@@ -1,10 +1,6 @@
 /**
  * Netlify Function: Form Submission Handler + Brevo Email
  * Sends auto-reply email when TurnkeyAI booking form is submitted
- * 
- * Environment variables required:
- * - BREVO_API_KEY: API key from Brevo (https://brevo.com)
- * - SENDER_EMAIL: Verified sender email (e.g., support@turnkeyai.com.au)
  */
 
 const https = require('https');
@@ -16,7 +12,16 @@ const SENDER_EMAIL = process.env.SENDER_EMAIL || 'support@turnkeyai.com.au';
 // Helper: POST to Brevo API
 function sendBrevoEmail(emailData) {
   return new Promise((resolve, reject) => {
-    const data = JSON.stringify(emailData);
+    // Brevo expects specific format
+    const payload = {
+      to: emailData.to,
+      from: emailData.from,
+      subject: emailData.subject,
+      htmlContent: emailData.htmlContent
+    };
+    
+    const data = JSON.stringify(payload);
+    
     const options = {
       hostname: 'api.brevo.com',
       port: 443,
@@ -25,7 +30,7 @@ function sendBrevoEmail(emailData) {
       headers: {
         'Content-Type': 'application/json',
         'api-key': BREVO_API_KEY,
-        'Content-Length': data.length
+        'Content-Length': Buffer.byteLength(data)
       }
     };
 
@@ -34,7 +39,7 @@ function sendBrevoEmail(emailData) {
       res.on('data', chunk => body += chunk);
       res.on('end', () => {
         if (res.statusCode >= 200 && res.statusCode < 300) {
-          resolve({ success: true, status: res.statusCode });
+          resolve({ success: true, status: res.statusCode, body });
         } else {
           reject(new Error(`Brevo API error: ${res.statusCode} ${body}`));
         }
@@ -49,15 +54,6 @@ function sendBrevoEmail(emailData) {
 
 // Main handler
 exports.handler = async (event) => {
-  // Check environment variables
-  if (!BREVO_API_KEY) {
-    console.error('BREVO_API_KEY not set in Netlify environment');
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'Server configuration error: missing API key' })
-    };
-  }
-
   // Only handle POST requests
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
@@ -135,7 +131,7 @@ exports.handler = async (event) => {
     // Send auto-reply email
     await sendBrevoEmail(autoReplyEmail);
 
-    // Also send internal notification (optional)
+    // Also send internal notification
     const internalEmail = {
       to: [{ email: 'thierry@bwpg.com.au', name: 'Thierry' }],
       from: { email: SENDER_EMAIL, name: 'TurnkeyAI System' },

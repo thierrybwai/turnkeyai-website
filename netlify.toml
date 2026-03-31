@@ -1,0 +1,13 @@
+[build]
+  functions = "functions"
+  publish = "public"
+  command = "echo 'Static site with Netlify Functions'"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Environment variables for form automation
+[env]
+  [env.production]
+    BREVO_API_KEY = ""  # Set in Netlify dashboard
+    SENDER_EMAIL = "support@turnkeyai.com.au"

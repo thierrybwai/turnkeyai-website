@@ -1,0 +1,19 @@
+{
+  "name": "turnkeyai-website",
+  "version": "1.0.0",
+  "description": "TurnkeyAI - AI-powered business automation platform for Australian SMEs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'Build step'"
+  },
+  "keywords": [
+    "ai",
+    "automation",
+    "business",
+    "australia"
+  ],
+  "author": "Thierry Lavirotte",
+  "license": "MIT",
+  "dependencies": {}
+}

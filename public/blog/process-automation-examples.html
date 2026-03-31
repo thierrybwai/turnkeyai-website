@@ -5,292 +5,155 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="12 real process automation examples with ROI for Australian businesses. See exactly what to automate and how much you'll save.">
     <meta name="keywords" content="Process automation, automation examples, workflow automation, business process automation">
-    <meta name="author" content="TurnkeyAI">
     <title>12 Process Automation Examples for Australian Businesses | TurnkeyAI</title>
     <style>
+        :root { --bg: #070711; --bg2: #0d0d1a; --accent: #6c47ff; --accent2: #9b72ff; --gold: #f5c842; --text: #f0efff; --text-muted: #8880b0; --border: rgba(108,71,255,0.2); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; line-height: 1.6; color: #333; }
-        nav { background: #fff; padding: 1.5rem 2rem; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; }
-        nav a { text-decoration: none; color: #333; margin-right: 2rem; font-weight: 500; }
-        .container { max-width: 800px; margin: 0 auto; padding: 3rem 2rem; }
-        h1 { font-size: 2.5rem; margin-bottom: 1rem; line-height: 1.2; }
-        .article-meta { color: #666; font-size: 0.95rem; margin-bottom: 2rem; }
-        .article-meta span { margin-right: 1rem; }
-        h2 { margin: 2rem 0 1rem 0; font-size: 1.8rem; color: #222; }
-        h3 { margin: 1.5rem 0 0.5rem 0; font-size: 1.3rem; color: #333; }
-        p { margin-bottom: 1rem; font-size: 1.05rem; line-height: 1.8; }
-        ul, ol { margin: 1rem 0 1rem 2rem; }
-        li { margin-bottom: 0.5rem; }
-        .example-box { background: #f0f7ff; border-left: 4px solid #007bff; padding: 1.5rem; margin: 2rem 0; border-radius: 4px; }
-        .example-box h4 { color: #0056b3; margin-bottom: 0.5rem; }
-        .savings { background: #d4edda; border-left: 4px solid #28a745; padding: 1rem; margin: 1rem 0; border-radius: 4px; font-size: 0.95rem; }
-        .cta-button { display: inline-block; background: #007bff; color: white; padding: 1rem 2rem; border-radius: 4px; text-decoration: none; font-weight: 600; margin-top: 2rem; }
-        .cta-button:hover { background: #0056b3; }
-        .related-articles { background: #f9f9f9; padding: 1.5rem; border-radius: 4px; margin-top: 3rem; }
-        .related-articles ul { list-style: none; margin: 1rem 0; }
-        .related-articles a { color: #007bff; text-decoration: none; }
+        body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; line-height: 1.7; }
+        header { padding: 20px 40px; border-bottom: 1px solid var(--border); }
+        header a { color: var(--text); text-decoration: none; font-weight: 600; margin-right: 2rem; }
+        header a:hover { color: var(--accent2); }
+        .container { max-width: 900px; margin: 0 auto; padding: 60px 40px; }
+        h1 { font-size: clamp(32px, 5vw, 56px); font-weight: 900; margin-bottom: 20px; line-height: 1.1; }
+        h1 em { font-style: normal; background: linear-gradient(135deg, var(--accent2) 0%, var(--gold) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .article-meta { color: var(--text-muted); font-size: 14px; margin-bottom: 40px; display: flex; gap: 20px; }
+        h2 { font-size: 28px; margin: 40px 0 20px; color: var(--text); font-weight: 800; }
+        h3 { font-size: 20px; margin: 30px 0 15px; color: var(--accent2); font-weight: 700; }
+        p { margin-bottom: 16px; color: var(--text); }
+        strong { color: var(--gold); font-weight: 700; }
+        ul, ol { margin: 16px 0 16px 24px; }
+        li { margin-bottom: 10px; }
+        .box { background: rgba(108,71,255,0.08); border: 1px solid var(--border); border-left: 4px solid var(--accent2); padding: 24px; margin: 24px 0; border-radius: 12px; }
+        .box h4 { color: var(--accent2); margin-bottom: 12px; }
+        .savings { background: rgba(34,211,160,0.08); border-left: 4px solid var(--green); padding: 12px 16px; margin: 16px 0; border-radius: 8px; font-size: 14px; }
+        .savings strong { color: var(--gold); }
+        .cta-button { display: inline-block; background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%); color: white; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 700; margin: 30px 0; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(108,71,255,0.3); }
+        .related { background: var(--bg2); padding: 24px; border-radius: 12px; margin-top: 40px; }
+        .related ul { list-style: none; margin: 16px 0; }
+        .related a { color: var(--accent2); text-decoration: none; }
+        footer { text-align: center; padding: 40px; border-top: 1px solid var(--border); color: var(--text-muted); }
     </style>
 </head>
 <body>
-    <nav>
-        <a href="/">← Back to Home</a>
-        <a href="/blog">All Articles</a>
-    </nav>
-
+    <header>
+        <a href="/">← Home</a> <a href="/blog">Blog</a>
+    </header>
+    
     <div class="container">
-        <article>
-            <h1>12 Process Automation Examples for Australian Businesses (with ROI)</h1>
-            <div class="article-meta">
-                <span>📅 March 31, 2026</span>
-                <span>👤 TurnkeyAI Team</span>
-                <span>⏱️ 11 min read</span>
-            </div>
-
-            <p>Most business owners think "automation" means big, expensive, take-months-to-implement systems.</p>
-            
-            <p>So they never do it.</p>
-            
-            <p>The truth? You're probably wasting $100+ per day on work that could be automated in a week.</p>
-            
-            <p>This guide shows 12 real, simple automation examples. For each one, I'll show you what the process is, how much time it wastes, exactly how to automate it, and how much you'll save.</p>
-
-            <h2>1. Email Management & Triage</h2>
-            <div class="example-box">
-                <h4>The Process</h4>
-                <p>Admin or manager reads 100+ emails daily, categorizes them, responds to routine ones, flags urgent ones for boss.</p>
-                <h4>Current Pain</h4>
-                <ul>
-                    <li>Takes 3-4 hours/day just reading/sorting</li>
-                    <li>Important emails get mixed with spam</li>
-                    <li>Slow responses (boss sees them hours later)</li>
-                    <li>Same questions answered repeatedly</li>
-                </ul>
-                <h4>How to Automate</h4>
-                <ul>
-                    <li>AI reads all incoming emails</li>
-                    <li>Categorizes by priority and type</li>
-                    <li>Auto-responds to common questions</li>
-                    <li>Flags urgent emails for human (with summary)</li>
-                </ul>
-                <div class="savings">
-                    <strong>Monthly Savings: $4,200</strong> (15 hours/week × 4 weeks × $70/hour)<br>
-                    Setup: 3-5 days | ROI: 6-12 weeks
-                </div>
-            </div>
-
-            <h2>2. Lead Capture & CRM Entry</h2>
-            <div class="example-box">
-                <h4>The Process</h4>
-                <p>Leads come in via forms, emails, phone calls. Someone manually enters them into CRM.</p>
-                <h4>How to Automate</h4>
-                <ul>
-                    <li>Forms auto-populate CRM</li>
-                    <li>Email leads auto-captured and parsed</li>
-                    <li>Duplicate detection (prevents 10+ duplicates/week)</li>
-                    <li>Lead scoring (hot leads flagged immediately)</li>
-                </ul>
-                <div class="savings">
-                    <strong>Monthly Savings: $2,800</strong> (10 hours/week × 4 weeks × $70/hour)<br>
-                    Plus: Faster lead follow-up (saves 20+ hours response time)<br>
-                    Setup: 1-2 days | ROI: 3-6 weeks
-                </div>
-            </div>
-
-            <h2>3. Invoice & Payment Processing</h2>
-            <div class="example-box">
-                <h4>How to Automate</h4>
-                <ul>
-                    <li>Invoice received → auto-extracted</li>
-                    <li>Matched to PO automatically</li>
-                    <li>Flagged if discrepancies exist</li>
-                    <li>Approved invoices → auto-entered into accounting</li>
-                    <li>Payment created (for you to approve)</li>
-                </ul>
-                <div class="savings">
-                    <strong>Monthly Savings: $3,600</strong> (12 hours/week × 4 weeks × $75/hour)<br>
-                    Plus: Error prevention $500-$1,000/month<br>
-                    Plus: Better cash flow<br>
-                    Setup: 4-6 days | ROI: 4-8 weeks
-                </div>
-            </div>
-
-            <h2>4. Appointment & Reminder Automation</h2>
-            <div class="example-box">
-                <h4>How to Automate</h4>
-                <ul>
-                    <li>Booking → automatic confirmation</li>
-                    <li>24-hour reminder (automatic SMS/email)</li>
-                    <li>2-hour reminder (automatic SMS)</li>
-                    <li>No-show → auto-reschedule request</li>
-                    <li>Post-appointment follow-up (automatic)</li>
-                </ul>
-                <div class="savings">
-                    <strong>Monthly Savings: $1,920</strong> (8 hours/week × 4 weeks × $60/hour)<br>
-                    Plus: 20-30% reduction in no-shows = $2,000-$5,000/month recovered<br>
-                    Setup: 2-3 days | ROI: 2-4 weeks
-                </div>
-            </div>
-
-            <h2>5. Report Generation & Distribution</h2>
-            <div class="example-box">
-                <h4>How to Automate</h4>
-                <ul>
-                    <li>Scheduled job pulls data from all sources</li>
-                    <li>Automatically formats into report</li>
-                    <li>Auto-generates charts/visuals</li>
-                    <li>Automatically emails to recipients</li>
-                </ul>
-                <div class="savings">
-                    <strong>Monthly Savings: $1,920</strong> (6 hours/week × 4 weeks × $80/hour)<br>
-                    Setup: 3-5 days | ROI: 4-8 weeks
-                </div>
-            </div>
-
-            <h2>6. Customer Feedback & Issue Tracking</h2>
-            <div class="example-box">
-                <h4>How to Automate</h4>
-                <ul>
-                    <li>All feedback → centralized inbox</li>
-                    <li>Auto-categorized by issue type</li>
-                    <li>Sentiment analysis (positive vs. negative vs. urgent)</li>
-                    <li>Auto-escalation (critical issues alert team)</li>
-                </ul>
-                <div class="savings">
-                    <strong>Monthly Savings: $1,400</strong> (5 hours/week × 4 weeks × $70/hour)<br>
-                    Setup: 2-4 days | ROI: 4-8 weeks
-                </div>
-            </div>
-
-            <h2>7. Expense Categorization</h2>
-            <div class="example-box">
-                <h4>How to Automate</h4>
-                <ul>
-                    <li>Expense submitted → automatically categorized (ML learns your patterns)</li>
-                    <li>Flagged if outside policy</li>
-                    <li>Auto-approved if under limit</li>
-                    <li>Auto-entered into accounting system</li>
-                </ul>
-                <div class="savings">
-                    <strong>Monthly Savings: $2,400</strong> (8 hours/week × 4 weeks × $75/hour)<br>
-                    Setup: 2-3 days | ROI: 3-6 weeks
-                </div>
-            </div>
-
-            <h2>8. Social Media Scheduling & Response</h2>
-            <div class="example-box">
-                <h4>How to Automate</h4>
-                <ul>
-                    <li>Schedule posts automatically (optimized time)</li>
-                    <li>Monitor comments & mentions</li>
-                    <li>Auto-respond to common questions</li>
-                    <li>Compile engagement metrics</li>
-                </ul>
-                <div class="savings">
-                    <strong>Monthly Savings: $2,600</strong> (10 hours/week × 4 weeks × $65/hour)<br>
-                    Setup: 1-2 days | ROI: 2-4 weeks
-                </div>
-            </div>
-
-            <h2>9. HR & Payroll Admin</h2>
-            <div class="example-box">
-                <h4>How to Automate</h4>
-                <ul>
-                    <li>Digital timesheets (auto-sum)</li>
-                    <li>Leave requests → automated workflow</li>
-                    <li>Payroll → auto-calculated</li>
-                    <li>Compliance reminders automated</li>
-                    <li>Onboarding → automated task list</li>
-                </ul>
-                <div class="savings">
-                    <strong>Monthly Savings: $4,200</strong> (15 hours/week × 4 weeks × $70/hour)<br>
-                    Setup: 5-7 days | ROI: 6-10 weeks
-                </div>
-            </div>
-
-            <h2>10. Customer Onboarding</h2>
-            <div class="example-box">
-                <h4>How to Automate</h4>
-                <ul>
-                    <li>Customer signs up → automatic welcome sequence (5-7 emails)</li>
-                    <li>Auto-create account and send credentials</li>
-                    <li>Auto-schedule onboarding call</li>
-                    <li>Auto-send relevant docs (customized by tier)</li>
-                    <li>Auto-send training resources</li>
-                </ul>
-                <div class="savings">
-                    <strong>$1,400 per customer</strong> (20 hours × $70/hour)<br>
-                    10 customers/month = <strong>$14,000/month</strong><br>
-                    Setup: 5-7 days | ROI: 1-2 weeks
-                </div>
-            </div>
-
-            <h2>11. Inventory Management</h2>
-            <div class="example-box">
-                <h4>How to Automate</h4>
-                <ul>
-                    <li>Real-time inventory across all channels</li>
-                    <li>Auto-alert when low stock</li>
-                    <li>Auto-send reorder to supplier</li>
-                    <li>Auto-update all sales channels</li>
-                </ul>
-                <div class="savings">
-                    <strong>Monthly Savings: $3,120</strong> (12 hours/week × 4 weeks × $65/hour)<br>
-                    Plus: Fewer oversells & stockouts<br>
-                    Setup: 3-5 days | ROI: 4-8 weeks
-                </div>
-            </div>
-
-            <h2>12. Lead Nurture & Follow-up</h2>
-            <div class="example-box">
-                <h4>How to Automate</h4>
-                <ul>
-                    <li>Triggered sequences (based on customer action)</li>
-                    <li>Day 1: Welcome email</li>
-                    <li>Day 3: Case study</li>
-                    <li>Day 7: Social proof</li>
-                    <li>Day 14: Limited offer</li>
-                    <li>Day 30: "Last chance" email</li>
-                </ul>
-                <div class="savings">
-                    <strong>Monthly Savings: $7,000</strong> (25 hours/week × 4 weeks × $70/hour)<br>
-                    Plus: Higher conversion (consistent follow-up)<br>
-                    Setup: 3-5 days | ROI: 2-4 weeks
-                </div>
-            </div>
-
-            <h2>Total: How Much Could YOU Save?</h2>
-
-            <p>If you automate even 50% of these 12 processes:</p>
+        <h1>12 Process Automation Examples for Australian Businesses <em>(with ROI)</em></h1>
+        <div class="article-meta"><span>📅 March 31, 2026</span> <span>👤 TurnkeyAI</span> <span>⏱️ 11 min read</span></div>
+        
+        <h2>Most business owners think "automation" means big, expensive systems</h2>
+        <p>So they never do it.</p>
+        <p>The truth? You're probably wasting $100+ per day on work that could be automated in a week.</p>
+        
+        <h2>1. Email Management & Triage (15+ hours/week)</h2>
+        <div class="box">
+            <h4>How to Automate</h4>
             <ul>
-                <li><strong>Time saved:</strong> 150+ hours/month</li>
-                <li><strong>Cost saved:</strong> $10,500+/month (conservative)</li>
-                <li><strong>Annual impact:</strong> $126,000+</li>
+                <li>AI reads all incoming emails</li>
+                <li>Categorizes by priority and type</li>
+                <li>Auto-responds to common questions</li>
+                <li>Flags urgent emails for human</li>
             </ul>
-
-            <p>That's not a nice-to-have. That's business-critical.</p>
-
-            <h2>Getting Started</h2>
-
-            <p>Pick ONE process from the list above that wastes the most time.</p>
-
-            <p>Calculate hours/week × hourly cost × monthly impact.</p>
-
-            <p>Then:</p>
-
-            <a href="/" class="cta-button">📅 Book Your Free Automation Audit</a>
-
-            <p style="margin-top: 1rem;">We'll show you exactly how to automate it, how much you'll save, and which approach makes sense.</p>
-
-            <div class="related-articles">
-                <h3>📚 Read More</h3>
-                <ul>
-                    <li><a href="/blog/ai-automation-australia">How Australian Businesses Are Using AI Automation to Save $10K+/Month</a></li>
-                    <li><a href="/blog/business-automation-tools">The Complete Guide to Business Automation Tools (2026)</a></li>
-                    <li><a href="/blog/ai-agents-for-business">AI Agents for Business: The 7-Day Implementation</a></li>
-                    <li><a href="/blog/automation-agency-vs-diy">Why Hiring an Automation Agency Beats DIY</a></li>
-                </ul>
-            </div>
-        </article>
+            <div class="savings"><strong>Monthly Savings: $4,200</strong> (15 hours/week × 4 weeks × $70/hour)</div>
+        </div>
+        
+        <h2>2. Lead Capture & CRM Entry (10+ hours/week)</h2>
+        <div class="box">
+            <h4>How to Automate</h4>
+            <ul>
+                <li>Forms auto-populate CRM</li>
+                <li>Email leads auto-captured and parsed</li>
+                <li>Duplicate detection</li>
+                <li>Lead scoring (hot leads flagged immediately)</li>
+            </ul>
+            <div class="savings"><strong>Monthly Savings: $2,800</strong> (10 hours/week × 4 weeks × $70/hour)</div>
+        </div>
+        
+        <h2>3. Invoice & Payment Processing (12+ hours/week)</h2>
+        <div class="box">
+            <p><strong>How to Automate:</strong> Invoice received → auto-extracted → matched to PO → approved invoices auto-entered → payment created</p>
+            <div class="savings"><strong>Monthly Savings: $3,600</strong> + error prevention $500-$1,000/month</div>
+        </div>
+        
+        <h2>4. Appointment & Reminder Automation (8+ hours/week)</h2>
+        <div class="box">
+            <p><strong>How to Automate:</strong> Booking → automatic confirmation → 24-hour reminder → 2-hour reminder → no-show reschedule → follow-up</p>
+            <div class="savings"><strong>Monthly Savings: $1,920</strong> + 20-30% reduction in no-shows = $2,000-$5,000/month recovered</div>
+        </div>
+        
+        <h2>5. Report Generation & Distribution (6+ hours/week)</h2>
+        <div class="box">
+            <p><strong>How to Automate:</strong> Scheduled job pulls data → auto-formats → generates charts → emails to recipients</p>
+            <div class="savings"><strong>Monthly Savings: $1,920</strong></div>
+        </div>
+        
+        <h2>6. Customer Feedback & Issue Tracking (5+ hours/week)</h2>
+        <div class="box">
+            <p><strong>How to Automate:</strong> All feedback → centralized inbox → auto-categorized → sentiment analysis → auto-escalation for urgent</p>
+            <div class="savings"><strong>Monthly Savings: $1,400</strong></div>
+        </div>
+        
+        <h2>7. Expense Categorization (8+ hours/week)</h2>
+        <div class="box">
+            <p><strong>How to Automate:</strong> Expense submitted → automatically categorized → auto-approved if under limit → auto-entered into accounting</p>
+            <div class="savings"><strong>Monthly Savings: $2,400</strong></div>
+        </div>
+        
+        <h2>8. Social Media Scheduling & Response (10+ hours/week)</h2>
+        <div class="box">
+            <p><strong>How to Automate:</strong> Schedule posts → monitor comments → auto-respond to common questions → compile metrics</p>
+            <div class="savings"><strong>Monthly Savings: $2,600</strong></div>
+        </div>
+        
+        <h2>9. HR & Payroll Admin (15+ hours/week)</h2>
+        <div class="box">
+            <p><strong>How to Automate:</strong> Digital timesheets → leave requests auto-workflow → payroll auto-calculated → compliance reminders → onboarding automation</p>
+            <div class="savings"><strong>Monthly Savings: $4,200</strong></div>
+        </div>
+        
+        <h2>10. Customer Onboarding (20+ hours per customer)</h2>
+        <div class="box">
+            <p><strong>How to Automate:</strong> Customer signs up → automatic welcome sequence → auto-create account → auto-schedule call → auto-send docs</p>
+            <div class="savings"><strong>$1,400 per customer</strong> (20 hours × $70/hour) = 10 customers/month = <strong>$14,000/month</strong></div>
+        </div>
+        
+        <h2>11. Inventory Management (12+ hours/week)</h2>
+        <div class="box">
+            <p><strong>How to Automate:</strong> Real-time inventory → auto-alert when low → auto-reorder → auto-update all channels</p>
+            <div class="savings"><strong>Monthly Savings: $3,120</strong> + fewer oversells/stockouts</div>
+        </div>
+        
+        <h2>12. Lead Nurture & Follow-up (25+ hours/week)</h2>
+        <div class="box">
+            <p><strong>How to Automate:</strong> Triggered sequences based on customer action (Day 1: welcome, Day 3: case study, Day 7: social proof, Day 14: offer, Day 30: final)</p>
+            <div class="savings"><strong>Monthly Savings: $7,000</strong> + higher conversion</div>
+        </div>
+        
+        <h2>Total: How Much Could YOU Save?</h2>
+        <p>If you automate even 50% of these 12 processes:</p>
+        <ul>
+            <li><strong>Time saved:</strong> 150+ hours/month</li>
+            <li><strong>Cost saved:</strong> $10,500+/month (conservative)</li>
+            <li><strong>Annual impact:</strong> <strong>$126,000+</strong></li>
+        </ul>
+        
+        <h2>Getting Started</h2>
+        <p>Pick ONE process from the list above that wastes the most time. Calculate hours/week × hourly cost × monthly impact. Then:</p>
+        <button class="cta-button">📅 Book Your Free Automation Audit</button>
+        
+        <div class="related">
+            <h3>📚 Read More Articles</h3>
+            <ul>
+                <li><a href="/blog/ai-automation-australia">How Australian Businesses Are Using AI Automation to Save $10K+/Month</a></li>
+                <li><a href="/blog/business-automation-tools">The Complete Guide to Business Automation Tools (2026)</a></li>
+                <li><a href="/blog/ai-agents-for-business">AI Agents for Business: The 7-Day Implementation</a></li>
+                <li><a href="/blog/automation-agency-vs-diy">Why Hiring an Automation Agency Beats DIY</a></li>
+            </ul>
+        </div>
     </div>
+    
+    <footer><p>© 2026 TurnkeyAI. AI automation for Australian businesses.</p></footer>
 </body>
 </html>

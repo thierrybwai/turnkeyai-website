@@ -478,12 +478,99 @@
   footer strong { color: var(--text); }
 
   /* ── RESPONSIVE ── */
+  @media (max-width: 480px) {
+    header { padding: 14px 16px; }
+    header a.btn { padding: 8px 14px; font-size: 12px; }
+    nav { display: none; }
+    .logo { font-size: 16px; }
+    .logo img { height: 32px; }
+    
+    .hero { padding: 100px 16px 60px; }
+    .hero h1 { font-size: clamp(28px, 5vw, 40px); }
+    .hero p { font-size: 15px; margin-bottom: 24px; padding: 0; }
+    .hero-ctas { flex-direction: column; }
+    .hero-ctas .btn { width: 100%; }
+    
+    section { padding: 50px 16px; max-width: 100%; }
+    .section-label { font-size: 11px; }
+    h2 { font-size: clamp(24px, 4vw, 32px); }
+    .section-intro { font-size: 16px; }
+    
+    .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 0.5px; }
+    .stat { padding: 16px 12px; }
+    .stat-num { font-size: 24px; }
+    .stat-label { font-size: 10px; }
+    
+    .packages-grid { grid-template-columns: 1fr; gap: 20px; }
+    .pkg-card { padding: 24px; }
+    .pkg-price { font-size: 32px; }
+    .pkg-features { font-size: 13px; }
+    
+    .retainer-card { grid-template-columns: 1fr; gap: 24px; }
+    .retainer-price { font-size: 32px; }
+    
+    #roi-calculator { padding: 24px 16px; }
+    #roi-rows { gap: 8px; }
+    [style*="display:grid; grid-template-columns:1fr 160px 120px"] { 
+      grid-template-columns: 1fr 100px 70px 32px !important; 
+      gap: 8px !important;
+    }
+    [style*="grid-template-columns:1fr 1fr 1fr"] { 
+      grid-template-columns: 1fr !important; 
+      gap: 12px !important;
+    }
+    [style*="grid-template-columns:repeat(3,1fr)"] { 
+      grid-template-columns: 1fr !important; 
+    }
+    [style*="grid-template-columns:1fr 1fr"] { 
+      grid-template-columns: 1fr !important; 
+    }
+    
+    .booking-form { padding: 24px; }
+    form input, form select, form textarea { font-size: 16px !important; padding: 12px 14px !important; }
+    
+    .cta-section h2 { font-size: 28px; }
+    .cta-btns { flex-direction: column; }
+    .cta-btns .btn { width: 100%; }
+    
+    [style*="display:grid; grid-template-columns:1fr 1fr; gap:20px"] {
+      grid-template-columns: 1fr !important;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    header { padding: 14px 16px; }
+    nav { display: none; }
+    
+    .hero h1 { font-size: clamp(32px, 5vw, 48px); }
+    .hero p { font-size: 16px; }
+    
+    section { padding: 60px 16px; }
+    h2 { font-size: clamp(24px, 4vw, 36px); }
+    
+    .packages-grid { grid-template-columns: 1fr; }
+    [style*="grid-template-columns:repeat(auto-fit"] {
+      grid-template-columns: 1fr !important;
+    }
+  }
+  
   @media (max-width: 768px) {
     header { padding: 16px 20px; }
     nav { display: none; }
     .stats-bar { grid-template-columns: repeat(2, 1fr); }
     .retainer-card { grid-template-columns: 1fr; }
     .retainer-price { font-size: 42px; }
+    
+    section { padding: 70px 20px; }
+    .hero h1 { font-size: clamp(36px, 5vw, 56px); }
+    .packages-grid { grid-template-columns: 1fr 1fr; }
+  }
+  
+  @media (max-width: 1024px) {
+    .packages-grid { grid-template-columns: 1fr 1fr; }
+    [style*="grid-template-columns:repeat(auto-fit"] {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+    }
   }
 </style>
 </head>

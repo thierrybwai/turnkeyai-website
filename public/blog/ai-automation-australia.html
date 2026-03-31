@@ -77,6 +77,30 @@
         
         footer { text-align: center; padding: 40px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 14px; }
         
+        @media (max-width: 480px) {
+            .container { padding: 24px 16px; }
+            header { padding: 14px 16px; }
+            header a { margin-right: 1rem; font-size: 13px; }
+            h1 { font-size: 24px; margin-bottom: 16px; }
+            .article-meta { font-size: 12px; flex-direction: column; gap: 8px; }
+            .article-content { font-size: 15px; line-height: 1.7; }
+            .article-content h2 { font-size: 20px; margin: 32px 0 16px; }
+            .article-content h3 { font-size: 18px; }
+            .article-content ul, .article-content ol { margin: 12px 0 12px 20px; }
+            .example-box { padding: 16px; margin: 16px 0; }
+            table { font-size: 13px; }
+            table td, table th { padding: 8px; }
+            .cta-button { padding: 12px 20px; font-size: 14px; width: 100%; }
+            .related-articles { padding: 16px; margin-top: 32px; }
+        }
+        
+        @media (max-width: 600px) {
+            .container { padding: 32px 18px; }
+            h1 { font-size: 26px; }
+            .article-content h2 { font-size: 21px; }
+            .article-content h3 { font-size: 18px; }
+        }
+        
         @media (max-width: 768px) {
             .container { padding: 40px 20px; }
             h1 { font-size: 28px; }

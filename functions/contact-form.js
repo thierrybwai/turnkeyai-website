@@ -133,7 +133,7 @@ exports.handler = async (event) => {
 
     // Also send internal notification
     const internalEmail = {
-      to: [{ email: 'thierry@bwpg.com.au', name: 'Thierry' }],
+      to: [{ email: 'start@tkai.com.au', name: 'TurnkeyAI Team' }],
       from: { email: SENDER_EMAIL, name: 'TurnkeyAI System' },
       subject: `🔔 New AI Audit Request: ${businessName || 'Unknown'}`,
       htmlContent: `

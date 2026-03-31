@@ -15,7 +15,7 @@ function sendBrevoEmail(emailData) {
     // Brevo expects specific format
     const payload = {
       to: emailData.to,
-      from: emailData.from,
+      sender: emailData.from,  // Brevo uses 'sender' not 'from'
       subject: emailData.subject,
       htmlContent: emailData.htmlContent
     };

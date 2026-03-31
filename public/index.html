@@ -584,19 +584,18 @@
         <div class="pkg-icon">☁️</div>
         <div class="pkg-name">Starter</div>
         <div class="pkg-title">Cloud</div>
-        <div class="pkg-sub">VPS · 1 User · Remote</div>
+        <div class="pkg-sub">VPS · Remote Setup</div>
         <div class="pkg-price">$2,999 <span>AUD</span></div>
-        <div class="pkg-after">One-time · After 3 months: ~$70/mo (VPS + API)</div>
+        <div class="pkg-after">One-time setup</div>
         <div class="pkg-saving">💰 Avg saving: $800–$1,200/week</div>
         <hr class="pkg-divider">
         <ul class="pkg-features">
           <li>Dedicated VPS (4 vCPU, 8GB RAM — EU/AUS)</li>
           <li>OpenClaw installed, configured & running 24/7</li>
-          <li>Anthropic Claude API integrated (Pro tier)</li>
-          <li>1 channel: Slack, Telegram, or WhatsApp</li>
+          <li>⚠️ VPS performance lower than dedicated hardware</li>
+          <li>Slack or Telegram integration</li>
           <li>2 custom workflows built to your spec</li>
           <li>Remote access via secure tunnel</li>
-          <li>3 months Anthropic API credits included (~$90)</li>
           <li>1-hour onboarding & training call</li>
         </ul>
         <div class="pkg-cta">
@@ -611,21 +610,21 @@
         <div class="pkg-icon">🖥️</div>
         <div class="pkg-name">Professional</div>
         <div class="pkg-title">Mac Mini</div>
-        <div class="pkg-sub">1 Mac Mini M4 · On-Site · Full Setup</div>
+        <div class="pkg-sub">1 Mac Mini M4 · On-Site Setup</div>
         <div class="pkg-price">$5,999 <span>AUD</span></div>
-        <div class="pkg-after">One-time · After 3 months: ~$155/mo (Claude Max)</div>
+        <div class="pkg-after">One-time setup</div>
         <div class="pkg-saving">💰 Avg saving: $1,500–$2,000/week</div>
         <hr class="pkg-divider">
         <ul class="pkg-features">
           <li>Apple Mac Mini M4 (16GB, 256GB) — yours to keep</li>
           <li>OpenClaw fully installed & configured</li>
-          <li>Anthropic Claude + Claude Code (3 months included)</li>
-          <li>Up to 3 channels: Slack, Telegram, WhatsApp, email</li>
+          <li>Slack and Telegram integration</li>
           <li>5 custom workflows built to spec</li>
+          <li>Sub-agent setup & configuration</li>
           <li>Connected to email, calendar & CRM</li>
           <li>On-site setup — Gold Coast or Brisbane included</li>
           <li>2-hour staff onboarding session</li>
-          <li>30-day post-install support via Slack/WhatsApp</li>
+          <li>30-day post-install support via Slack/Telegram</li>
         </ul>
         <div class="pkg-cta">
           <a href="https://buy.stripe.com/14A5kF7eP9BVaTAfS22Fa02" class="btn btn-primary" target="_blank" rel="noopener">Get Started →</a>
@@ -638,23 +637,22 @@
         <div class="pkg-icon">🏢</div>
         <div class="pkg-name">Enterprise</div>
         <div class="pkg-title">AI Command Centre</div>
-        <div class="pkg-sub">5 Mac Minis · Local LLM · Full Department Automation</div>
+        <div class="pkg-sub">5 Mac Minis · Full Department Automation</div>
         <div class="pkg-price">$24,999 <span>AUD</span></div>
-        <div class="pkg-after">One-time · After 3 months: ~$620/mo (4 × Claude Max)</div>
+        <div class="pkg-after">One-time setup</div>
         <div class="pkg-saving">💰 Avg saving: $4,000–$6,000/week</div>
         <hr class="pkg-divider">
         <ul class="pkg-features">
-          <li>1 × Mac Mini M4 Pro (48GB) — local LLM host (Llama/Mistral). Zero API costs for internal tasks.</li>
+          <li>1 × Mac Mini M4 Pro (48GB) — local LLM host</li>
           <li>4 × Mac Mini M4 (16GB) — each running OpenClaw + Claude</li>
-          <li>Network switch + internal LAN — all 5 units communicate</li>
           <li>Department-level automation: admin, marketing, ops, CS, finance</li>
           <li>Up to 10 custom workflows</li>
-          <li>Dedicated Slack workspace as AI team HQ</li>
+          <li>Slack and Telegram integration</li>
+          <li>Dedicated team HQ for AI agents</li>
           <li>All units connected to email, CRM & accounting</li>
           <li>On-site setup anywhere in Australia (travel included)</li>
           <li>Full-day staff training session</li>
           <li>3 months priority support (first in queue)</li>
-          <li>3 months Anthropic API credits for all 4 units (~$620)</li>
         </ul>
         <div class="pkg-cta">
           <a href="https://buy.stripe.com/00wbJ342DcO76Dk35g2Fa03" class="btn btn-outline" target="_blank" rel="noopener">Get Started</a>
@@ -870,9 +868,42 @@
           </div>
         </div>
         <div style="margin-bottom:20px;">
-          <label style="display:block; font-size:13px; color:var(--text-muted); margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:1px;">Business Name & Industry</label>
-          <input type="text" name="businessName" placeholder="e.g. Smith Plumbing — Trades" required style="width:100%; background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:14px 16px; color:var(--text); font-size:15px; outline:none; font-family:inherit; box-sizing:border-box;">
+          <label style="display:block; font-size:13px; color:var(--text-muted); margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:1px;">Business Name</label>
+          <input type="text" name="businessName" placeholder="e.g. Smith Plumbing" required style="width:100%; background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:14px 16px; color:var(--text); font-size:15px; outline:none; font-family:inherit; box-sizing:border-box;">
         </div>
+        <div style="margin-bottom:20px;">
+          <label style="display:block; font-size:13px; color:var(--text-muted); margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:1px;">Your Industry</label>
+          <select id="industrySelect" name="industry" style="width:100%; background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:14px 16px; color:var(--text); font-size:15px; outline:none; font-family:inherit; appearance:none; box-sizing:border-box;" onchange="showIndustryExamples();">
+            <option value="">Select your industry...</option>
+            <option value="accounting">Accounting/Bookkeeping</option>
+            <option value="real_estate">Real Estate/Property Management</option>
+            <option value="ecommerce">E-Commerce/Retail</option>
+            <option value="healthcare">Healthcare/Medical Clinics</option>
+            <option value="legal">Legal Services/Law Firms</option>
+            <option value="marketing">Marketing Agencies</option>
+            <option value="cleaning">Cleaning Services</option>
+            <option value="trades">Plumbing/Trades</option>
+            <option value="consulting">Consulting Firms</option>
+            <option value="dental">Dental Practices</option>
+            <option value="beauty">Hair/Beauty Services</option>
+            <option value="restaurant">Restaurant/Cafe</option>
+            <option value="fitness">Fitness/Gym</option>
+            <option value="education">Educational Services/Training</option>
+            <option value="insurance">Insurance</option>
+            <option value="recruitment">Recruitment/HR</option>
+            <option value="it_services">IT Services/Support</option>
+            <option value="hospitality">Hospitality/Hotels</option>
+            <option value="manufacturing">Manufacturing</option>
+            <option value="financial">Financial Services/Investment</option>
+          </select>
+        </div>
+        
+        <!-- Dynamic Industry Examples -->
+        <div id="industryExamples" style="display:none; margin-bottom:32px; background:rgba(108,71,255,0.08); border:1px solid var(--border); border-radius:12px; padding:24px;">
+          <h3 style="color:var(--accent2); font-size:16px; margin-bottom:16px;">Automation Examples for Your Industry</h3>
+          <div id="examplesContent" style="display:grid; gap:12px;"></div>
+        </div>
+        
         <div style="margin-bottom:20px;">
           <label style="display:block; font-size:13px; color:var(--text-muted); margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:1px;">Which package interests you most?</label>
           <select name="packageInterest" style="width:100%; background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:14px 16px; color:var(--text); font-size:15px; outline:none; font-family:inherit; appearance:none; box-sizing:border-box;">
@@ -884,32 +915,11 @@
             <option value="unsure">Not sure yet — help me decide</option>
           </select>
         </div>
+
         <div style="margin-bottom:32px;">
-          <label style="display:block; font-size:13px; color:var(--text-muted); margin-bottom:14px; font-weight:600; text-transform:uppercase; letter-spacing:1px;">Where do you want AI to take the wheel? <span style="color:var(--accent2); font-size:11px;">(Select all that apply)</span></label>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-            <label class="pain-option"><input type="checkbox" name="automationInterests" value="Emails & inbox management"><span>📧 Emails &amp; Inbox</span></label>
-            <label class="pain-option"><input type="checkbox" name="automationInterests" value="Multiple chats & customer messages"><span>💬 Multiple Chats</span></label>
-            <label class="pain-option"><input type="checkbox" name="automationInterests" value="Facebook management"><span>👍 Facebook</span></label>
-            <label class="pain-option"><input type="checkbox" name="automationInterests" value="Instagram management"><span>📸 Instagram</span></label>
-            <label class="pain-option"><input type="checkbox" name="automationInterests" value="Marketing campaigns"><span>📣 Marketing Campaigns</span></label>
-            <label class="pain-option"><input type="checkbox" name="automationInterests" value="Rosters & scheduling"><span>🗓️ Rosters &amp; Scheduling</span></label>
-            <label class="pain-option"><input type="checkbox" name="automationInterests" value="CRM & lead management"><span>🤝 CRM &amp; Leads</span></label>
-            <label class="pain-option"><input type="checkbox" name="automationInterests" value="Automations & workflows"><span>⚙️ Automations</span></label>
-            <label class="pain-option"><input type="checkbox" name="automationInterests" value="Follow-ups & reminders"><span>🔔 Follow-ups</span></label>
-            <label class="pain-option"><input type="checkbox" name="automationInterests" value="Something else"><span>✨ Something Else</span></label>
-          </div>
+          <label style="display:block; font-size:13px; color:var(--text-muted); margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:1px;">What do you expect from your AI installation?</label>
+          <textarea name="expectedOutcomes" placeholder="E.g. Save team time on admin, improve customer response times, reduce manual data entry..." style="width:100%; background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:14px 16px; color:var(--text); font-size:15px; outline:none; font-family:inherit; box-sizing:border-box; resize:vertical; min-height:100px;"></textarea>
         </div>
-        <style>
-          .pain-option {
-            display: flex; align-items: center; gap: 12px;
-            background: var(--bg2); border: 1px solid var(--border); border-radius: 10px;
-            padding: 13px 16px; cursor: pointer; transition: border-color .15s, background .15s;
-            font-size: 14px; font-weight: 500; color: var(--text-muted);
-          }
-          .pain-option:hover { border-color: var(--accent); color: var(--text); }
-          .pain-option input[type="checkbox"] { accent-color: var(--accent); width: 16px; height: 16px; flex-shrink: 0; cursor: pointer; }
-          .pain-option:has(input:checked) { border-color: var(--accent); background: rgba(108,71,255,0.1); color: var(--text); }
-        </style>
         <button type="submit" id="submitBtn" class="btn btn-primary" style="width:100%; text-align:center; padding:18px; font-size:17px; border-radius:12px; display:block; border:none; cursor:pointer;">
           Book My Free AI Audit →
         </button>
@@ -955,7 +965,40 @@
 </footer>
 
 
+<script src="/industry-data.js"></script>
 <script>
+function showIndustryExamples() {
+  const industrySelect = document.getElementById('industrySelect');
+  const selectedIndustry = industrySelect.value;
+  const examplesDiv = document.getElementById('industryExamples');
+  const examplesContent = document.getElementById('examplesContent');
+  
+  if (!selectedIndustry || !industryData[selectedIndustry]) {
+    examplesDiv.style.display = 'none';
+    return;
+  }
+  
+  const industry = industryData[selectedIndustry];
+  examplesContent.innerHTML = '';
+  
+  industry.examples.forEach(example => {
+    const html = `
+      <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(108,71,255,0.2); border-radius:8px; padding:12px 16px;">
+        <div style="font-weight:700; color:var(--accent2); margin-bottom:6px;">${example.process}</div>
+        <div style="font-size:13px; color:var(--text-muted); margin-bottom:6px;">
+          ⏱️ ${example.timeSaved} saved · 💰 ${example.savings}/month
+        </div>
+        <div style="font-size:12px; color:var(--text-muted);">
+          ${example.processes.join(', ')}
+        </div>
+      </div>
+    `;
+    examplesContent.innerHTML += html;
+  });
+  
+  examplesDiv.style.display = 'block';
+}
+
 async function handleFormSubmit(event) {
   event.preventDefault();
   const form = document.getElementById('bookingForm');
@@ -971,8 +1014,9 @@ async function handleFormSubmit(event) {
       email: form.querySelector('[name="email"]').value,
       phone: form.querySelector('[name="phone"]').value || '',
       businessName: form.querySelector('[name="businessName"]').value,
+      industry: form.querySelector('[name="industry"]').value,
       packageInterest: form.querySelector('[name="packageInterest"]').value,
-      automationInterests: Array.from(form.querySelectorAll('[name="automationInterests"]:checked')).map(cb => cb.value)
+      expectedOutcomes: form.querySelector('[name="expectedOutcomes"]').value || ''
     };
     
     const response = await fetch('/.netlify/functions/contact-form', {

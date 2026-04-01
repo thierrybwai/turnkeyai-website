@@ -7,7 +7,11 @@ const https = require('https');
 
 // Get from Netlify environment variables
 const BREVO_API_KEY = process.env.BREVO_API_KEY;
-const SENDER_EMAIL = process.env.SENDER_EMAIL || 'start@tkai.com.au';
+const SENDER_EMAIL = 'start@tkai.com.au';  // Always use start@tkai.com.au
+
+// Debug logging
+console.log('BREVO_API_KEY configured:', !!BREVO_API_KEY);
+console.log('SENDER_EMAIL:', SENDER_EMAIL);
 
 // Helper: POST to Brevo API
 function sendBrevoEmail(emailData) {
@@ -15,7 +19,10 @@ function sendBrevoEmail(emailData) {
     // Brevo expects specific format
     const payload = {
       to: emailData.to,
-      sender: emailData.from,  // Brevo uses 'sender' not 'from'
+      sender: {
+        email: SENDER_EMAIL,
+        name: 'TurnkeyAI Team'
+      },
       subject: emailData.subject,
       htmlContent: emailData.htmlContent
     };

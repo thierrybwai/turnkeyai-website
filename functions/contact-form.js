@@ -3,112 +3,85 @@
  * Sends auto-reply email when TurnkeyAI booking form is submitted
  */
 
-const https = require('https');
-
 // Get from Netlify environment variables
 const BREVO_API_KEY = process.env.BREVO_API_KEY;
 const SENDER_EMAIL = 'start@tkai.com.au';  // Always use start@tkai.com.au
 
-// Debug logging
-console.log('BREVO_API_KEY configured:', !!BREVO_API_KEY);
-console.log('SENDER_EMAIL:', SENDER_EMAIL);
+// Helper: Send email via Brevo API using fetch
+async function sendBrevoEmail(emailData) {
+  const payload = {
+    to: emailData.to,
+    sender: {
+      email: SENDER_EMAIL,
+      name: 'TurnkeyAI Team'
+    },
+    subject: emailData.subject,
+    htmlContent: emailData.htmlContent
+  };
 
-// Helper: POST to Brevo API
-function sendBrevoEmail(emailData) {
-  return new Promise((resolve, reject) => {
-    // Brevo expects specific format
-    const payload = {
-      to: emailData.to,
-      sender: {
-        email: SENDER_EMAIL,
-        name: 'TurnkeyAI Team'
-      },
-      subject: emailData.subject,
-      htmlContent: emailData.htmlContent
-    };
-    
-    const data = JSON.stringify(payload);
-    
-    const options = {
-      hostname: 'api.brevo.com',
-      port: 443,
-      path: '/v3/smtp/email',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'api-key': BREVO_API_KEY,
-        'Content-Length': Buffer.byteLength(data)
-      }
-    };
-
-    const req = https.request(options, (res) => {
-      let body = '';
-      res.on('data', chunk => body += chunk);
-      res.on('end', () => {
-        if (res.statusCode >= 200 && res.statusCode < 300) {
-          resolve({ success: true, status: res.statusCode, body });
-        } else {
-          reject(new Error(`Brevo API error: ${res.statusCode} ${body}`));
-        }
-      });
-    });
-
-    req.on('error', reject);
-    req.write(data);
-    req.end();
+  const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'api-key': BREVO_API_KEY
+    },
+    body: JSON.stringify(payload)
   });
+
+  if (!response.ok) {
+    const errorBody = await response.text();
+    throw new Error(`Brevo API error: ${response.status} ${errorBody}`);
+  }
+
+  return await response.json();
 }
 
 // Helper: Add contact to Brevo list (triggers automation)
-function addContactToBrevoList(contactData) {
-  return new Promise((resolve, reject) => {
-    const payload = {
-      email: contactData.email,
-      attributes: {
-        FIRSTNAME: contactData.firstName,
-        LASTNAME: contactData.lastName,
-        PHONE: contactData.phone,
-        BUSINESS_NAME: contactData.businessName,
-        INDUSTRY: contactData.industry,
-        PACKAGE_INTEREST: contactData.packageInterest
-      },
-      listIds: [3]  // TurnkeyAI AI Audit Requests
-    };
-    
-    const data = JSON.stringify(payload);
-    
-    const options = {
-      hostname: 'api.brevo.com',
-      port: 443,
-      path: '/v3/contacts',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'api-key': BREVO_API_KEY,
-        'Content-Length': Buffer.byteLength(data)
-      }
-    };
+async function addContactToBrevoList(contactData) {
+  const payload = {
+    email: contactData.email,
+    attributes: {
+      FIRSTNAME: contactData.firstName,
+      LASTNAME: contactData.lastName,
+      PHONE: contactData.phone,
+      BUSINESS_NAME: contactData.businessName,
+      INDUSTRY: contactData.industry,
+      PACKAGE_INTEREST: contactData.packageInterest
+    },
+    listIds: [3]  // TurnkeyAI AI Audit Requests
+  };
 
-    const req = https.request(options, (res) => {
-      let body = '';
-      res.on('data', chunk => body += chunk);
-      res.on('end', () => {
-        if (res.statusCode >= 200 && res.statusCode < 300) {
-          resolve({ success: true, status: res.statusCode, body });
-        } else {
-          reject(new Error(`Brevo contact error: ${res.statusCode} ${body}`));
-        }
-      });
-    });
-
-    req.on('error', reject);
-    req.write(data);
-    req.end();
+  const response = await fetch('https://api.brevo.com/v3/contacts', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'api-key': BREVO_API_KEY
+    },
+    body: JSON.stringify(payload)
   });
+
+  if (!response.ok) {
+    const errorBody = await response.text();
+    throw new Error(`Brevo contact error: ${response.status} ${errorBody}`);
+  }
+
+  return await response.json();
 }
 
 // Main handler
 exports.handler = async (event) => {
+  // Check if BREVO_API_KEY is set
+  if (!BREVO_API_KEY) {
+    console.error('BREVO_API_KEY is not set in environment variables');
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        error: 'Server configuration error',
+        details: 'Email service not configured'
+      })
+    };
+  }
+
   // Only handle POST requests
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
@@ -116,7 +89,16 @@ exports.handler = async (event) => {
 
   try {
     // Parse form data
-    const body = JSON.parse(event.body);
+    let body;
+    try {
+      body = JSON.parse(event.body);
+    } catch (parseError) {
+      console.error('JSON parse error:', parseError);
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: 'Invalid JSON in request body' })
+      };
+    }
     const {
       firstName = '',
       lastName = '',
@@ -139,7 +121,6 @@ exports.handler = async (event) => {
     // Build auto-reply email
     const autoReplyEmail = {
       to: [{ email, name: firstName }],
-      from: { email: SENDER_EMAIL, name: 'TurnkeyAI Team' },
       subject: "Your Free AI Audit Request — We're Ready! 🚀",
       htmlContent: `
         <html>
@@ -190,7 +171,6 @@ exports.handler = async (event) => {
     // Also send internal notification
     const internalEmail = {
       to: [{ email: 'start@tkai.com.au', name: 'TurnkeyAI Team' }],
-      from: { email: SENDER_EMAIL, name: 'TurnkeyAI System' },
       subject: `🔔 New AI Audit Request: ${businessName || 'Unknown'}`,
       htmlContent: `
         <html>

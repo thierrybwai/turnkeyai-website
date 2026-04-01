@@ -52,6 +52,55 @@ function sendBrevoEmail(emailData) {
   });
 }
 
+// Helper: Add contact to Brevo list (triggers automation)
+function addContactToBrevoList(contactData) {
+  return new Promise((resolve, reject) => {
+    const payload = {
+      email: contactData.email,
+      attributes: {
+        FIRSTNAME: contactData.firstName,
+        LASTNAME: contactData.lastName,
+        PHONE: contactData.phone,
+        BUSINESS_NAME: contactData.businessName,
+        INDUSTRY: contactData.industry,
+        PACKAGE_INTEREST: contactData.packageInterest,
+        EXPECTED_OUTCOMES: contactData.expectedOutcomes
+      },
+      listIds: [3]  // TurnkeyAI AI Audit Requests
+    };
+    
+    const data = JSON.stringify(payload);
+    
+    const options = {
+      hostname: 'api.brevo.com',
+      port: 443,
+      path: '/v3/contacts',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'api-key': BREVO_API_KEY,
+        'Content-Length': Buffer.byteLength(data)
+      }
+    };
+
+    const req = https.request(options, (res) => {
+      let body = '';
+      res.on('data', chunk => body += chunk);
+      res.on('end', () => {
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          resolve({ success: true, status: res.statusCode, body });
+        } else {
+          reject(new Error(`Brevo contact error: ${res.statusCode} ${body}`));
+        }
+      });
+    });
+
+    req.on('error', reject);
+    req.write(data);
+    req.end();
+  });
+}
+
 // Main handler
 exports.handler = async (event) => {
   // Only handle POST requests
@@ -68,7 +117,9 @@ exports.handler = async (event) => {
       email = '',
       phone = '',
       businessName = '',
+      industry = '',
       packageInterest = '',
+      expectedOutcomes = '',
       automationInterests = []
     } = body;
 
@@ -144,7 +195,9 @@ exports.handler = async (event) => {
             <p><strong>Email:</strong> ${email}</p>
             <p><strong>Phone:</strong> ${phone}</p>
             <p><strong>Business:</strong> ${businessName}</p>
+            <p><strong>Industry:</strong> ${industry || 'Not specified'}</p>
             <p><strong>Package Interest:</strong> ${packageInterest || 'Not specified'}</p>
+            <p><strong>Expected Outcomes:</strong> ${expectedOutcomes || 'Not specified'}</p>
             <p><strong>Automation Interests:</strong> ${automationInterests.join(', ') || 'Not specified'}</p>
             <p><em>Follow up within 24 hours</em></p>
           </body>
@@ -154,12 +207,24 @@ exports.handler = async (event) => {
 
     await sendBrevoEmail(internalEmail);
 
+    // Add contact to Brevo list to trigger automation sequence
+    await addContactToBrevoList({
+      email,
+      firstName,
+      lastName,
+      phone,
+      businessName,
+      industry,
+      packageInterest,
+      expectedOutcomes
+    });
+
     // Return success
     return {
       statusCode: 200,
       body: JSON.stringify({
         success: true,
-        message: 'Email sent successfully',
+        message: 'Email sent successfully and lead added to automation',
         recipientEmail: email
       })
     };

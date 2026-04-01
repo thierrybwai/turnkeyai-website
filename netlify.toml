@@ -5,8 +5,3 @@
 
 [functions]
   node_bundler = "esbuild"
-
-# Environment variables
-[env.production]
-  BREVO_API_KEY = ""
-  SENDER_EMAIL = "support@turnkeyai.com.au"

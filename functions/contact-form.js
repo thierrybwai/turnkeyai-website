@@ -63,8 +63,7 @@ function addContactToBrevoList(contactData) {
         PHONE: contactData.phone,
         BUSINESS_NAME: contactData.businessName,
         INDUSTRY: contactData.industry,
-        PACKAGE_INTEREST: contactData.packageInterest,
-        EXPECTED_OUTCOMES: contactData.expectedOutcomes
+        PACKAGE_INTEREST: contactData.packageInterest
       },
       listIds: [3]  // TurnkeyAI AI Audit Requests
     };
@@ -119,7 +118,6 @@ exports.handler = async (event) => {
       businessName = '',
       industry = '',
       packageInterest = '',
-      expectedOutcomes = '',
       automationInterests = []
     } = body;
 
@@ -197,7 +195,6 @@ exports.handler = async (event) => {
             <p><strong>Business:</strong> ${businessName}</p>
             <p><strong>Industry:</strong> ${industry || 'Not specified'}</p>
             <p><strong>Package Interest:</strong> ${packageInterest || 'Not specified'}</p>
-            <p><strong>Expected Outcomes:</strong> ${expectedOutcomes || 'Not specified'}</p>
             <p><strong>Automation Interests:</strong> ${automationInterests.join(', ') || 'Not specified'}</p>
             <p><em>Follow up within 24 hours</em></p>
           </body>
@@ -215,8 +212,7 @@ exports.handler = async (event) => {
       phone,
       businessName,
       industry,
-      packageInterest,
-      expectedOutcomes
+      packageInterest
     });
 
     // Return success

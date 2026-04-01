@@ -995,7 +995,7 @@
           <div id="examplesContent" style="display:grid; gap:12px;"></div>
         </div>
         
-        <div style="margin-bottom:20px;">
+        <div style="margin-bottom:32px;">
           <label style="display:block; font-size:13px; color:var(--text-muted); margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:1px;">Which package interests you most?</label>
           <select name="packageInterest" style="width:100%; background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:14px 16px; color:var(--text); font-size:15px; outline:none; font-family:inherit; appearance:none; box-sizing:border-box;">
             <option value="">Select a package...</option>
@@ -1005,11 +1005,6 @@
             <option value="retainer">Monthly Retainer ($1,999/mo)</option>
             <option value="unsure">Not sure yet — help me decide</option>
           </select>
-        </div>
-
-        <div style="margin-bottom:32px;">
-          <label style="display:block; font-size:13px; color:var(--text-muted); margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:1px;">What do you expect from your AI installation?</label>
-          <textarea name="expectedOutcomes" style="width:100%; background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:14px 16px; color:var(--text); font-size:15px; outline:none; font-family:inherit; box-sizing:border-box; resize:vertical; min-height:100px;"></textarea>
         </div>
         <button type="submit" id="submitBtn" class="btn btn-primary" style="width:100%; text-align:center; padding:18px; font-size:17px; border-radius:12px; display:block; border:none; cursor:pointer;">
           Book My Free AI Audit →
@@ -1119,8 +1114,7 @@ async function handleFormSubmit(event) {
       phone: form.querySelector('[name="phone"]').value || '',
       businessName: form.querySelector('[name="businessName"]').value,
       industry: form.querySelector('[name="industry"]').value,
-      packageInterest: form.querySelector('[name="packageInterest"]').value,
-      expectedOutcomes: form.querySelector('[name="expectedOutcomes"]').value || ''
+      packageInterest: form.querySelector('[name="packageInterest"]').value
     };
     
     const response = await fetch('/.netlify/functions/contact-form', {

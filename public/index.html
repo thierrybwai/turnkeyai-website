@@ -690,7 +690,7 @@
           <li>1-hour onboarding & training call</li>
         </ul>
         <div class="pkg-cta">
-          <a href="https://buy.stripe.com/8x200lfLl7tNbXE21c2Fa01" class="btn btn-outline" target="_blank" rel="noopener">Get Started</a>
+          <a href="#booking" onclick="setPackageAndScroll('starter')" class="btn btn-outline">Get Started</a>
         </div>
 
       </div>
@@ -718,7 +718,7 @@
           <li>30-day post-install support via Slack/Telegram</li>
         </ul>
         <div class="pkg-cta">
-          <a href="https://buy.stripe.com/14A5kF7eP9BVaTAfS22Fa02" class="btn btn-primary" target="_blank" rel="noopener">Get Started →</a>
+          <a href="#booking" onclick="setPackageAndScroll('professional')" class="btn btn-primary">Get Started →</a>
         </div>
 
       </div>
@@ -746,7 +746,7 @@
           <li>3 months priority support (first in queue)</li>
         </ul>
         <div class="pkg-cta">
-          <a href="https://buy.stripe.com/00wbJ342DcO76Dk35g2Fa03" class="btn btn-outline" target="_blank" rel="noopener">Get Started</a>
+          <a href="#booking" onclick="setPackageAndScroll('enterprise')" class="btn btn-outline">Get Started</a>
         </div>
 
       </div>
@@ -1058,6 +1058,19 @@
 
 <script src="/industry-data.js"></script>
 <script>
+function setPackageAndScroll(packageValue) {
+  const packageMap = {
+    'starter': 'starter',
+    'professional': 'professional',
+    'enterprise': 'enterprise'
+  };
+  
+  const select = document.querySelector('[name="packageInterest"]');
+  if (select) {
+    select.value = packageMap[packageValue];
+  }
+}
+
 function showIndustryExamples() {
   const industrySelect = document.getElementById('industrySelect');
   const selectedIndustry = industrySelect.value;

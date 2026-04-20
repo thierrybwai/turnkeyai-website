@@ -7,5 +7,5 @@
 /blog/automation-agency-vs-diy  /automation-agency-vs-diy.html  200
 
 # Blog index redirect
-/blog  /blog-index.html  200
-/blog/  /blog-index.html  200
+/blog  /blog-home.html  200
+/blog/  /blog-home.html  200

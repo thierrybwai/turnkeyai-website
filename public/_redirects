@@ -1,11 +1,11 @@
 # Blog article redirects
-/blog/claude-opus-4-7  /claude-opus-4-7.html  200
-/blog/ai-automation-australia  /ai-automation-australia.html  200
-/blog/business-automation-tools  /business-automation-tools.html  200
-/blog/ai-agents-for-business  /ai-agents-for-business.html  200
-/blog/process-automation-examples  /process-automation-examples.html  200
-/blog/automation-agency-vs-diy  /automation-agency-vs-diy.html  200
+/blog/claude-opus-4-7  /blog/claude-opus-4-7.html  200
+/blog/ai-automation-australia  /blog/ai-automation-australia.html  200
+/blog/business-automation-tools  /blog/business-automation-tools.html  200
+/blog/ai-agents-for-business  /blog/ai-agents-for-business.html  200
+/blog/process-automation-examples  /blog/process-automation-examples.html  200
+/blog/automation-agency-vs-diy  /blog/automation-agency-vs-diy.html  200
 
 # Blog index redirect
-/blog  /blog-home.html  200
-/blog/  /blog-home.html  200
+/blog  /blog/index.html  200
+/blog/  /blog/index.html  200

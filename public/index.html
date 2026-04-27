@@ -100,15 +100,15 @@
       "offers": [
         {
           "@type": "Offer",
-          "name": "Starter",
-          "price": "2999",
+          "name": "Professional",
+          "price": "5999",
           "priceCurrency": "AUD",
           "url": "https://turnkeyai.com.au/#pricing"
         },
         {
           "@type": "Offer",
-          "name": "Professional",
-          "price": "5999",
+          "name": "Business",
+          "price": "10999",
           "priceCurrency": "AUD",
           "url": "https://turnkeyai.com.au/#pricing"
         },
@@ -154,7 +154,7 @@
           "name": "What does AI automation cost for a small business?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "TurnkeyAI packages start from $2,999 AUD (ex-GST) for the Starter package, up to $24,999 for full Enterprise deployment. Monthly retainer support is available from $1,999/month."
+            "text": "TurnkeyAI packages start from $5,999 AUD (ex-GST) for the Professional package (1 Mac Mini), $10,999 for Business (2 Mac Minis), up to $24,999 for the full Enterprise AI Command Centre."
           }
         }
       ]
@@ -589,7 +589,7 @@
     <a href="#savings">ROI</a>
     <a href="#action">Get Started</a>
   </nav>
-  <a href="#booking" class="btn btn-primary">Book a Free AI Audit →</a>
+  <a href="#booking" class="btn btn-primary">Get Started →</a>
 </header>
 
 <!-- HERO -->
@@ -670,34 +670,8 @@
 
     <div class="packages-grid">
 
-      <!-- STARTER -->
-      <div class="pkg-card">
-        <div class="pkg-icon">☁️</div>
-        <div class="pkg-name">Starter</div>
-        <div class="pkg-title">Cloud</div>
-        <div class="pkg-sub">VPS · Remote Setup</div>
-        <div class="pkg-price">$2,999 <span>AUD</span></div>
-        <div class="pkg-after">One-time setup</div>
-        <div class="pkg-saving">💰 Avg saving: $800–$1,200/week</div>
-        <hr class="pkg-divider">
-        <ul class="pkg-features">
-          <li>Dedicated VPS (4 vCPU, 8GB RAM — EU/AUS)</li>
-          <li>OpenClaw installed, configured & running 24/7</li>
-          <li>⚠️ VPS performance lower than dedicated hardware</li>
-          <li>Slack or Telegram integration</li>
-          <li>2 custom workflows built to your spec</li>
-          <li>Remote access via secure tunnel</li>
-          <li>1-hour onboarding & training call</li>
-        </ul>
-        <div class="pkg-cta">
-          <a href="#booking" onclick="setPackageAndScroll('starter')" class="btn btn-outline">Get Started</a>
-        </div>
-
-      </div>
-
       <!-- PROFESSIONAL -->
-      <div class="pkg-card featured">
-        <div class="pkg-badge">MOST POPULAR</div>
+      <div class="pkg-card">
         <div class="pkg-icon">🖥️</div>
         <div class="pkg-name">Professional</div>
         <div class="pkg-title">Mac Mini</div>
@@ -718,7 +692,36 @@
           <li>30-day post-install support via Slack/Telegram</li>
         </ul>
         <div class="pkg-cta">
-          <a href="#booking" onclick="setPackageAndScroll('professional')" class="btn btn-primary">Get Started →</a>
+          <a href="#booking" onclick="setPackageAndScroll('professional')" class="btn btn-outline">Get Started</a>
+        </div>
+
+      </div>
+
+      <!-- BUSINESS -->
+      <div class="pkg-card featured">
+        <div class="pkg-badge">MOST POPULAR</div>
+        <div class="pkg-icon">⚡</div>
+        <div class="pkg-name">Business</div>
+        <div class="pkg-title">Dual Mac Mini</div>
+        <div class="pkg-sub">2 Mac Minis · On-Site Setup</div>
+        <div class="pkg-price">$10,999 <span>AUD</span></div>
+        <div class="pkg-after">One-time setup</div>
+        <div class="pkg-saving">💰 Avg saving: $2,500–$3,500/week</div>
+        <hr class="pkg-divider">
+        <ul class="pkg-features">
+          <li>1 × Mac Mini M4 Pro (24GB) — local LLM host</li>
+          <li>1 × Mac Mini M4 (16GB) — running OpenClaw + Claude</li>
+          <li>OpenClaw fully installed & configured</li>
+          <li>Slack and Telegram integration</li>
+          <li>7 custom workflows built to spec</li>
+          <li>Multi-agent coordination & sub-agent setup</li>
+          <li>Connected to email, calendar, CRM & accounting</li>
+          <li>On-site setup — Gold Coast or Brisbane included</li>
+          <li>Half-day staff onboarding session</li>
+          <li>60-day post-install support via Slack/Telegram</li>
+        </ul>
+        <div class="pkg-cta">
+          <a href="#booking" onclick="setPackageAndScroll('business')" class="btn btn-primary">Get Started →</a>
         </div>
 
       </div>
@@ -751,31 +754,6 @@
 
       </div>
 
-    </div>
-
-    <!-- RETAINER -->
-    <p class="section-label" style="margin-top:70px">Ongoing</p>
-    <h2>Monthly Retainer — AI Maintenance Plan</h2>
-    <div class="retainer-card">
-      <div>
-        <h3>Monthly Investment</h3>
-        <div class="retainer-price">$1,999 <span>AUD/mo</span></div>
-        <div class="retainer-note">10 hours included · $200/hr effective rate<br>Unused hours do not roll over</div>
-
-      </div>
-      <div>
-        <ul class="retainer-features">
-          <li>System monitoring, updates & troubleshooting</li>
-          <li>New workflow builds and integrations</li>
-          <li>Monthly performance report (automations run, time saved, issues resolved)</li>
-          <li>Direct Slack/WhatsApp access to AI + human oversight</li>
-          <li>Priority access for new feature rollouts</li>
-          <li>Quarterly strategic AI roadmap review</li>
-        </ul>
-        <div style="margin-top:28px;">
-          <a href="https://buy.stripe.com/9B65kFfMT9XW8tr37R2Ji00" class="btn btn-primary" target="_blank" rel="noopener" style="display:inline-block;">Subscribe →</a>
-        </div>
-      </div>
     </div>
   </div>
 </div>
@@ -825,13 +803,13 @@
         <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px; text-align:center;">Break-even on your investment</p>
         <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;" id="breakeven-cards">
           <div style="border:1px solid var(--border); border-radius:14px; padding:20px; text-align:center;">
-            <div style="font-size:12px; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Starter — $2,999</div>
-            <div id="be-starter" style="font-size:22px; font-weight:800; color:var(--accent2);">—</div>
+            <div style="font-size:12px; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Professional — $5,999</div>
+            <div id="be-pro" style="font-size:22px; font-weight:800; color:var(--accent2);">—</div>
           </div>
           <div style="border:2px solid var(--accent); border-radius:14px; padding:20px; text-align:center; position:relative;">
             <div style="position:absolute; top:-10px; left:50%; transform:translateX(-50%); background:var(--accent); color:#fff; font-size:10px; font-weight:700; padding:3px 10px; border-radius:20px; white-space:nowrap;">MOST POPULAR</div>
-            <div style="font-size:12px; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Professional — $5,999</div>
-            <div id="be-pro" style="font-size:22px; font-weight:800; color:var(--accent2);">—</div>
+            <div style="font-size:12px; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Business — $10,999</div>
+            <div id="be-business" style="font-size:22px; font-weight:800; color:var(--accent2);">—</div>
           </div>
           <div style="border:1px solid var(--border); border-radius:14px; padding:20px; text-align:center;">
             <div style="font-size:12px; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Enterprise — $24,999</div>
@@ -878,8 +856,8 @@
       document.getElementById('total-annual').textContent = formatAUD(totalAnnual);
       document.getElementById('total-weekly').textContent = weeklyTotal > 0 ? '$' + Math.round(weeklyTotal).toLocaleString() : '$0';
       document.getElementById('total-yearly').textContent = formatAUD(totalSaving);
-      document.getElementById('be-starter').textContent = weeklyTotal > 0 ? formatWeeks(2999 / weeklyTotal) : '—';
       document.getElementById('be-pro').textContent = weeklyTotal > 0 ? formatWeeks(5999 / weeklyTotal) : '—';
+      document.getElementById('be-business').textContent = weeklyTotal > 0 ? formatWeeks(10999 / weeklyTotal) : '—';
       document.getElementById('be-enterprise').textContent = weeklyTotal > 0 ? formatWeeks(24999 / weeklyTotal) : '—';
     }
 
@@ -931,9 +909,9 @@
 <!-- BOOKING -->
 <section id="booking" style="background: var(--bg2); max-width:100%; padding:90px 24px;">
   <div style="max-width:800px; margin:0 auto; text-align:center;">
-    <p class="section-label">Free Consultation</p>
-    <h2>Book Your Free 30-Minute AI Audit</h2>
-    <p class="section-intro" style="margin:0 auto 50px;">In 30 minutes, we'll identify 5 specific automations your business can run on Day 1. Walk away with a clear picture — no obligation, no hard sell.</p>
+    <p class="section-label">Get Started</p>
+    <h2>Fill up the form and we'll connect you soon</h2>
+    <p class="section-intro" style="margin:0 auto 50px;">Tell us about your business and we'll be in touch to map out exactly how AI fits in. No obligation, no hard sell — just a clear next step.</p>
 
     <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 48px; text-align:left;">
       <form id="bookingForm" name="ai-audit" method="POST" data-netlify="true" onsubmit="handleFormSubmit(event)">
@@ -1000,17 +978,16 @@
           <label style="display:block; font-size:13px; color:var(--text-muted); margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:1px;">Which package interests you most?</label>
           <select name="packageInterest" style="width:100%; background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:14px 16px; color:var(--text); font-size:15px; outline:none; font-family:inherit; appearance:none; box-sizing:border-box;">
             <option value="">Select a package...</option>
-            <option value="starter">Starter — Cloud ($2,999)</option>
-            <option value="professional">Professional — Mac Mini ($5,999) ← Most Popular</option>
+            <option value="professional">Professional — 1 Mac Mini ($5,999)</option>
+            <option value="business">Business — 2 Mac Minis ($10,999) ← Most Popular</option>
             <option value="enterprise">Enterprise — AI Command Centre ($24,999)</option>
-            <option value="retainer">Monthly Retainer ($1,999/mo)</option>
             <option value="unsure">Not sure yet — help me decide</option>
           </select>
         </div>
         <button type="submit" id="submitBtn" class="btn btn-primary" style="width:100%; text-align:center; padding:18px; font-size:17px; border-radius:12px; display:block; border:none; cursor:pointer;">
-          Book My Free AI Audit →
+          Send My Request →
         </button>
-        <p style="text-align:center; color:var(--text-muted); font-size:13px; margin-top:16px;">We'll respond within 2 business hours. No spam. No hard sell. Just an honest 30-minute conversation.</p>
+        <p style="text-align:center; color:var(--text-muted); font-size:13px; margin-top:16px;">We'll respond within 2 business hours. No spam. No hard sell. Just a clear next step.</p>
       </form>
     </div>
 
@@ -1035,12 +1012,12 @@
 </section>
 
 <!-- CTA -->
-<div class="cta-section">
+<div class="cta-section" id="action">
   <p class="section-label">Get Started</p>
   <h2>Ready to deploy AI in your business?</h2>
-  <p>Book a free 30-minute AI Audit. We'll identify 5 specific automations ready on Day 1.</p>
+  <p>Fill up the form and we'll connect you soon to map out exactly how AI fits your business.</p>
   <div class="cta-btns">
-    <a href="#booking" class="btn btn-primary">Book a Free AI Audit →</a>
+    <a href="#booking" class="btn btn-primary">Get Started →</a>
     <a href="#packages" class="btn btn-outline">View Packages</a>
   </div>
 </div>
@@ -1055,15 +1032,9 @@
 <script src="/industry-data.js"></script>
 <script>
 function setPackageAndScroll(packageValue) {
-  const packageMap = {
-    'starter': 'starter',
-    'professional': 'professional',
-    'enterprise': 'enterprise'
-  };
-  
   const select = document.querySelector('[name="packageInterest"]');
   if (select) {
-    select.value = packageMap[packageValue];
+    select.value = packageValue;
   }
 }
 
@@ -1130,13 +1101,13 @@ async function handleFormSubmit(event) {
     } else {
       alert('Something went wrong. Please try again.');
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Book My Free AI Audit →';
+      submitBtn.textContent = 'Send My Request →';
     }
   } catch (error) {
     console.error(error);
     alert('Error sending form');
     submitBtn.disabled = false;
-    submitBtn.textContent = 'Book My Free AI Audit →';
+    submitBtn.textContent = 'Send My Request →';
   }
 }
 </script>

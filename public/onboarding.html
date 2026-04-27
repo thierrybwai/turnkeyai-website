@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>TurnkeyAI — New Client Onboarding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #0f172a;
+      --navy2:   #1e293b;
+      --blue:    #2563eb;
+      --blue-lt: #3b82f6;
+      --accent:  #06b6d4;
+      --white:   #ffffff;
+      --gray-50: #f8fafc;
+      --gray-100:#f1f5f9;
+      --gray-200:#e2e8f0;
+      --gray-400:#94a3b8;
+      --gray-600:#475569;
+      --gray-800:#1e293b;
+      --red:     #ef4444;
+      --green:   #22c55e;
+      --radius:  12px;
+      --shadow-lg: 0 12px 48px rgba(15,23,42,.16);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--gray-50);
+      color: var(--gray-800);
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--navy);
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .header-inner { max-width: 760px; width: 100%; display: flex; align-items: center; gap: 12px; }
+    .logo-badge {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--blue), var(--accent));
+      display: flex; align-items: center; justify-content: center; font-size: 18px;
+    }
+    .logo-text { font-size: 18px; font-weight: 700; color: var(--white); letter-spacing: -0.3px; }
+    .logo-text span { color: var(--accent); }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #1e3a5f 100%);
+      padding: 48px 24px 56px; text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(6,182,212,.15); border: 1px solid rgba(6,182,212,.3);
+      color: var(--accent); font-size: 13px; font-weight: 600;
+      padding: 6px 14px; border-radius: 999px; margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(26px, 5vw, 38px); font-weight: 800; color: var(--white);
+      line-height: 1.2; letter-spacing: -0.5px; margin-bottom: 12px;
+    }
+    .hero h1 span {
+      background: linear-gradient(90deg, var(--blue-lt), var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero p { color: #94a3b8; font-size: 16px; max-width: 480px; margin: 0 auto; line-height: 1.6; }
+
+    /* ── Progress steps ── */
+    .steps-wrap { display: flex; justify-content: center; padding: 32px 24px 0; }
+    .steps { display: flex; align-items: center; max-width: 560px; width: 100%; }
+    .step { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; }
+    .step-dot {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--gray-200); color: var(--gray-400);
+      font-size: 13px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; z-index: 1; transition: all .3s;
+    }
+    .step.active .step-dot { background: var(--blue); color: white; box-shadow: 0 0 0 4px rgba(37,99,235,.2); }
+    .step.done .step-dot { background: var(--green); color: white; }
+    .step-label { font-size: 11px; font-weight: 600; color: var(--gray-400); text-align: center; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.5px; }
+    .step.active .step-label { color: var(--blue); }
+    .step.done .step-label { color: var(--green); }
+    .step-line { flex: 1; height: 2px; background: var(--gray-200); margin-bottom: 22px; transition: background .3s; }
+    .step-line.done { background: var(--green); }
+
+    /* ── Page wrap ── */
+    .page-wrap { max-width: 760px; margin: 32px auto 80px; padding: 0 16px; }
+
+    .card { background: var(--white); border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden; display: none; }
+    .card.active { display: block; }
+
+    .card-header {
+      padding: 28px 32px 20px; border-bottom: 1px solid var(--gray-100);
+      display: flex; align-items: flex-start; gap: 16px;
+    }
+    .card-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;
+    }
+    .card-icon.blue   { background: #eff6ff; }
+    .card-icon.cyan   { background: #ecfeff; }
+    .card-icon.purple { background: #faf5ff; }
+    .card-icon.amber  { background: #fffbeb; }
+    .card-icon.rose   { background: #fff1f2; }
+
+    .card-header-text h2 { font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .card-header-text p  { font-size: 14px; color: var(--gray-600); line-height: 1.5; }
+
+    .card-body { padding: 28px 32px; }
+
+    /* ── Form elements ── */
+    .field { margin-bottom: 20px; }
+    .field:last-child { margin-bottom: 0; }
+
+    label { display: block; font-size: 13.5px; font-weight: 600; color: var(--gray-800); margin-bottom: 6px; }
+    label .optional { font-weight: 400; color: var(--gray-400); font-size: 12px; margin-left: 4px; }
+    label .req { color: var(--red); margin-left: 2px; }
+
+    .input-wrap { position: relative; }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="url"],
+    textarea {
+      width: 100%; border: 1.5px solid var(--gray-200); border-radius: var(--radius);
+      padding: 0 44px 0 14px; font-family: inherit; font-size: 14.5px;
+      color: var(--navy); background: var(--white);
+      transition: border-color .2s, box-shadow .2s; -webkit-appearance: none;
+    }
+    input[type="text"], input[type="email"], input[type="password"], input[type="url"] { height: 44px; }
+    textarea { padding: 12px 14px; resize: vertical; min-height: 110px; line-height: 1.6; }
+    input:focus, textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
+    input.error, textarea.error { border-color: var(--red); box-shadow: 0 0 0 3px rgba(239,68,68,.10); }
+    input::placeholder, textarea::placeholder { color: var(--gray-400); font-size: 14px; }
+
+    .field-icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--gray-400); font-size: 16px; pointer-events: none; }
+    .toggle-pw {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; color: var(--gray-400);
+      padding: 4px; display: flex; align-items: center; font-size: 16px; transition: color .2s;
+    }
+    .toggle-pw:hover { color: var(--gray-600); }
+
+    .field-hint  { font-size: 12px; color: var(--gray-400); margin-top: 5px; }
+    .field-error { font-size: 12px; color: var(--red); margin-top: 5px; display: none; }
+    .field-error.visible { display: block; }
+
+    /* ── Insight box (soul.md / goal.md explanations) ── */
+    .insight-box {
+      background: var(--gray-50); border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius); padding: 14px 16px; margin-bottom: 10px;
+    }
+    .insight-box .insight-title { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .insight-box p { font-size: 13px; color: var(--gray-600); line-height: 1.6; }
+    .insight-box .insight-example { font-size: 12.5px; color: var(--gray-400); font-style: italic; margin-top: 6px; }
+
+    /* ── Tool section ── */
+    .tool-section { border: 1.5px solid var(--gray-200); border-radius: var(--radius); overflow: hidden; margin-bottom: 14px; }
+    .tool-header {
+      background: var(--gray-50); padding: 12px 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer; user-select: none; border-bottom: 1.5px solid transparent; transition: border-color .2s;
+    }
+    .tool-header.open { border-bottom-color: var(--gray-200); }
+    .tool-header-left { display: flex; align-items: center; gap: 10px; }
+    .tool-num {
+      width: 26px; height: 26px; border-radius: 6px; background: var(--gray-200);
+      color: var(--gray-600); font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .tool-num.filled { background: var(--blue); color: white; }
+    .tool-title   { font-size: 14px; font-weight: 600; color: var(--gray-800); }
+    .tool-subtitle { font-size: 12px; color: var(--gray-400); margin-top: 1px; }
+    .tool-chevron { color: var(--gray-400); font-size: 12px; transition: transform .25s; }
+    .tool-header.open .tool-chevron { transform: rotate(180deg); }
+    .tool-body { padding: 20px 20px 16px; display: none; }
+    .tool-body.open { display: block; }
+
+    /* ── Checkbox (T&C) ── */
+    .checkbox-field { display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: var(--gray-50); border: 1.5px solid var(--gray-200); border-radius: var(--radius); cursor: pointer; }
+    .checkbox-field input[type="checkbox"] {
+      width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px;
+      accent-color: var(--blue); cursor: pointer;
+      border: none; padding: 0;
+    }
+    .checkbox-label { font-size: 14px; color: var(--gray-600); line-height: 1.6; cursor: pointer; }
+    .checkbox-label a { color: var(--blue); text-decoration: none; font-weight: 600; }
+    .checkbox-label a:hover { text-decoration: underline; }
+    .checkbox-field.error-border { border-color: var(--red); }
+
+    /* ── Security note ── */
+    .security-note {
+      display: flex; align-items: flex-start; gap: 10px;
+      background: #f0fdf4; border: 1px solid #bbf7d0;
+      border-radius: 10px; padding: 14px 16px; margin-top: 20px;
+    }
+    .security-note .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .security-note p { font-size: 13px; color: #166534; line-height: 1.5; }
+
+    /* ── Section sub-header ── */
+    .section-label {
+      font-size: 12px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.8px; color: var(--gray-400); margin: 28px 0 14px;
+    }
+    hr.divider { border: none; border-top: 1px solid var(--gray-100); margin: 24px 0; }
+
+    /* ── Nav buttons ── */
+    .btn-row { display: flex; gap: 12px; justify-content: flex-end; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--gray-100); }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 0 24px; height: 44px; border-radius: var(--radius);
+      font-family: inherit; font-size: 15px; font-weight: 600;
+      cursor: pointer; border: none; transition: all .2s;
+    }
+    .btn-outline { background: white; border: 1.5px solid var(--gray-200); color: var(--gray-600); }
+    .btn-outline:hover { border-color: var(--gray-400); color: var(--gray-800); }
+    .btn-primary { background: linear-gradient(135deg, var(--blue), #1d4ed8); color: white; box-shadow: 0 4px 14px rgba(37,99,235,.35); }
+    .btn-primary:hover { box-shadow: 0 6px 20px rgba(37,99,235,.45); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:disabled { opacity: .6; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-success { background: linear-gradient(135deg, var(--green), #16a34a); color: white; box-shadow: 0 4px 14px rgba(34,197,94,.35); }
+    .btn-success:hover { box-shadow: 0 6px 20px rgba(34,197,94,.45); transform: translateY(-1px); }
+    .btn-success:disabled { opacity: .6; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    /* ── Success screen ── */
+    .success-screen { text-align: center; padding: 64px 32px; }
+    .success-icon {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--green), #16a34a);
+      display: flex; align-items: center; justify-content: center; font-size: 36px;
+      margin: 0 auto 24px; box-shadow: 0 8px 32px rgba(34,197,94,.35);
+    }
+    .success-screen h2 { font-size: 28px; font-weight: 800; color: var(--navy); margin-bottom: 12px; }
+    .success-screen p { font-size: 16px; color: var(--gray-600); max-width: 400px; margin: 0 auto; line-height: 1.6; }
+    .success-meta { display: flex; justify-content: center; gap: 32px; margin-top: 32px; }
+    .success-meta-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .success-meta-item span:first-child { font-size: 22px; }
+    .success-meta-item span:last-child { font-size: 13px; color: var(--gray-400); font-weight: 500; }
+
+    footer { text-align: center; padding: 0 0 40px; color: var(--gray-400); font-size: 13px; }
+    footer a { color: var(--blue); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .card-header, .card-body { padding: 20px; }
+      .hero { padding: 36px 20px 44px; }
+      .btn-row { flex-direction: column-reverse; }
+      .btn { justify-content: center; }
+      .success-meta { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-badge">⚡</div>
+    <div class="logo-text">Turnkey<span>AI</span></div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-badge">🚀 New Client Setup</div>
+  <h1>Let's get your<br/><span>AI agent up and running</span></h1>
+  <p>Complete this form so we can configure and launch your AI agent within 7 days.</p>
+</div>
+
+<!-- Steps indicator -->
+<div class="steps-wrap">
+  <div class="steps" id="stepsBar">
+    <div class="step active" id="step-dot-1">
+      <div class="step-dot">1</div>
+      <div class="step-label">Agent</div>
+    </div>
+    <div class="step-line" id="line-1"></div>
+    <div class="step" id="step-dot-2">
+      <div class="step-dot">2</div>
+      <div class="step-label">Accounts</div>
+    </div>
+    <div class="step-line" id="line-2"></div>
+    <div class="step" id="step-dot-3">
+      <div class="step-dot">3</div>
+      <div class="step-label">Tools</div>
+    </div>
+    <div class="step-line" id="line-3"></div>
+    <div class="step" id="step-dot-4">
+      <div class="step-dot">4</div>
+      <div class="step-label">Goals</div>
+    </div>
+  </div>
+</div>
+
+<div class="page-wrap">
+<form name="turnkeyai-onboarding" method="POST" data-netlify="true" id="onboardingForm" novalidate>
+  <input type="hidden" name="form-name" value="turnkeyai-onboarding" />
+
+  <!-- ══════════════════════════════
+       STEP 1 — Agent name
+  ══════════════════════════════ -->
+  <div class="card active" id="card-1">
+    <div class="card-header">
+      <div class="card-icon blue">🤖</div>
+      <div class="card-header-text">
+        <h2>Name your AI agent</h2>
+        <p>Give your agent a name — this is how we'll refer to it during setup and in reports.</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <label for="agentName">AI Agent Name <span class="req">*</span></label>
+        <div class="input-wrap">
+          <input type="text" id="agentName" name="agentName"
+            placeholder="e.g. Alex, Sophie, or simply 'Sales Bot'"
+            autocomplete="off" />
+          <span class="field-icon">✨</span>
+        </div>
+        <div class="field-hint">You can always rename it later.</div>
+        <div class="field-error" id="err-agentName">Please enter a name for your agent.</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-primary" onclick="goTo(2)">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       STEP 2 — Accounts (Email + Slack)
+  ══════════════════════════════ -->
+  <div class="card" id="card-2">
+    <div class="card-header">
+      <div class="card-icon cyan">📬</div>
+      <div class="card-header-text">
+        <h2>Agent accounts</h2>
+        <p>Set up the email account for your agent, and share your Slack details so we can connect everything.</p>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <div class="section-label">Agent email account</div>
+      <p style="font-size:14px;color:var(--gray-600);margin-bottom:18px;line-height:1.6;">Please create a new email account for your AI agent (e.g. <strong>agent@yourbusiness.com</strong>) and share the login details below.</p>
+
+      <div class="field">
+        <label for="agentEmail">Email address <span class="req">*</span></label>
+        <div class="input-wrap">
+          <input type="email" id="agentEmail" name="agentEmail"
+            placeholder="agent@yourbusiness.com" autocomplete="off" />
+          <span class="field-icon">@</span>
+        </div>
+        <div class="field-error" id="err-agentEmail">Please enter a valid email address.</div>
+      </div>
+
+      <div class="field">
+        <label for="agentEmailPw">Password <span class="req">*</span></label>
+        <div class="input-wrap">
+          <input type="password" id="agentEmailPw" name="agentEmailPassword"
+            placeholder="••••••••••••" autocomplete="new-password" />
+          <button type="button" class="toggle-pw" onclick="togglePw('agentEmailPw')" aria-label="Show password">👁</button>
+        </div>
+        <div class="field-error" id="err-agentEmailPw">Please enter the password.</div>
+      </div>
+
+      <div class="field">
+        <label for="agentEmailLink">Webmail / inbox link <span class="optional">(optional)</span></label>
+        <div class="input-wrap">
+          <input type="url" id="agentEmailLink" name="agentEmailLink"
+            placeholder="https://mail.google.com or your webmail URL" />
+          <span class="field-icon">🔗</span>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="section-label">Slack account</div>
+      <p style="font-size:14px;color:var(--gray-600);margin-bottom:18px;line-height:1.6;">Do you already have a Slack account? If yes, please provide your email and password and we'll set it up. If not, we'll create a full Slack account for you — leave these blank.</p>
+
+      <div class="field">
+        <label for="slackEmail">Slack email <span class="optional">(optional)</span></label>
+        <div class="input-wrap">
+          <input type="email" id="slackEmail" name="slackEmail"
+            placeholder="your.email@example.com" autocomplete="off" />
+          <span class="field-icon">💬</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="slackPassword">Slack password <span class="optional">(optional)</span></label>
+        <div class="input-wrap">
+          <input type="password" id="slackPassword" name="slackPassword"
+            placeholder="••••••••" autocomplete="new-password" />
+          <button type="button" class="toggle-pw" onclick="togglePw('slackPassword')" aria-label="Show password">👁</button>
+        </div>
+      </div>
+
+      <div class="security-note">
+        <span class="icon">🔒</span>
+        <p>Your credentials are transmitted securely over HTTPS and only accessible to your dedicated TurnkeyAI setup engineer.</p>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn btn-outline" onclick="goTo(1)">← Back</button>
+        <button type="button" class="btn btn-primary" onclick="goTo(3)">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       STEP 3 — Tools (1–5)
+  ══════════════════════════════ -->
+  <div class="card" id="card-3">
+    <div class="card-header">
+      <div class="card-icon purple">🔧</div>
+      <div class="card-header-text">
+        <h2>Connect your tools</h2>
+        <p>Add up to 5 platforms or apps you'd like your AI agent to access. Leave unused tools blank.</p>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <!-- Tool 1 -->
+      <div class="tool-section">
+        <div class="tool-header open" onclick="toggleTool(this)">
+          <div class="tool-header-left">
+            <div class="tool-num" id="tool-num-1">1</div>
+            <div>
+              <div class="tool-title" id="tool-title-1">Tool 1</div>
+              <div class="tool-subtitle">Click to add credentials</div>
+            </div>
+          </div>
+          <span class="tool-chevron">▼</span>
+        </div>
+        <div class="tool-body open">
+          <div class="field">
+            <label>Platform / App Name</label>
+            <div class="input-wrap">
+              <input type="text" name="tool1_name" placeholder="e.g. HubSpot, Xero, Gmail…"
+                oninput="updateToolTitle(1, this.value)" />
+            </div>
+          </div>
+          <div class="field">
+            <label>Username / Email</label>
+            <div class="input-wrap">
+              <input type="text" name="tool1_username" placeholder="username or email" autocomplete="off" />
+              <span class="field-icon">👤</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <div class="input-wrap">
+              <input type="password" name="tool1_password" placeholder="••••••••" autocomplete="new-password" />
+              <button type="button" class="toggle-pw" onclick="togglePwSibling(this)" aria-label="Show">👁</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Link / URL <span class="optional">(optional)</span></label>
+            <div class="input-wrap">
+              <input type="url" name="tool1_link" placeholder="https://" />
+              <span class="field-icon">🔗</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tool 2 -->
+      <div class="tool-section">
+        <div class="tool-header" onclick="toggleTool(this)">
+          <div class="tool-header-left">
+            <div class="tool-num" id="tool-num-2">2</div>
+            <div>
+              <div class="tool-title" id="tool-title-2">Tool 2</div>
+              <div class="tool-subtitle">Click to add credentials</div>
+            </div>
+          </div>
+          <span class="tool-chevron">▼</span>
+        </div>
+        <div class="tool-body">
+          <div class="field"><label>Platform / App Name</label>
+            <div class="input-wrap"><input type="text" name="tool2_name" placeholder="e.g. HubSpot, Xero, Gmail…" oninput="updateToolTitle(2, this.value)" /></div></div>
+          <div class="field"><label>Username / Email</label>
+            <div class="input-wrap"><input type="text" name="tool2_username" placeholder="username or email" autocomplete="off" /><span class="field-icon">👤</span></div></div>
+          <div class="field"><label>Password</label>
+            <div class="input-wrap"><input type="password" name="tool2_password" placeholder="••••••••" autocomplete="new-password" /><button type="button" class="toggle-pw" onclick="togglePwSibling(this)" aria-label="Show">👁</button></div></div>
+          <div class="field"><label>Link / URL <span class="optional">(optional)</span></label>
+            <div class="input-wrap"><input type="url" name="tool2_link" placeholder="https://" /><span class="field-icon">🔗</span></div></div>
+        </div>
+      </div>
+
+      <!-- Tool 3 -->
+      <div class="tool-section">
+        <div class="tool-header" onclick="toggleTool(this)">
+          <div class="tool-header-left">
+            <div class="tool-num" id="tool-num-3">3</div>
+            <div>
+              <div class="tool-title" id="tool-title-3">Tool 3</div>
+              <div class="tool-subtitle">Click to add credentials</div>
+            </div>
+          </div>
+          <span class="tool-chevron">▼</span>
+        </div>
+        <div class="tool-body">
+          <div class="field"><label>Platform / App Name</label>
+            <div class="input-wrap"><input type="text" name="tool3_name" placeholder="e.g. HubSpot, Xero, Gmail…" oninput="updateToolTitle(3, this.value)" /></div></div>
+          <div class="field"><label>Username / Email</label>
+            <div class="input-wrap"><input type="text" name="tool3_username" placeholder="username or email" autocomplete="off" /><span class="field-icon">👤</span></div></div>
+          <div class="field"><label>Password</label>
+            <div class="input-wrap"><input type="password" name="tool3_password" placeholder="••••••••" autocomplete="new-password" /><button type="button" class="toggle-pw" onclick="togglePwSibling(this)" aria-label="Show">👁</button></div></div>
+          <div class="field"><label>Link / URL <span class="optional">(optional)</span></label>
+            <div class="input-wrap"><input type="url" name="tool3_link" placeholder="https://" /><span class="field-icon">🔗</span></div></div>
+        </div>
+      </div>
+
+      <!-- Tool 4 -->
+      <div class="tool-section">
+        <div class="tool-header" onclick="toggleTool(this)">
+          <div class="tool-header-left">
+            <div class="tool-num" id="tool-num-4">4</div>
+            <div>
+              <div class="tool-title" id="tool-title-4">Tool 4</div>
+              <div class="tool-subtitle">Click to add credentials</div>
+            </div>
+          </div>
+          <span class="tool-chevron">▼</span>
+        </div>
+        <div class="tool-body">
+          <div class="field"><label>Platform / App Name</label>
+            <div class="input-wrap"><input type="text" name="tool4_name" placeholder="e.g. HubSpot, Xero, Gmail…" oninput="updateToolTitle(4, this.value)" /></div></div>
+          <div class="field"><label>Username / Email</label>
+            <div class="input-wrap"><input type="text" name="tool4_username" placeholder="username or email" autocomplete="off" /><span class="field-icon">👤</span></div></div>
+          <div class="field"><label>Password</label>
+            <div class="input-wrap"><input type="password" name="tool4_password" placeholder="••••••••" autocomplete="new-password" /><button type="button" class="toggle-pw" onclick="togglePwSibling(this)" aria-label="Show">👁</button></div></div>
+          <div class="field"><label>Link / URL <span class="optional">(optional)</span></label>
+            <div class="input-wrap"><input type="url" name="tool4_link" placeholder="https://" /><span class="field-icon">🔗</span></div></div>
+        </div>
+      </div>
+
+      <!-- Tool 5 -->
+      <div class="tool-section">
+        <div class="tool-header" onclick="toggleTool(this)">
+          <div class="tool-header-left">
+            <div class="tool-num" id="tool-num-5">5</div>
+            <div>
+              <div class="tool-title" id="tool-title-5">Tool 5</div>
+              <div class="tool-subtitle">Click to add credentials</div>
+            </div>
+          </div>
+          <span class="tool-chevron">▼</span>
+        </div>
+        <div class="tool-body">
+          <div class="field"><label>Platform / App Name</label>
+            <div class="input-wrap"><input type="text" name="tool5_name" placeholder="e.g. HubSpot, Xero, Gmail…" oninput="updateToolTitle(5, this.value)" /></div></div>
+          <div class="field"><label>Username / Email</label>
+            <div class="input-wrap"><input type="text" name="tool5_username" placeholder="username or email" autocomplete="off" /><span class="field-icon">👤</span></div></div>
+          <div class="field"><label>Password</label>
+            <div class="input-wrap"><input type="password" name="tool5_password" placeholder="••••••••" autocomplete="new-password" /><button type="button" class="toggle-pw" onclick="togglePwSibling(this)" aria-label="Show">👁</button></div></div>
+          <div class="field"><label>Link / URL <span class="optional">(optional)</span></label>
+            <div class="input-wrap"><input type="url" name="tool5_link" placeholder="https://" /><span class="field-icon">🔗</span></div></div>
+        </div>
+      </div>
+
+      <div class="security-note" style="margin-top:8px;">
+        <span class="icon">🔒</span>
+        <p>All credentials are encrypted in transit and only used to connect your tools during setup.</p>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn btn-outline" onclick="goTo(2)">← Back</button>
+        <button type="button" class="btn btn-primary" onclick="goTo(4)">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       STEP 4 — Personality, Goals & Submit
+  ══════════════════════════════ -->
+  <div class="card" id="card-4">
+    <div class="card-header">
+      <div class="card-icon amber">🧠</div>
+      <div class="card-header-text">
+        <h2>Personality & Goals</h2>
+        <p>Help us shape your agent's character and define what success looks like for your business.</p>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <!-- soul.md -->
+      <div class="section-label">🧬 soul.md — Agent personality</div>
+      <div class="insight-box">
+        <div class="insight-title">What is soul.md?</div>
+        <p>Think of soul.md as your AI agent's personality. It defines who your agent is — its name, how it communicates, its tone, and what it should (or should never) do. This is what makes your agent feel like a natural extension of your business rather than a generic bot.</p>
+        <div class="insight-example">"My agent should be professional but friendly, always sign off with our business name, and never discuss competitors."</div>
+      </div>
+      <div class="field">
+        <label for="soulMd">Describe your agent's personality & communication style <span class="req">*</span></label>
+        <textarea id="soulMd" name="soulMd"
+          placeholder="e.g. Friendly and professional, always uses the client's first name, signs off with 'The TurnkeyAI Team', never discusses pricing without booking a call first…"></textarea>
+        <div class="field-error" id="err-soulMd">Please describe your agent's personality.</div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- goal.md -->
+      <div class="section-label">🎯 goal.md — Business goals</div>
+      <div class="insight-box">
+        <div class="insight-title">What is goal.md?</div>
+        <p>goal.md is where you tell your AI agent what success looks like for your business. Think in numbers and targets — not tasks, but outcomes. Your agent will use these goals to prioritise what it does and how hard it works.</p>
+        <div class="insight-example">"Get 10 new clients per month", "Book 20 calls per week", "Generate $50,000 in revenue this quarter", "Respond to every lead within 15 minutes."</div>
+      </div>
+      <div class="field">
+        <label for="goalMd">What are your business goals? What does success look like? <span class="req">*</span></label>
+        <textarea id="goalMd" name="goalMd"
+          placeholder="e.g. Book 15 discovery calls per month, respond to all leads within 10 minutes, generate $30k in new revenue this quarter…"></textarea>
+        <div class="field-error" id="err-goalMd">Please share your business goals.</div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Anything else -->
+      <div class="field">
+        <label for="anythingElse">Anything else you'd like us to know before we get started? <span class="optional">(optional)</span></label>
+        <textarea id="anythingElse" name="anythingElse" style="min-height:80px;"
+          placeholder="Any specific instructions, preferences, or context that would help us set up your agent…"></textarea>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Terms & Conditions -->
+      <div class="field">
+        <label style="margin-bottom:8px;">Terms & Conditions <span class="req">*</span></label>
+        <label class="checkbox-field" id="tcWrapper">
+          <input type="checkbox" id="tcCheckbox" name="termsAccepted" value="yes" />
+          <span class="checkbox-label">I have read and agree to the <a href="https://turnkeyai.com.au/terms" target="_blank">terms and conditions of TurnkeyAI</a>. I understand that by submitting this form, I authorise TurnkeyAI to proceed with my AI agent setup as described.</span>
+        </label>
+        <div class="field-error" id="err-tc">You must accept the terms and conditions to continue.</div>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn btn-outline" onclick="goTo(3)">← Back</button>
+        <button type="submit" class="btn btn-success" id="submitBtn">🚀 Submit & Launch</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       SUCCESS screen
+  ══════════════════════════════ -->
+  <div class="card" id="card-success">
+    <div class="success-screen">
+      <div class="success-icon">✅</div>
+      <h2>You're all set!</h2>
+      <p>We've received your onboarding details. Your TurnkeyAI engineer will be in touch within <strong>24 hours</strong> to kick off your setup.</p>
+      <div class="success-meta">
+        <div class="success-meta-item"><span>⚡</span><span>7 days to live</span></div>
+        <div class="success-meta-item"><span>🧠</span><span>AI-powered</span></div>
+        <div class="success-meta-item"><span>🇦🇺</span><span>Aussie support</span></div>
+      </div>
+    </div>
+  </div>
+
+</form>
+
+<footer>
+  <p>© 2025 TurnkeyAI · <a href="https://turnkeyai.com.au" target="_blank">turnkeyai.com.au</a> · Your business, running on AI from Day 1.</p>
+</footer>
+</div>
+
+<script>
+  let currentStep = 1;
+  const totalSteps = 4;
+
+  function goTo(step) {
+    if (step > currentStep && !validateStep(currentStep)) return;
+    const prev = currentStep;
+    document.getElementById('card-' + prev).classList.remove('active');
+
+    // Update step dots
+    const prevDot = document.getElementById('step-dot-' + prev);
+    if (prevDot) {
+      prevDot.classList.remove('active');
+      if (step > prev) prevDot.classList.add('done');
+      else prevDot.classList.remove('done');
+    }
+    if (step > prev) {
+      const line = document.getElementById('line-' + prev);
+      if (line) line.classList.add('done');
+    } else {
+      const line = document.getElementById('line-' + step);
+      if (line) line.classList.remove('done');
+      const prevDotBack = document.getElementById('step-dot-' + step);
+      if (prevDotBack) prevDotBack.classList.remove('done');
+    }
+
+    currentStep = step;
+    const newCard = document.getElementById('card-' + step);
+    if (newCard) {
+      newCard.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    const newDot = document.getElementById('step-dot-' + step);
+    if (newDot) { newDot.classList.remove('done'); newDot.classList.add('active'); }
+  }
+
+  function validateStep(step) {
+    let valid = true;
+    if (step === 1) {
+      const v = document.getElementById('agentName').value.trim();
+      showErr('agentName', !v);
+      if (!v) valid = false;
+    }
+    if (step === 2) {
+      const email = document.getElementById('agentEmail').value.trim();
+      const pw    = document.getElementById('agentEmailPw').value.trim();
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      showErr('agentEmail', !emailOk);
+      showErr('agentEmailPw', !pw);
+      if (!emailOk || !pw) valid = false;
+    }
+    if (step === 4) {
+      const soul = document.getElementById('soulMd').value.trim();
+      const goal = document.getElementById('goalMd').value.trim();
+      const tc   = document.getElementById('tcCheckbox').checked;
+      showErr('soulMd', !soul);
+      showErr('goalMd', !goal);
+      showErr('tc', !tc);
+      document.getElementById('tcWrapper').classList.toggle('error-border', !tc);
+      if (!soul || !goal || !tc) valid = false;
+    }
+    return valid;
+  }
+
+  function showErr(id, show) {
+    const err   = document.getElementById('err-' + id);
+    const input = document.getElementById(id);
+    if (err) err.classList.toggle('visible', show);
+    if (input) input.classList.toggle('error', show);
+  }
+
+  function toggleTool(header) {
+    header.classList.toggle('open');
+    header.nextElementSibling.classList.toggle('open');
+  }
+
+  function updateToolTitle(n, val) {
+    document.getElementById('tool-title-' + n).textContent = val.trim() || 'Tool ' + n;
+    document.getElementById('tool-num-' + n).classList.toggle('filled', !!val.trim());
+  }
+
+  function togglePw(inputId) {
+    const inp = document.getElementById(inputId);
+    if (inp) inp.type = inp.type === 'password' ? 'text' : 'password';
+  }
+
+  function togglePwSibling(btn) {
+    const inp = btn.previousElementSibling;
+    if (inp) inp.type = inp.type === 'password' ? 'text' : 'password';
+  }
+
+  // Terms checkbox live validation
+  document.getElementById('tcCheckbox').addEventListener('change', function() {
+    document.getElementById('tcWrapper').classList.toggle('error-border', !this.checked);
+    if (this.checked) {
+      document.getElementById('err-tc').classList.remove('visible');
+    }
+  });
+
+  // Form submission via Netlify
+  document.getElementById('onboardingForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (!validateStep(4)) return;
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = '⏳ Submitting…';
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(this)).toString()
+    })
+    .then(() => {
+      document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+      document.getElementById('card-success').classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      ['step-dot-1','step-dot-2','step-dot-3','step-dot-4'].forEach(id => {
+        const d = document.getElementById(id);
+        if (d) { d.classList.remove('active'); d.classList.add('done'); }
+      });
+      ['line-1','line-2','line-3'].forEach(id => {
+        const l = document.getElementById(id);
+        if (l) l.classList.add('done');
+      });
+    })
+    .catch(() => {
+      btn.disabled = false;
+      btn.textContent = '🚀 Submit & Launch';
+      alert('Something went wrong. Please try again.');
+    });
+  });
+</script>
+</body>
+</html>

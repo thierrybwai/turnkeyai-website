@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 72" width="280" height="72">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#b894ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6c47ff;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="textgrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9b72ff;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Icon: Stylised key with circuit node -->
+  <!-- Key ring (circle) -->
+  <circle cx="32" cy="32" r="16" fill="none" stroke="url(#grad)" stroke-width="3.5" filter="url(#glow)"/>
+  <!-- Key ring inner dot -->
+  <circle cx="32" cy="32" r="6" fill="url(#grad)"/>
+  <!-- Key shaft -->
+  <rect x="45" y="29.5" width="24" height="5" rx="2.5" fill="url(#grad)"/>
+  <!-- Key teeth -->
+  <rect x="62" y="34.5" width="4" height="7" rx="1.5" fill="url(#grad)"/>
+  <rect x="55" y="34.5" width="4" height="5" rx="1.5" fill="url(#grad)"/>
+  <!-- Circuit dot accent -->
+  <circle cx="21" cy="20" r="2" fill="#9b72ff" opacity="0.6"/>
+  <circle cx="43" cy="44" r="1.5" fill="#6c47ff" opacity="0.5"/>
+  <line x1="21" y1="20" x2="32" y2="28" stroke="#9b72ff" stroke-width="0.8" opacity="0.4"/>
+
+  <!-- Wordmark -->
+  <text x="82" y="38" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif"
+        font-size="26" font-weight="800" letter-spacing="-0.8"
+        fill="url(#textgrad)">Turnkey<tspan fill="#9b72ff">AI</tspan></text>
+
+  <!-- Tagline -->
+  <text x="83" y="54" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif"
+        font-size="9.5" font-weight="500" letter-spacing="2.5" fill="#8880b0">AI SYSTEMS FOR BUSINESS</text>
+</svg>

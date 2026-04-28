@@ -369,6 +369,11 @@ function buildCityPage(city) {
 <meta property="og:description" content="${description}">
 <meta property="og:url" content="${url}">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://turnkeyai.com.au/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://turnkeyai.com.au/og-image.png">
 <meta name="geo.region" content="AU-QLD">
 <meta name="geo.placename" content="${city.name}">
 <meta name="geo.position" content="${city.lat};${city.lon}">
@@ -521,6 +526,11 @@ function buildIndustryPage(ind) {
 <meta property="og:description" content="${description}">
 <meta property="og:url" content="${url}">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://turnkeyai.com.au/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://turnkeyai.com.au/og-image.png">
 <link rel="stylesheet" href="/assets/brand.css">
 <script type="application/ld+json">${JSON.stringify(schema)}</script>
 </head>

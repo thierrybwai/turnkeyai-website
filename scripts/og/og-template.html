@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    background: #0a0a0a;
+    color: #fff;
+    font-family: -apple-system, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+  /* radial accents */
+  body::before {
+    content: '';
+    position: absolute;
+    width: 800px; height: 800px;
+    right: -200px; top: -300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,113,227,0.55) 0%, rgba(0,113,227,0) 70%);
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    left: -200px; bottom: -250px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,113,227,0.25) 0%, rgba(0,113,227,0) 70%);
+    z-index: 0;
+  }
+
+  /* TOP brand row at fixed Y */
+  .top {
+    position: absolute;
+    top: 56px; left: 72px; right: 72px;
+    display: flex; align-items: center; gap: 14px;
+    z-index: 2;
+  }
+  .dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: #0071e3;
+    box-shadow: 0 0 24px rgba(0,113,227,0.6);
+  }
+  .brand { font-size: 30px; font-weight: 600; letter-spacing: -0.02em; }
+  .badge {
+    margin-left: auto;
+    font-size: 14px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+
+  /* HEADLINE absolutely centered vertically */
+  h1 {
+    position: absolute;
+    left: 72px; right: 72px;
+    top: 200px;
+    font-size: 72px;
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+    font-weight: 600;
+    z-index: 2;
+  }
+  h1 .accent {
+    background: linear-gradient(180deg, #4aa1ff 0%, #0071e3 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* BOTTOM row pinned at fixed Y from top (NOT bottom) */
+  .bottom {
+    position: absolute;
+    left: 72px; right: 72px;
+    top: 510px;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    z-index: 2;
+  }
+  .left-info { display: flex; gap: 44px; }
+  .stat-num {
+    font-size: 34px; font-weight: 600;
+    letter-spacing: -0.025em; line-height: 1;
+  }
+  .stat-num .blue { color: #4aa1ff; }
+  .stat-label {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 6px;
+    display: block;
+  }
+  .url {
+    font-size: 18px; font-weight: 500;
+    color: rgba(255,255,255,0.7);
+  }
+</style>
+</head>
+<body>
+
+  <div class="top">
+    <span class="dot"></span>
+    <span class="brand">TurnkeyAI</span>
+    <span class="badge">For Australian SMEs</span>
+  </div>
+
+  <h1>
+    Done-for-you AI<br>
+    automation, <span class="accent">live in 7 days</span>.
+  </h1>
+
+  <div class="bottom">
+    <div class="left-info">
+      <div>
+        <div class="stat-num">7 <span class="blue">days</span></div>
+        <div class="stat-label">From brief to live</div>
+      </div>
+      <div>
+        <div class="stat-num">$1,500<span class="blue">+</span></div>
+        <div class="stat-label">Avg weekly saving</div>
+      </div>
+      <div>
+        <div class="stat-num">13<span class="blue">×</span></div>
+        <div class="stat-label">Year-1 ROI</div>
+      </div>
+    </div>
+    <div class="url">turnkeyai.com.au</div>
+  </div>
+
+</body>
+</html>

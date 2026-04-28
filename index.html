@@ -2140,7 +2140,31 @@ body {
         packageInterest: form.packageInterest.value
       });
       const r = await fetch('/', { method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: params.toString() });
-      if (r.ok) { window.location.href = '/thank-you'; }
+      if (r.ok) {
+        // GA4 conversion event (used for Google Ads + GA4 conversions reporting)
+        try {
+          if (typeof gtag === 'function') {
+            gtag('event', 'generate_lead', {
+              event_category: 'engagement',
+              event_label: form.industry.value || 'unknown',
+              package_interest: form.packageInterest.value || 'unknown',
+              value: 1
+            });
+            gtag('event', 'form_submission', {
+              form_name: 'ai-audit',
+              industry: form.industry.value || 'unknown'
+            });
+          }
+        } catch (e) { /* analytics never blocks the redirect */ }
+        // Microsoft Clarity custom event (so you can filter session recordings)
+        try {
+          if (typeof clarity === 'function') {
+            clarity('event', 'form_submission');
+            clarity('set', 'lead_industry', form.industry.value || 'unknown');
+          }
+        } catch (e) { /* idem */ }
+        window.location.href = '/thank-you';
+      }
       else { alert('Something went wrong. Try again.'); submitBtn.disabled = false; submitBtn.textContent = 'Send my request →'; }
     } catch (err) {
       alert('Error sending form'); submitBtn.disabled = false; submitBtn.textContent = 'Send my request →';

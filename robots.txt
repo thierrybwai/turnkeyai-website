@@ -70,4 +70,4 @@ User-agent: meta-externalagent
 Allow: /
 
 # Sitemap
-Sitemap: https://tkai.com.au/sitemap.xml
+Sitemap: https://turnkeyai.com.au/sitemap.xml

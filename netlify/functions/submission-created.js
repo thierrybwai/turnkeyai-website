@@ -1,5 +1,5 @@
 // Triggered automatically by Netlify whenever a form on the site is submitted.
-// Sends a value-first confirmation email to the lead via Resend.
+// Sends an action-oriented confirmation email to the lead via Resend.
 
 export default async (req) => {
   try {
@@ -21,7 +21,7 @@ export default async (req) => {
       return new Response('No email on submission', { status: 200 });
     }
 
-    const subject = `Thanks ${firstName}. Here's something useful while you wait.`;
+    const subject = `We've started, ${firstName}. One task from you to keep us moving.`;
     const { html, text } = buildEmail({ firstName, businessName, industry, packageInterest });
 
     const resendRes = await fetch('https://api.resend.com/emails', {
@@ -62,35 +62,38 @@ function buildEmail({ firstName, businessName, industry, packageInterest }) {
 
   const text = `Hi ${firstName},
 
-Got your brief. Someone reads every one personally, and you'll hear back within 2 business hours with either a 15-minute call slot or an honest "not yet" if we're not the right fit.
+Got your brief. We've already started building your AI agent on our end.
 
-${recap ? recap + '\n\n' : ''}While you wait, here's something most SMEs get wrong before they even talk to us.
+There's one thing we need from you to keep us moving:
 
-The 3 questions that decide if AI will actually save you money
+Create a new email address for your AI agent.
 
-Most SMEs pick the wrong role to automate first. They go for the loud one (sales, marketing) when the real money is hiding in the boring one. Before our call, ask yourself:
+Why a separate address?
+Your agent will read its own inbox, send its own replies, and connect to your tools (CRM, calendar, accounting, support). Keeping it separate from your personal or main business email keeps audit trails clean and access easy to revoke later. We apply this to every deployment.
 
-1. Which role costs you the most in time, not salary?
-The answer is rarely the highest-paid person. It's usually the role that interrupts everyone else. An admin who pings 4 people 20 times a day costs the business more than her $60k salary suggests.
+What to do (5 minutes):
 
-2. Which task would you do yourself if you had to?
-If the answer is "none of it, I'd hire someone first", that's the role to automate. You're already paying for it whether the seat is filled or not.
+1. Create a new mailbox at your business domain, for example: ai@yourbusiness.com.au. Or a fresh Google Workspace or Microsoft 365 account if that's faster.
 
-3. What breaks when that person is on holiday?
-Whatever stops working is the workflow worth automating. Everything else is noise.
+2. Reply to this email with:
+   - The new email address
+   - A temporary password (we change it once setup is complete)
+   - Whether it's hosted on Google Workspace, Microsoft 365, or another provider
 
-Bring your answers to the call. We'll map them to a 7-day deployment in 20 minutes.
+3. That's it. We take it from there.
+
+${recap ? recap + '\n\n' : ''}A note on security: any credentials you share are stored encrypted, used only for the one-time setup, and either rotated or fully revoked at your discretion once your agent is operational.
 
 What happens next:
-- Your brief gets read today
-- You receive a reply with a Calendly link (or a kind "not yet")
-- If we're a fit, we scope your first 3 workflows on the call
-- Day 7, your Mac Mini is running in your office
+- You send us the new email address (today).
+- We configure your agent and connect it to your tools (within 24 hours of receiving your details).
+- We run pre-flight checks. You hear back from us within 2 business hours of completion.
+- Day 7: your Mac Mini is in your office, your AI agent is running.
 
 Talk soon,
 TurnkeyAI
 
-P.S. Every day without your AI running is a day you're paying people to do work it could already handle.
+P.S. The faster the email credentials reach us, the faster we ship. Most clients reply within an hour and have their agent running by day 5.
 `;
 
   const html = `<!doctype html>
@@ -101,7 +104,7 @@ P.S. Every day without your AI running is a day you're paying people to do work 
 <meta name="x-apple-disable-message-reformatting">
 <meta name="color-scheme" content="light">
 <meta name="supported-color-schemes" content="light">
-<title>Thanks ${escapeHtml(firstName)}</title>
+<title>We've started, ${escapeHtml(firstName)}</title>
 <!--[if mso]>
 <style>table,td,div,h1,h2,h3,p {font-family: Helvetica, Arial, sans-serif !important;}</style>
 <![endif]-->
@@ -110,7 +113,7 @@ P.S. Every day without your AI running is a day you're paying people to do work 
 
   <!-- Preheader (hidden) -->
   <div style="display:none;font-size:1px;color:#f2f2f4;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;">
-    The 3 questions that decide if AI will actually save you money. Plus what happens next.
+    Your AI agent build has started. One quick task from you to keep us moving.
   </div>
 
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f2f2f4;">
@@ -128,7 +131,7 @@ P.S. Every day without your AI running is a day you're paying people to do work 
                     <span style="display:inline-block;width:8px;height:8px;background:#0071e3;border-radius:50%;margin-right:10px;vertical-align:middle;"></span>TurnkeyAI
                   </td>
                   <td align="right" style="font-size:12px;color:#86868b;letter-spacing:0.04em;text-transform:uppercase;font-weight:500;">
-                    Confirmation
+                    Build started
                   </td>
                 </tr>
               </table>
@@ -138,10 +141,10 @@ P.S. Every day without your AI running is a day you're paying people to do work 
           <!-- HERO -->
           <tr>
             <td style="background:#ffffff;padding:56px 40px 32px;" align="left">
-              <p style="margin:0 0 14px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#0071e3;font-weight:600;">Brief received</p>
+              <p style="margin:0 0 14px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#0071e3;font-weight:600;">Brief received · work has started</p>
               <h1 style="margin:0 0 20px;font-size:36px;line-height:1.1;letter-spacing:-0.02em;font-weight:600;color:#1d1d1f;">Thanks, ${escapeHtml(firstName)}.</h1>
               <p style="margin:0;font-size:17px;line-height:1.55;color:#1d1d1f;">
-                Someone reads every brief personally. You'll hear back <strong style="font-weight:600;">within 2 business hours</strong> with either a 15-minute call slot, or an honest "not yet" if we're not the right fit.
+                Your AI agent is on our build queue. We've started on our end. To keep us moving, there's <strong style="font-weight:600;">one task for you today</strong>.
               </p>
             </td>
           </tr>
@@ -169,71 +172,72 @@ P.S. Every day without your AI running is a day you're paying people to do work 
             </td>
           </tr>
 
-          <!-- EDITORIAL SECTION -->
+          <!-- ACTION REQUIRED -->
           <tr>
             <td style="background:#ffffff;padding:48px 40px 16px;" align="left">
-              <p style="margin:0 0 14px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#86868b;font-weight:600;">While you wait</p>
+              <p style="margin:0 0 14px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#86868b;font-weight:600;">Your one task</p>
               <h2 style="margin:0 0 18px;font-size:28px;line-height:1.15;letter-spacing:-0.02em;font-weight:600;color:#1d1d1f;">
-                The 3 questions that decide<br>if AI will actually save you money.
+                Create a new email address<br>for your AI agent.
               </h2>
-              <p style="margin:0;font-size:16px;line-height:1.6;color:#424245;">
-                Most SMEs pick the wrong role to automate first. They go for the loud one, sales, marketing, when the real money is hiding in the boring one. Before our call, ask yourself:
+              <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#424245;">
+                Your agent will read its own inbox, send its own replies, and connect to your tools (CRM, calendar, accounting, support). Keeping it separate from your personal or main business email keeps audit trails clean and access easy to revoke later. We apply this to every deployment.
               </p>
             </td>
           </tr>
 
-          <!-- QUESTION 1 -->
+          <!-- STEP 1 -->
           <tr>
             <td style="background:#ffffff;padding:32px 40px 0;" align="left">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td width="56" valign="top" style="font-size:48px;line-height:1;font-weight:600;letter-spacing:-0.04em;color:#0071e3;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,Helvetica,Arial,sans-serif;padding-right:16px;">01</td>
                   <td valign="top">
-                    <h3 style="margin:0 0 10px;font-size:18px;line-height:1.35;letter-spacing:-0.01em;font-weight:600;color:#1d1d1f;">Which role costs you the most in time, not salary?</h3>
-                    <p style="margin:0;font-size:15px;line-height:1.6;color:#424245;">The answer is rarely the highest-paid person. It's usually the role that interrupts everyone else. An admin who pings 4 people 20 times a day costs the business more than her $60k salary suggests.</p>
+                    <h3 style="margin:0 0 10px;font-size:18px;line-height:1.35;letter-spacing:-0.01em;font-weight:600;color:#1d1d1f;">Create a new mailbox</h3>
+                    <p style="margin:0;font-size:15px;line-height:1.6;color:#424245;">At your business domain, for example: <span style="font-family:ui-monospace,'SF Mono',Menlo,monospace;background:#f5f5f7;padding:1px 6px;border-radius:4px;">ai@yourbusiness.com.au</span>. Or a fresh Google Workspace / Microsoft 365 account if that's faster.</p>
                   </td>
                 </tr>
               </table>
             </td>
           </tr>
 
-          <!-- QUESTION 2 -->
+          <!-- STEP 2 -->
           <tr>
             <td style="background:#ffffff;padding:32px 40px 0;" align="left">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td width="56" valign="top" style="font-size:48px;line-height:1;font-weight:600;letter-spacing:-0.04em;color:#0071e3;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,Helvetica,Arial,sans-serif;padding-right:16px;">02</td>
                   <td valign="top">
-                    <h3 style="margin:0 0 10px;font-size:18px;line-height:1.35;letter-spacing:-0.01em;font-weight:600;color:#1d1d1f;">Which task would you do yourself if you had to?</h3>
-                    <p style="margin:0;font-size:15px;line-height:1.6;color:#424245;">If the answer is "none of it, I'd hire someone first," that's the role to automate. You're already paying for it whether the seat is filled or not.</p>
+                    <h3 style="margin:0 0 10px;font-size:18px;line-height:1.35;letter-spacing:-0.01em;font-weight:600;color:#1d1d1f;">Reply to this email with the details</h3>
+                    <p style="margin:0;font-size:15px;line-height:1.6;color:#424245;">The new email address, a temporary password (we rotate it after setup), and whether it's hosted on Google Workspace, Microsoft 365, or another provider.</p>
                   </td>
                 </tr>
               </table>
             </td>
           </tr>
 
-          <!-- QUESTION 3 -->
+          <!-- STEP 3 -->
           <tr>
             <td style="background:#ffffff;padding:32px 40px 48px;" align="left">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td width="56" valign="top" style="font-size:48px;line-height:1;font-weight:600;letter-spacing:-0.04em;color:#0071e3;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,Helvetica,Arial,sans-serif;padding-right:16px;">03</td>
                   <td valign="top">
-                    <h3 style="margin:0 0 10px;font-size:18px;line-height:1.35;letter-spacing:-0.01em;font-weight:600;color:#1d1d1f;">What breaks when that person is on holiday?</h3>
-                    <p style="margin:0;font-size:15px;line-height:1.6;color:#424245;">Whatever stops working is the workflow worth automating. Everything else is noise.</p>
+                    <h3 style="margin:0 0 10px;font-size:18px;line-height:1.35;letter-spacing:-0.01em;font-weight:600;color:#1d1d1f;">We take it from there</h3>
+                    <p style="margin:0;font-size:15px;line-height:1.6;color:#424245;">Configuration, integration, testing. Within 24 hours of receiving your details, we run pre-flight checks and you hear back with confirmation that everything is set up.</p>
                   </td>
                 </tr>
               </table>
             </td>
           </tr>
 
-          <!-- CALLOUT -->
+          <!-- SECURITY CALLOUT -->
           <tr>
             <td style="background:#ffffff;padding:0 40px 48px;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f5f5f7;border-radius:16px;">
                 <tr>
-                  <td style="padding:24px 28px;font-size:16px;line-height:1.55;color:#1d1d1f;">
-                    Bring your answers to the call. We'll map them to a <strong style="font-weight:600;">7-day deployment</strong> in 20 minutes.
+                  <td style="padding:24px 28px;font-size:14px;line-height:1.55;color:#424245;">
+                    <span style="display:inline-block;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#86868b;font-weight:600;margin-bottom:8px;">On security</span><br>
+                    Any credentials you share are stored encrypted, used only for the one-time setup, and either rotated or fully revoked at your discretion once your agent is operational. We never store passwords in plain text.
                   </td>
                 </tr>
               </table>
@@ -250,25 +254,25 @@ P.S. Every day without your AI running is a day you're paying people to do work 
                   <td width="32" valign="top" style="padding:0 0 18px;">
                     <div style="width:24px;height:24px;border-radius:50%;background:#0071e3;color:#fff;font-size:12px;font-weight:600;line-height:24px;text-align:center;">1</div>
                   </td>
-                  <td valign="top" style="padding:2px 0 18px;font-size:15px;color:#1d1d1f;line-height:1.5;">Your brief gets read today.</td>
+                  <td valign="top" style="padding:2px 0 18px;font-size:15px;color:#1d1d1f;line-height:1.5;">You send us the new email address (today).</td>
                 </tr>
                 <tr>
                   <td width="32" valign="top" style="padding:0 0 18px;">
                     <div style="width:24px;height:24px;border-radius:50%;background:#0071e3;color:#fff;font-size:12px;font-weight:600;line-height:24px;text-align:center;">2</div>
                   </td>
-                  <td valign="top" style="padding:2px 0 18px;font-size:15px;color:#1d1d1f;line-height:1.5;">You receive a reply with a Calendly link, or a kind "not yet."</td>
+                  <td valign="top" style="padding:2px 0 18px;font-size:15px;color:#1d1d1f;line-height:1.5;">We configure your agent and connect it to your tools (within 24 hours).</td>
                 </tr>
                 <tr>
                   <td width="32" valign="top" style="padding:0 0 18px;">
                     <div style="width:24px;height:24px;border-radius:50%;background:#0071e3;color:#fff;font-size:12px;font-weight:600;line-height:24px;text-align:center;">3</div>
                   </td>
-                  <td valign="top" style="padding:2px 0 18px;font-size:15px;color:#1d1d1f;line-height:1.5;">If we're a fit, we scope your first 3 workflows on the call.</td>
+                  <td valign="top" style="padding:2px 0 18px;font-size:15px;color:#1d1d1f;line-height:1.5;">We run pre-flight checks. You hear back within 2 business hours of completion.</td>
                 </tr>
                 <tr>
                   <td width="32" valign="top">
                     <div style="width:24px;height:24px;border-radius:50%;background:#0071e3;color:#fff;font-size:12px;font-weight:600;line-height:24px;text-align:center;">4</div>
                   </td>
-                  <td valign="top" style="padding:2px 0 0;font-size:15px;color:#1d1d1f;line-height:1.5;"><strong style="font-weight:600;">Day 7</strong>: your Mac Mini is running in your office.</td>
+                  <td valign="top" style="padding:2px 0 0;font-size:15px;color:#1d1d1f;line-height:1.5;"><strong style="font-weight:600;">Day 7</strong>: your Mac Mini is in your office, your agent is running.</td>
                 </tr>
               </table>
             </td>
@@ -279,7 +283,7 @@ P.S. Every day without your AI running is a day you're paying people to do work 
             <td style="background:#0a0a0a;border-radius:0 0 20px 20px;padding:40px;" align="left">
               <p style="margin:0 0 8px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#86868b;font-weight:600;">P.S.</p>
               <p style="margin:0 0 28px;font-size:17px;line-height:1.5;color:#f5f5f7;letter-spacing:-0.01em;">
-                Every day without your AI running is a day you're paying people to do work it could already handle.
+                The faster the email credentials reach us, the faster we ship. Most clients reply within an hour and have their agent running by day 5.
               </p>
               <div style="height:1px;background:#1d1d1f;line-height:1px;font-size:1px;margin:0 0 24px;">&nbsp;</div>
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
@@ -289,7 +293,7 @@ P.S. Every day without your AI running is a day you're paying people to do work 
                     <span style="font-size:12px;color:#6e6e73;">Done-for-you AI automation. 7 days. Hardware yours forever.</span>
                   </td>
                   <td align="right" style="font-size:12px;color:#6e6e73;">
-                    <a href="https://tkai.com.au" style="color:#86868b;text-decoration:none;">tkai.com.au</a>
+                    <a href="https://turnkeyai.com.au" style="color:#86868b;text-decoration:none;">turnkeyai.com.au</a>
                   </td>
                 </tr>
               </table>
@@ -299,7 +303,7 @@ P.S. Every day without your AI running is a day you're paying people to do work 
           <!-- LEGAL -->
           <tr>
             <td style="padding:24px 8px;text-align:center;font-size:11px;color:#86868b;line-height:1.6;">
-              You're receiving this because you submitted a brief on tkai.com.au.<br>
+              You're receiving this because you submitted a brief on turnkeyai.com.au.<br>
               Reply to this email to reach us directly.
             </td>
           </tr>

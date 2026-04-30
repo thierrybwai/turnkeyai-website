@@ -24,11 +24,12 @@
   if (SKIP_PATHS.some((rx) => rx.test(path))) return;
 
   const STORAGE_KEY = 'tk-toast-dismissed';
-  const COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
-  try {
-    const stored = parseInt(localStorage.getItem(STORAGE_KEY), 10);
-    if (stored && Date.now() - stored < COOLDOWN_MS) return;
-  } catch (e) { /* localStorage unavailable; continue */ }
+  // const COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
+  // TEMP: cooldown disabled for visual QA — restore the block below before going to steady state
+  // try {
+  //   const stored = parseInt(localStorage.getItem(STORAGE_KEY), 10);
+  //   if (stored && Date.now() - stored < COOLDOWN_MS) return;
+  // } catch (e) { /* localStorage unavailable; continue */ }
 
   function scrolledDeep() {
     const total = document.documentElement.scrollHeight;

@@ -1,0 +1,1091 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Onboarding · Set up your AI agent | TurnkeyAI</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="canonical" href="https://turnkeyai.com.au/onboarding/">
+<link rel="stylesheet" href="/assets/brand.css">
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "wikl0ltns0");
+</script>
+<!-- Google Analytics (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DHZ47DHP0B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DHZ47DHP0B');
+</script>
+<style>
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Apple SF Pro stack — exactly as apple.com */
+      --tk-font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+      --tk-font-text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+
+      /* Apple's exact neutral palette */
+      --tk-bg: #fbfbfd;
+      --tk-bg-alt: #f5f5f7;
+      --tk-bg-elev: #ffffff;
+      --tk-fg: #1d1d1f;
+      --tk-fg-muted: #3d3d42;
+      --tk-fg-subtle: #6e6e73;
+      --tk-line: rgba(0,0,0,0.10);
+      --tk-line-strong: rgba(0,0,0,0.18);
+      --tk-accent: #0071e3;
+      --tk-accent-hover: #0077ed;
+      --tk-accent-soft: rgba(0,113,227,0.10);
+      --tk-success: #1d9d4f;
+      --tk-error: #d70015;
+      --tk-shadow-color: 220 8% 12%;
+
+      /* Liquid Glass tokens */
+      --glass-bg: rgba(255,255,255,0.62);
+      --glass-bg-strong: rgba(255,255,255,0.78);
+      --glass-blur: saturate(180%) blur(40px);
+      --glass-border: inset 0 0 0 1px rgba(255,255,255,0.5);
+      --glass-highlight: inset 0 1px 0 rgba(255,255,255,0.9);
+      --glass-shadow: 0 1px 1px rgba(0,0,0,0.04), 0 8px 32px -8px hsl(var(--tk-shadow-color) / 0.18);
+
+      --tk-ease: cubic-bezier(0.28, 0.11, 0.32, 1);
+      --tk-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; }
+    body {
+      font-family: var(--tk-font-text);
+      font-size: 17px;
+      line-height: 1.5;
+      letter-spacing: -0.011em;
+      background: var(--tk-bg);
+      color: var(--tk-fg);
+      min-height: 100vh;
+    }
+    ::selection { background: var(--tk-accent); color: #fff; }
+
+    /* ── Header — Liquid Glass nav ── */
+    header {
+      position: sticky; top: 14px; z-index: 50;
+      margin: 14px auto 0;
+      max-width: 720px;
+      border-radius: 100px;
+      height: 52px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      box-shadow:
+        var(--glass-border),
+        var(--glass-highlight),
+        0 0.5px 0 rgba(0,0,0,0.06),
+        0 6px 18px -6px rgba(0,0,0,0.10),
+        0 14px 40px -12px rgba(0,0,0,0.08);
+      padding: 0 22px;
+    }
+    .header-inner {
+      width: 100%;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .logo-badge { display: none; }
+    .logo-text { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: var(--tk-fg); font-family: var(--tk-font-display); }
+    .logo-text span { color: var(--tk-fg); }
+    @media (max-width: 600px) { header { margin: 10px 14px 0; } }
+
+    /* ── Hero — light, ambient glow ── */
+    .hero {
+      padding: 80px 24px 48px;
+      text-align: center;
+      position: relative;
+      overflow: visible;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 1100px; max-width: 130vw; height: 700px;
+      background: radial-gradient(ellipse 50% 35% at 50% 50%, rgba(0,113,227,0.08) 0%, transparent 70%);
+      filter: blur(60px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero > * { position: relative; z-index: 1; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--tk-accent);
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.04em;
+      margin-bottom: 14px;
+    }
+    .hero h1 {
+      font-family: var(--tk-font-display);
+      font-size: clamp(34px, 5.5vw, 56px);
+      font-weight: 600;
+      line-height: 1.06;
+      letter-spacing: -0.035em;
+      color: var(--tk-fg);
+      margin-bottom: 16px;
+      text-wrap: balance;
+    }
+    .hero h1 span {
+      color: var(--tk-accent);
+      -webkit-background-clip: initial; -webkit-text-fill-color: var(--tk-accent); background-clip: initial; background: none;
+    }
+    .hero p {
+      color: var(--tk-fg-muted);
+      font-size: 19px;
+      font-weight: 400;
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.45;
+      letter-spacing: -0.011em;
+    }
+
+    /* ── Progress steps ── */
+    .steps-wrap { display: flex; justify-content: center; padding: 32px 24px 0; }
+    .steps { display: flex; align-items: center; max-width: 560px; width: 100%; }
+    .step { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; }
+    .step-dot {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--tk-bg-elev);
+      box-shadow: inset 0 0 0 1.5px var(--tk-line-strong);
+      color: var(--tk-fg-subtle);
+      font-size: 13px; font-weight: 500;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; z-index: 1;
+      transition: all .35s var(--tk-ease);
+    }
+    .step.active .step-dot {
+      background: var(--tk-accent); color: white;
+      box-shadow: 0 0 0 5px var(--tk-accent-soft);
+    }
+    .step.done .step-dot {
+      background: var(--tk-fg); color: white;
+      box-shadow: none;
+    }
+    .step-label { font-size: 12px; font-weight: 500; color: var(--tk-fg-subtle); text-align: center; white-space: nowrap; letter-spacing: -0.005em; }
+    .step.active .step-label { color: var(--tk-accent); }
+    .step.done .step-label { color: var(--tk-fg); }
+    .step-line { flex: 1; height: 1px; background: var(--tk-line-strong); margin-bottom: 24px; transition: background .35s var(--tk-ease); }
+    .step-line.done { background: var(--tk-fg); }
+
+    /* ── Page wrap ── */
+    .page-wrap { max-width: 720px; margin: 40px auto 80px; padding: 0 16px; }
+
+    /* ── Cards — Liquid Glass ── */
+    .card {
+      background: var(--glass-bg-strong);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border-radius: 24px;
+      box-shadow: var(--glass-border), var(--glass-highlight), var(--glass-shadow);
+      overflow: hidden;
+      display: none;
+    }
+    .card.active { display: block; }
+
+    .card-header {
+      padding: 32px 36px 24px;
+      display: flex; align-items: flex-start; gap: 18px;
+    }
+    .card-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; flex-shrink: 0;
+      background: var(--tk-bg-alt);
+      box-shadow: inset 0 0 0 1px var(--tk-line);
+    }
+    .card-icon.blue, .card-icon.cyan, .card-icon.purple, .card-icon.amber, .card-icon.rose {
+      background: var(--tk-bg-alt);
+    }
+    .card-header-text h2 {
+      font-family: var(--tk-font-display);
+      font-size: 24px; font-weight: 600; color: var(--tk-fg);
+      letter-spacing: -0.025em; line-height: 1.15;
+      margin-bottom: 8px;
+    }
+    .card-header-text p {
+      font-size: 15px; color: var(--tk-fg-muted);
+      line-height: 1.55; letter-spacing: -0.008em;
+    }
+
+    .card-body { padding: 8px 36px 36px; }
+
+    /* ── Form elements ── */
+    .field { margin-bottom: 20px; }
+    .field:last-child { margin-bottom: 0; }
+
+    label {
+      display: block;
+      font-size: 14px; font-weight: 600;
+      color: var(--tk-fg);
+      letter-spacing: -0.008em;
+      margin-bottom: 10px;
+    }
+    label .optional { font-weight: 400; color: var(--tk-fg-subtle); font-size: 13px; margin-left: 6px; }
+    label .req { color: var(--tk-accent); margin-left: 2px; font-weight: 600; }
+
+    .input-wrap { position: relative; }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="url"],
+    textarea {
+      width: 100%;
+      border: 1px solid var(--tk-line);
+      background: var(--tk-bg);
+      border-radius: 12px;
+      padding: 0 44px 0 16px;
+      font-family: var(--tk-font-text);
+      font-size: 16px;
+      letter-spacing: -0.005em;
+      color: var(--tk-fg);
+      transition: border-color .22s var(--tk-ease), background .22s var(--tk-ease), box-shadow .22s var(--tk-ease);
+      -webkit-appearance: none;
+    }
+    input[type="text"], input[type="email"], input[type="password"], input[type="url"] { height: 48px; }
+    textarea { padding: 14px 16px; resize: vertical; min-height: 120px; line-height: 1.55; }
+    input:hover, textarea:hover { border-color: var(--tk-line-strong); }
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--tk-accent);
+      background: #fff;
+      box-shadow: 0 0 0 4px var(--tk-accent-soft);
+    }
+    input.error, textarea.error {
+      border-color: var(--tk-error);
+      box-shadow: 0 0 0 4px rgba(215,0,21,0.10);
+    }
+    input::placeholder, textarea::placeholder { color: #9a9a9e; }
+
+    .field-icon {
+      position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+      color: var(--tk-fg-subtle); font-size: 16px; pointer-events: none;
+    }
+    .toggle-pw {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; color: var(--tk-fg-subtle);
+      padding: 4px; display: flex; align-items: center; font-size: 16px;
+      transition: color .2s var(--tk-ease);
+    }
+    .toggle-pw:hover { color: var(--tk-fg); }
+
+    .field-hint  { font-size: 13px; color: var(--tk-fg-muted); margin-top: 8px; letter-spacing: -0.005em; }
+    .field-error { font-size: 13px; color: var(--tk-error); font-weight: 500; margin-top: 8px; display: none; letter-spacing: -0.005em; }
+    .field-error.visible { display: block; }
+
+    /* ── Insight box ── */
+    .insight-box {
+      background: var(--tk-accent-soft);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-bottom: 12px;
+    }
+    .insight-box .insight-title {
+      font-size: 13px; font-weight: 600; color: var(--tk-accent);
+      margin-bottom: 4px; letter-spacing: -0.005em;
+    }
+    .insight-box p {
+      font-size: 14px; color: var(--tk-fg); line-height: 1.55;
+      letter-spacing: -0.005em;
+    }
+    .insight-box .insight-example {
+      font-size: 13px; color: var(--tk-fg-muted);
+      margin-top: 8px; letter-spacing: -0.005em;
+    }
+
+    /* ── Tool section ── */
+    .tool-section {
+      background: var(--tk-bg);
+      border: 1px solid var(--tk-line);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 12px;
+      transition: border-color .22s var(--tk-ease);
+    }
+    .tool-section:hover { border-color: var(--tk-line-strong); }
+    .tool-header {
+      background: transparent; padding: 14px 18px;
+      display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer; user-select: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color .22s var(--tk-ease);
+    }
+    .tool-header.open { border-bottom-color: var(--tk-line); }
+    .tool-header-left { display: flex; align-items: center; gap: 12px; }
+    .tool-num {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: var(--tk-bg-alt);
+      color: var(--tk-fg-muted);
+      font-size: 12px; font-weight: 600;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .22s var(--tk-ease);
+    }
+    .tool-num.filled { background: var(--tk-accent); color: white; }
+    .tool-title { font-size: 15px; font-weight: 600; color: var(--tk-fg); letter-spacing: -0.01em; }
+    .tool-subtitle { font-size: 13px; color: var(--tk-fg-muted); margin-top: 3px; letter-spacing: -0.005em; }
+    .tool-chevron { color: var(--tk-fg-subtle); font-size: 12px; transition: transform .25s var(--tk-ease); }
+    .tool-header.open .tool-chevron { transform: rotate(180deg); }
+    .tool-body { padding: 20px 20px 16px; display: none; }
+    .tool-body.open { display: block; }
+
+    /* ── Checkbox (T&C) ── */
+    .checkbox-field {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 18px;
+      background: var(--tk-bg);
+      border: 1px solid var(--tk-line);
+      border-radius: 14px;
+      cursor: pointer;
+      transition: border-color .22s var(--tk-ease);
+    }
+    .checkbox-field:hover { border-color: var(--tk-line-strong); }
+    .checkbox-field input[type="checkbox"] {
+      width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px;
+      accent-color: var(--tk-accent); cursor: pointer;
+      border: none; padding: 0;
+    }
+    .checkbox-label {
+      font-size: 14px; color: var(--tk-fg-muted);
+      font-weight: 400;
+      line-height: 1.55; cursor: pointer;
+      letter-spacing: -0.005em;
+    }
+    .checkbox-label a { color: var(--tk-accent); text-decoration: none; font-weight: 500; }
+    .checkbox-label a:hover { text-decoration: underline; }
+    .checkbox-field.error-border { border-color: var(--tk-error); }
+
+    /* ── Security note ── */
+    .security-note {
+      display: flex; align-items: flex-start; gap: 10px;
+      background: var(--tk-bg-alt);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-top: 20px;
+    }
+    .security-note .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .security-note p {
+      font-size: 14px; color: var(--tk-fg-muted);
+      line-height: 1.55; letter-spacing: -0.005em;
+    }
+
+    /* ── Section sub-header ── */
+    .section-label {
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--tk-accent);
+      margin: 28px 0 14px;
+    }
+    hr.divider { border: none; border-top: 1px solid var(--tk-line); margin: 24px 0; }
+
+    /* ── Buttons — Apple pill ── */
+    .btn-row {
+      display: flex; gap: 10px; justify-content: flex-end;
+      margin-top: 32px; padding-top: 24px;
+      border-top: 1px solid var(--tk-line);
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 13px 26px;
+      border-radius: 980px;
+      font-family: var(--tk-font-text);
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -0.005em;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all .22s var(--tk-ease);
+      white-space: nowrap;
+    }
+    .btn:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--tk-accent-soft), 0 0 0 5px var(--tk-accent); }
+    .btn:active { transform: scale(0.97); }
+    .btn-outline {
+      background: transparent;
+      color: var(--tk-fg);
+      border-color: var(--tk-line-strong);
+    }
+    .btn-outline:hover { background: var(--tk-bg-alt); border-color: var(--tk-fg-muted); }
+    .btn-primary {
+      background: var(--tk-accent);
+      color: white;
+    }
+    .btn-primary:hover { background: var(--tk-accent-hover); }
+    .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+    .btn-success {
+      background: var(--tk-fg);
+      color: white;
+    }
+    .btn-success:hover { background: #000; }
+    .btn-success:disabled { opacity: .5; cursor: not-allowed; }
+
+    /* ── Success screen ── */
+    .success-screen { text-align: center; padding: 72px 36px; }
+    .success-icon {
+      width: 76px; height: 76px;
+      border-radius: 50%;
+      background: var(--tk-accent);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 28px;
+      box-shadow:
+        0 0 0 6px var(--tk-accent-soft),
+        0 12px 32px -8px rgba(0,113,227,0.4);
+      position: relative;
+    }
+    .success-icon::after {
+      content: '✓';
+      font-size: 38px;
+      font-weight: 600;
+      color: white;
+      line-height: 1;
+    }
+    .success-icon > * { display: none; }
+    .success-screen h2 {
+      font-family: var(--tk-font-display);
+      font-size: 32px; font-weight: 600;
+      letter-spacing: -0.03em; line-height: 1.1;
+      color: var(--tk-fg);
+      margin-bottom: 14px;
+    }
+    .success-screen p {
+      font-size: 17px; color: var(--tk-fg-muted);
+      max-width: 440px; margin: 0 auto;
+      line-height: 1.5; letter-spacing: -0.011em;
+    }
+    .success-meta {
+      display: flex; justify-content: center; gap: 36px;
+      margin-top: 36px;
+    }
+    .success-meta-item {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+    }
+    .success-meta-item span:first-child { font-size: 24px; }
+    .success-meta-item span:last-child {
+      font-size: 13px; color: var(--tk-fg-subtle);
+      font-weight: 400; letter-spacing: -0.005em;
+    }
+
+    footer {
+      text-align: center;
+      padding: 0 0 48px;
+      color: var(--tk-fg-muted);
+      font-size: 14px;
+      letter-spacing: -0.005em;
+    }
+    footer a { color: var(--tk-accent); text-decoration: none; font-weight: 500; }
+
+    @media (max-width: 600px) {
+      .card-header, .card-body { padding-left: 22px; padding-right: 22px; }
+      .card-header { padding-top: 26px; padding-bottom: 18px; }
+      .card-body { padding-bottom: 26px; }
+      .hero { padding: 56px 20px 32px; }
+      .btn-row { flex-direction: column-reverse; }
+      .btn { justify-content: center; width: 100%; }
+      .success-meta { gap: 22px; }
+    }
+  
+</style>
+</head>
+<body>
+
+<nav class="tk-nav">
+  <div class="tk-nav-inner">
+    <a href="/" class="tk-brand">TurnkeyAI</a>
+    <ul class="tk-nav-links">
+      <li><a href="/#packages" class="tk-nav-link">Packages</a></li>
+      <li><a href="/#roi" class="tk-nav-link">ROI</a></li>
+      <li><a href="/#how" class="tk-nav-link">How it works</a></li>
+      <li><a href="/blog/" class="tk-nav-link">Blog</a></li>
+      <li><a href="/onboarding/" class="tk-nav-link" style="opacity:1;">Onboarding</a></li>
+    </ul>
+    <a href="mailto:start@tkai.com.au" class="tk-btn tk-btn--primary tk-btn--sm">Need help?</a>
+  </div>
+</nav>
+<div class="hero">
+  <div class="hero-badge">New Client Setup</div>
+  <h1>Let's get your <span>AI agent</span> up and running.</h1>
+  <p>Complete this form so we can configure and launch your AI agent within 7 days.</p>
+</div>
+
+<!-- Steps indicator -->
+<div class="steps-wrap">
+  <div class="steps" id="stepsBar">
+    <div class="step active" id="step-dot-1">
+      <div class="step-dot">1</div>
+      <div class="step-label">Agent</div>
+    </div>
+    <div class="step-line" id="line-1"></div>
+    <div class="step" id="step-dot-2">
+      <div class="step-dot">2</div>
+      <div class="step-label">Accounts</div>
+    </div>
+    <div class="step-line" id="line-2"></div>
+    <div class="step" id="step-dot-3">
+      <div class="step-dot">3</div>
+      <div class="step-label">Tools</div>
+    </div>
+    <div class="step-line" id="line-3"></div>
+    <div class="step" id="step-dot-4">
+      <div class="step-dot">4</div>
+      <div class="step-label">Goals</div>
+    </div>
+  </div>
+</div>
+
+<div class="page-wrap">
+<form name="turnkeyai-onboarding" method="POST" data-netlify="true" id="onboardingForm" novalidate>
+  <input type="hidden" name="form-name" value="turnkeyai-onboarding" />
+
+  <!-- ══════════════════════════════
+       STEP 1 — Agent name
+  ══════════════════════════════ -->
+  <div class="card active" id="card-1">
+    <div class="card-header">
+      <div class="card-icon blue">🤖</div>
+      <div class="card-header-text">
+        <h2>Name your AI agent</h2>
+        <p>Give your agent a name — this is how we'll refer to it during setup and in reports.</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <label for="agentName">AI Agent Name <span class="req">*</span></label>
+        <div class="input-wrap">
+          <input type="text" id="agentName" name="agentName"
+            placeholder="e.g. Alex, Sophie, or simply 'Sales Bot'"
+            autocomplete="off" />
+          <span class="field-icon">✨</span>
+        </div>
+        <div class="field-hint">You can always rename it later.</div>
+        <div class="field-error" id="err-agentName">Please enter a name for your agent.</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-primary" onclick="goTo(2)">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       STEP 2 — Accounts (Email + Slack)
+  ══════════════════════════════ -->
+  <div class="card" id="card-2">
+    <div class="card-header">
+      <div class="card-icon cyan">📬</div>
+      <div class="card-header-text">
+        <h2>Agent accounts</h2>
+        <p>Set up the email account for your agent, and share your Slack details so we can connect everything.</p>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <div class="section-label">Agent email account</div>
+      <p style="font-size:14px;color:var(--gray-600);margin-bottom:18px;line-height:1.6;">Please create a new email account for your AI agent (e.g. <strong>agent@yourbusiness.com</strong>) and share the login details below.</p>
+
+      <div class="field">
+        <label for="agentEmail">Email address <span class="req">*</span></label>
+        <div class="input-wrap">
+          <input type="email" id="agentEmail" name="agentEmail"
+            placeholder="agent@yourbusiness.com" autocomplete="off" />
+          <span class="field-icon">@</span>
+        </div>
+        <div class="field-error" id="err-agentEmail">Please enter a valid email address.</div>
+      </div>
+
+      <div class="field">
+        <label for="agentEmailPw">Password <span class="req">*</span></label>
+        <div class="input-wrap">
+          <input type="password" id="agentEmailPw" name="agentEmailPassword"
+            placeholder="••••••••••••" autocomplete="new-password" />
+          <button type="button" class="toggle-pw" onclick="togglePw('agentEmailPw')" aria-label="Show password">👁</button>
+        </div>
+        <div class="field-error" id="err-agentEmailPw">Please enter the password.</div>
+      </div>
+
+      <div class="field">
+        <label for="agentEmailLink">Webmail / inbox link <span class="optional">(optional)</span></label>
+        <div class="input-wrap">
+          <input type="url" id="agentEmailLink" name="agentEmailLink"
+            placeholder="https://mail.google.com or your webmail URL" />
+          <span class="field-icon">🔗</span>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="section-label">Slack account</div>
+      <p style="font-size:14px;color:var(--gray-600);margin-bottom:18px;line-height:1.6;">Do you already have a Slack account? If yes, please provide your email and password and we'll set it up. If not, we'll create a full Slack account for you — leave these blank.</p>
+
+      <div class="field">
+        <label for="slackEmail">Slack email <span class="optional">(optional)</span></label>
+        <div class="input-wrap">
+          <input type="email" id="slackEmail" name="slackEmail"
+            placeholder="your.email@example.com" autocomplete="off" />
+          <span class="field-icon">💬</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="slackPassword">Slack password <span class="optional">(optional)</span></label>
+        <div class="input-wrap">
+          <input type="password" id="slackPassword" name="slackPassword"
+            placeholder="••••••••" autocomplete="new-password" />
+          <button type="button" class="toggle-pw" onclick="togglePw('slackPassword')" aria-label="Show password">👁</button>
+        </div>
+      </div>
+
+      <div class="security-note">
+        <span class="icon">🔒</span>
+        <p>Your credentials are transmitted securely over HTTPS and only accessible to your dedicated TurnkeyAI setup engineer.</p>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn btn-outline" onclick="goTo(1)">← Back</button>
+        <button type="button" class="btn btn-primary" onclick="goTo(3)">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       STEP 3 — Tools (1–5)
+  ══════════════════════════════ -->
+  <div class="card" id="card-3">
+    <div class="card-header">
+      <div class="card-icon purple">🔧</div>
+      <div class="card-header-text">
+        <h2>Connect your tools</h2>
+        <p>Add up to 5 platforms or apps you'd like your AI agent to access. Leave unused tools blank.</p>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <!-- Tool 1 -->
+      <div class="tool-section">
+        <div class="tool-header open" onclick="toggleTool(this)">
+          <div class="tool-header-left">
+            <div class="tool-num" id="tool-num-1">1</div>
+            <div>
+              <div class="tool-title" id="tool-title-1">Tool 1</div>
+              <div class="tool-subtitle">Click to add credentials</div>
+            </div>
+          </div>
+          <span class="tool-chevron">▼</span>
+        </div>
+        <div class="tool-body open">
+          <div class="field">
+            <label>Platform / App Name</label>
+            <div class="input-wrap">
+              <input type="text" name="tool1_name" placeholder="e.g. HubSpot, Xero, Gmail…"
+                oninput="updateToolTitle(1, this.value)" />
+            </div>
+          </div>
+          <div class="field">
+            <label>Username / Email</label>
+            <div class="input-wrap">
+              <input type="text" name="tool1_username" placeholder="username or email" autocomplete="off" />
+              <span class="field-icon">👤</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <div class="input-wrap">
+              <input type="password" name="tool1_password" placeholder="••••••••" autocomplete="new-password" />
+              <button type="button" class="toggle-pw" onclick="togglePwSibling(this)" aria-label="Show">👁</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Link / URL <span class="optional">(optional)</span></label>
+            <div class="input-wrap">
+              <input type="url" name="tool1_link" placeholder="https://" />
+              <span class="field-icon">🔗</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tool 2 -->
+      <div class="tool-section">
+        <div class="tool-header" onclick="toggleTool(this)">
+          <div class="tool-header-left">
+            <div class="tool-num" id="tool-num-2">2</div>
+            <div>
+              <div class="tool-title" id="tool-title-2">Tool 2</div>
+              <div class="tool-subtitle">Click to add credentials</div>
+            </div>
+          </div>
+          <span class="tool-chevron">▼</span>
+        </div>
+        <div class="tool-body">
+          <div class="field"><label>Platform / App Name</label>
+            <div class="input-wrap"><input type="text" name="tool2_name" placeholder="e.g. HubSpot, Xero, Gmail…" oninput="updateToolTitle(2, this.value)" /></div></div>
+          <div class="field"><label>Username / Email</label>
+            <div class="input-wrap"><input type="text" name="tool2_username" placeholder="username or email" autocomplete="off" /><span class="field-icon">👤</span></div></div>
+          <div class="field"><label>Password</label>
+            <div class="input-wrap"><input type="password" name="tool2_password" placeholder="••••••••" autocomplete="new-password" /><button type="button" class="toggle-pw" onclick="togglePwSibling(this)" aria-label="Show">👁</button></div></div>
+          <div class="field"><label>Link / URL <span class="optional">(optional)</span></label>
+            <div class="input-wrap"><input type="url" name="tool2_link" placeholder="https://" /><span class="field-icon">🔗</span></div></div>
+        </div>
+      </div>
+
+      <!-- Tool 3 -->
+      <div class="tool-section">
+        <div class="tool-header" onclick="toggleTool(this)">
+          <div class="tool-header-left">
+            <div class="tool-num" id="tool-num-3">3</div>
+            <div>
+              <div class="tool-title" id="tool-title-3">Tool 3</div>
+              <div class="tool-subtitle">Click to add credentials</div>
+            </div>
+          </div>
+          <span class="tool-chevron">▼</span>
+        </div>
+        <div class="tool-body">
+          <div class="field"><label>Platform / App Name</label>
+            <div class="input-wrap"><input type="text" name="tool3_name" placeholder="e.g. HubSpot, Xero, Gmail…" oninput="updateToolTitle(3, this.value)" /></div></div>
+          <div class="field"><label>Username / Email</label>
+            <div class="input-wrap"><input type="text" name="tool3_username" placeholder="username or email" autocomplete="off" /><span class="field-icon">👤</span></div></div>
+          <div class="field"><label>Password</label>
+            <div class="input-wrap"><input type="password" name="tool3_password" placeholder="••••••••" autocomplete="new-password" /><button type="button" class="toggle-pw" onclick="togglePwSibling(this)" aria-label="Show">👁</button></div></div>
+          <div class="field"><label>Link / URL <span class="optional">(optional)</span></label>
+            <div class="input-wrap"><input type="url" name="tool3_link" placeholder="https://" /><span class="field-icon">🔗</span></div></div>
+        </div>
+      </div>
+
+      <!-- Tool 4 -->
+      <div class="tool-section">
+        <div class="tool-header" onclick="toggleTool(this)">
+          <div class="tool-header-left">
+            <div class="tool-num" id="tool-num-4">4</div>
+            <div>
+              <div class="tool-title" id="tool-title-4">Tool 4</div>
+              <div class="tool-subtitle">Click to add credentials</div>
+            </div>
+          </div>
+          <span class="tool-chevron">▼</span>
+        </div>
+        <div class="tool-body">
+          <div class="field"><label>Platform / App Name</label>
+            <div class="input-wrap"><input type="text" name="tool4_name" placeholder="e.g. HubSpot, Xero, Gmail…" oninput="updateToolTitle(4, this.value)" /></div></div>
+          <div class="field"><label>Username / Email</label>
+            <div class="input-wrap"><input type="text" name="tool4_username" placeholder="username or email" autocomplete="off" /><span class="field-icon">👤</span></div></div>
+          <div class="field"><label>Password</label>
+            <div class="input-wrap"><input type="password" name="tool4_password" placeholder="••••••••" autocomplete="new-password" /><button type="button" class="toggle-pw" onclick="togglePwSibling(this)" aria-label="Show">👁</button></div></div>
+          <div class="field"><label>Link / URL <span class="optional">(optional)</span></label>
+            <div class="input-wrap"><input type="url" name="tool4_link" placeholder="https://" /><span class="field-icon">🔗</span></div></div>
+        </div>
+      </div>
+
+      <!-- Tool 5 -->
+      <div class="tool-section">
+        <div class="tool-header" onclick="toggleTool(this)">
+          <div class="tool-header-left">
+            <div class="tool-num" id="tool-num-5">5</div>
+            <div>
+              <div class="tool-title" id="tool-title-5">Tool 5</div>
+              <div class="tool-subtitle">Click to add credentials</div>
+            </div>
+          </div>
+          <span class="tool-chevron">▼</span>
+        </div>
+        <div class="tool-body">
+          <div class="field"><label>Platform / App Name</label>
+            <div class="input-wrap"><input type="text" name="tool5_name" placeholder="e.g. HubSpot, Xero, Gmail…" oninput="updateToolTitle(5, this.value)" /></div></div>
+          <div class="field"><label>Username / Email</label>
+            <div class="input-wrap"><input type="text" name="tool5_username" placeholder="username or email" autocomplete="off" /><span class="field-icon">👤</span></div></div>
+          <div class="field"><label>Password</label>
+            <div class="input-wrap"><input type="password" name="tool5_password" placeholder="••••••••" autocomplete="new-password" /><button type="button" class="toggle-pw" onclick="togglePwSibling(this)" aria-label="Show">👁</button></div></div>
+          <div class="field"><label>Link / URL <span class="optional">(optional)</span></label>
+            <div class="input-wrap"><input type="url" name="tool5_link" placeholder="https://" /><span class="field-icon">🔗</span></div></div>
+        </div>
+      </div>
+
+      <div class="security-note" style="margin-top:8px;">
+        <span class="icon">🔒</span>
+        <p>All credentials are encrypted in transit and only used to connect your tools during setup.</p>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn btn-outline" onclick="goTo(2)">← Back</button>
+        <button type="button" class="btn btn-primary" onclick="goTo(4)">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       STEP 4 — Personality, Goals & Submit
+  ══════════════════════════════ -->
+  <div class="card" id="card-4">
+    <div class="card-header">
+      <div class="card-icon amber">🧠</div>
+      <div class="card-header-text">
+        <h2>Personality & Goals</h2>
+        <p>Help us shape your agent's character and define what success looks like for your business.</p>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <!-- soul.md -->
+      <div class="section-label">🧬 soul.md — Agent personality</div>
+      <div class="insight-box">
+        <div class="insight-title">What is soul.md?</div>
+        <p>Think of soul.md as your AI agent's personality. It defines who your agent is — its name, how it communicates, its tone, and what it should (or should never) do. This is what makes your agent feel like a natural extension of your business rather than a generic bot.</p>
+        <div class="insight-example">"My agent should be professional but friendly, always sign off with our business name, and never discuss competitors."</div>
+      </div>
+      <div class="field">
+        <label for="soulMd">Describe your agent's personality & communication style <span class="req">*</span></label>
+        <textarea id="soulMd" name="soulMd"
+          placeholder="e.g. Friendly and professional, always uses the client's first name, signs off with 'The TurnkeyAI Team', never discusses pricing without booking a call first…"></textarea>
+        <div class="field-error" id="err-soulMd">Please describe your agent's personality.</div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- goal.md -->
+      <div class="section-label">🎯 goal.md — Business goals</div>
+      <div class="insight-box">
+        <div class="insight-title">What is goal.md?</div>
+        <p>goal.md is where you tell your AI agent what success looks like for your business. Think in numbers and targets — not tasks, but outcomes. Your agent will use these goals to prioritise what it does and how hard it works.</p>
+        <div class="insight-example">"Get 10 new clients per month", "Book 20 calls per week", "Generate $50,000 in revenue this quarter", "Respond to every lead within 15 minutes."</div>
+      </div>
+      <div class="field">
+        <label for="goalMd">What are your business goals? What does success look like? <span class="req">*</span></label>
+        <textarea id="goalMd" name="goalMd"
+          placeholder="e.g. Book 15 discovery calls per month, respond to all leads within 10 minutes, generate $30k in new revenue this quarter…"></textarea>
+        <div class="field-error" id="err-goalMd">Please share your business goals.</div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Anything else -->
+      <div class="field">
+        <label for="anythingElse">Anything else you'd like us to know before we get started? <span class="optional">(optional)</span></label>
+        <textarea id="anythingElse" name="anythingElse" style="min-height:80px;"
+          placeholder="Any specific instructions, preferences, or context that would help us set up your agent…"></textarea>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Terms & Conditions -->
+      <div class="field">
+        <label style="margin-bottom:8px;">Terms & Conditions <span class="req">*</span></label>
+        <label class="checkbox-field" id="tcWrapper">
+          <input type="checkbox" id="tcCheckbox" name="termsAccepted" value="yes" />
+          <span class="checkbox-label">I have read and agree to the <a href="https://turnkeyai.com.au/terms" target="_blank">terms and conditions of TurnkeyAI</a>. I understand that by submitting this form, I authorise TurnkeyAI to proceed with my AI agent setup as described.</span>
+        </label>
+        <div class="field-error" id="err-tc">You must accept the terms and conditions to continue.</div>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn btn-outline" onclick="goTo(3)">← Back</button>
+        <button type="submit" class="btn btn-success" id="submitBtn">🚀 Submit & Launch</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       SUCCESS screen
+  ══════════════════════════════ -->
+  <div class="card" id="card-success">
+    <div class="success-screen">
+      <div class="success-icon">✅</div>
+      <h2>You're all set!</h2>
+      <p>We've received your onboarding details. Your TurnkeyAI engineer will be in touch within <strong>24 hours</strong> to kick off your setup.</p>
+      <div class="success-meta">
+        <div class="success-meta-item"><span>⚡</span><span>7 days to live</span></div>
+        <div class="success-meta-item"><span>🧠</span><span>AI-powered</span></div>
+        <div class="success-meta-item"><span>🇦🇺</span><span>Aussie support</span></div>
+      </div>
+    </div>
+  </div>
+
+</form>
+
+
+</div>
+
+<script>
+  let currentStep = 1;
+  const totalSteps = 4;
+
+  function goTo(step) {
+    if (step > currentStep && !validateStep(currentStep)) return;
+    const prev = currentStep;
+    document.getElementById('card-' + prev).classList.remove('active');
+
+    // Update step dots
+    const prevDot = document.getElementById('step-dot-' + prev);
+    if (prevDot) {
+      prevDot.classList.remove('active');
+      if (step > prev) prevDot.classList.add('done');
+      else prevDot.classList.remove('done');
+    }
+    if (step > prev) {
+      const line = document.getElementById('line-' + prev);
+      if (line) line.classList.add('done');
+    } else {
+      const line = document.getElementById('line-' + step);
+      if (line) line.classList.remove('done');
+      const prevDotBack = document.getElementById('step-dot-' + step);
+      if (prevDotBack) prevDotBack.classList.remove('done');
+    }
+
+    currentStep = step;
+    const newCard = document.getElementById('card-' + step);
+    if (newCard) {
+      newCard.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    const newDot = document.getElementById('step-dot-' + step);
+    if (newDot) { newDot.classList.remove('done'); newDot.classList.add('active'); }
+  }
+
+  function validateStep(step) {
+    let valid = true;
+    if (step === 1) {
+      const v = document.getElementById('agentName').value.trim();
+      showErr('agentName', !v);
+      if (!v) valid = false;
+    }
+    if (step === 2) {
+      const email = document.getElementById('agentEmail').value.trim();
+      const pw    = document.getElementById('agentEmailPw').value.trim();
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      showErr('agentEmail', !emailOk);
+      showErr('agentEmailPw', !pw);
+      if (!emailOk || !pw) valid = false;
+    }
+    if (step === 4) {
+      const soul = document.getElementById('soulMd').value.trim();
+      const goal = document.getElementById('goalMd').value.trim();
+      const tc   = document.getElementById('tcCheckbox').checked;
+      showErr('soulMd', !soul);
+      showErr('goalMd', !goal);
+      showErr('tc', !tc);
+      document.getElementById('tcWrapper').classList.toggle('error-border', !tc);
+      if (!soul || !goal || !tc) valid = false;
+    }
+    return valid;
+  }
+
+  function showErr(id, show) {
+    const err   = document.getElementById('err-' + id);
+    const input = document.getElementById(id);
+    if (err) err.classList.toggle('visible', show);
+    if (input) input.classList.toggle('error', show);
+  }
+
+  function toggleTool(header) {
+    header.classList.toggle('open');
+    header.nextElementSibling.classList.toggle('open');
+  }
+
+  function updateToolTitle(n, val) {
+    document.getElementById('tool-title-' + n).textContent = val.trim() || 'Tool ' + n;
+    document.getElementById('tool-num-' + n).classList.toggle('filled', !!val.trim());
+  }
+
+  function togglePw(inputId) {
+    const inp = document.getElementById(inputId);
+    if (inp) inp.type = inp.type === 'password' ? 'text' : 'password';
+  }
+
+  function togglePwSibling(btn) {
+    const inp = btn.previousElementSibling;
+    if (inp) inp.type = inp.type === 'password' ? 'text' : 'password';
+  }
+
+  // Terms checkbox live validation
+  document.getElementById('tcCheckbox').addEventListener('change', function() {
+    document.getElementById('tcWrapper').classList.toggle('error-border', !this.checked);
+    if (this.checked) {
+      document.getElementById('err-tc').classList.remove('visible');
+    }
+  });
+
+  // Form submission via Netlify
+  document.getElementById('onboardingForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (!validateStep(4)) return;
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = '⏳ Submitting…';
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(this)).toString()
+    })
+    .then(() => {
+      document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+      document.getElementById('card-success').classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      ['step-dot-1','step-dot-2','step-dot-3','step-dot-4'].forEach(id => {
+        const d = document.getElementById(id);
+        if (d) { d.classList.remove('active'); d.classList.add('done'); }
+      });
+      ['line-1','line-2','line-3'].forEach(id => {
+        const l = document.getElementById(id);
+        if (l) l.classList.add('done');
+      });
+    })
+    .catch(() => {
+      btn.disabled = false;
+      btn.textContent = '🚀 Submit & Launch';
+      alert('Something went wrong. Please try again.');
+    });
+  });
+</script>
+<footer class="tk-footer-rich">
+  <div class="tk-footer-grid">
+    <div>
+      <a href="/" class="tk-brand" style="margin-bottom: 16px;">TurnkeyAI</a>
+      <p class="tk-small" style="margin-top: 12px; max-width: 280px;">
+        Done-for-you AI automation for Australian SMEs. Live in 7 days, on a Mac Mini in your office.
+      </p>
+    </div>
+    <div>
+      <p class="tk-eyebrow" style="margin-bottom: 14px;">Explore</p>
+      <ul class="tk-footer-links">
+        <li><a href="/#packages">Packages</a></li>
+        <li><a href="/#roi">ROI calculator</a></li>
+        <li><a href="/#how">How it works</a></li>
+        <li><a href="/blog/">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="tk-eyebrow" style="margin-bottom: 14px;">Legal</p>
+      <ul class="tk-footer-links">
+        <li><a href="/legal/terms.html">Terms</a></li>
+        <li><a href="/legal/privacy.html">Privacy</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="tk-eyebrow" style="margin-bottom: 14px;">Contact</p>
+      <ul class="tk-footer-links">
+        <li><a href="mailto:start@tkai.com.au">start@tkai.com.au</a></li>
+        <li>Gold Coast, Australia</li>
+      </ul>
+    </div>
+  </div>
+  <div class="tk-footer-bottom">
+    <span>&copy; 2026 TurnkeyAI. All prices AUD ex-GST.</span>
+    <span class="tk-footer-pulse">
+      <span class="tk-pulse-dot"></span>
+      Currently accepting new clients
+    </span>
+  </div>
+</footer>
+
+<script src="/assets/shared.js" defer></script>
+</body>
+</html>

@@ -21,7 +21,7 @@ export default async (req) => {
       return new Response('No email on submission', { status: 200 });
     }
 
-    const subject = `We've started, ${firstName}. One task from you to keep us moving.`;
+    const subject = `We've started, ${firstName}. One quick task for you.`;
     const { html, text } = buildEmail({ firstName, businessName, industry, packageInterest });
 
     const resendRes = await fetch('https://api.resend.com/emails', {
@@ -62,9 +62,9 @@ function buildEmail({ firstName, businessName, industry, packageInterest }) {
 
   const text = `Hi ${firstName},
 
-Got your brief. We've already started building your AI agent on our end.
+Got your brief. Your AI agent is already on our build queue and we've started on our end.
 
-There's one thing we need from you to keep us moving:
+There's one task for you today, and it takes 5 minutes:
 
 Create a new email address for your AI agent.
 
@@ -75,25 +75,23 @@ What to do (5 minutes):
 
 1. Create a new mailbox at your business domain, for example: ai@yourbusiness.com.au. Or a fresh Google Workspace or Microsoft 365 account if that's faster.
 
-2. Reply to this email with:
-   - The new email address
-   - A temporary password (we change it once setup is complete)
-   - Whether it's hosted on Google Workspace, Microsoft 365, or another provider
+2. Reply to this email to confirm the address is ready. You don't need to send the password — we'll handle the credentials together on our first setup call.
 
-3. That's it. We take it from there.
+3. We send you a Calendly link within 2 business hours for a 30-minute setup call. On that call, we walk through the onboarding form with you, capture the credentials securely, and answer any questions.
 
-${recap ? recap + '\n\n' : ''}A note on security: any credentials you share are stored encrypted, used only for the one-time setup, and either rotated or fully revoked at your discretion once your agent is operational.
+${recap ? recap + '\n\n' : ''}A note on security: we never ask for passwords by email. All credentials shared on the setup call are stored encrypted, used only for the one-time setup, and either rotated or fully revoked at your discretion once your agent is operational.
 
 What happens next:
-- You send us the new email address (today).
-- We configure your agent and connect it to your tools (within 24 hours of receiving your details).
-- We run pre-flight checks. You hear back from us within 2 business hours of completion.
+- You create the email address (today, 5 minutes).
+- You reply to confirm it's ready.
+- We send a Calendly link for a 30-minute setup call.
+- On the call, we complete the onboarding form together and capture credentials securely.
 - Day 7: your Mac Mini is in your office, your AI agent is running.
 
 Talk soon,
 TurnkeyAI
 
-P.S. The faster the email credentials reach us, the faster we ship. Most clients reply within an hour and have their agent running by day 5.
+P.S. The faster you create the address and reply, the sooner we lock in your call slot. Most clients are on a call within 24 hours.
 `;
 
   const html = `<!doctype html>
@@ -144,7 +142,7 @@ P.S. The faster the email credentials reach us, the faster we ship. Most clients
               <p style="margin:0 0 14px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#0071e3;font-weight:600;">Brief received · work has started</p>
               <h1 style="margin:0 0 20px;font-size:36px;line-height:1.1;letter-spacing:-0.02em;font-weight:600;color:#1d1d1f;">Thanks, ${escapeHtml(firstName)}.</h1>
               <p style="margin:0;font-size:17px;line-height:1.55;color:#1d1d1f;">
-                Your AI agent is on our build queue. We've started on our end. To keep us moving, there's <strong style="font-weight:600;">one task for you today</strong>.
+                Your AI agent is on our build queue. We've started on our end. There's <strong style="font-weight:600;">one task for you today</strong>, and it takes 5 minutes.
               </p>
             </td>
           </tr>
@@ -207,8 +205,8 @@ P.S. The faster the email credentials reach us, the faster we ship. Most clients
                 <tr>
                   <td width="56" valign="top" style="font-size:48px;line-height:1;font-weight:600;letter-spacing:-0.04em;color:#0071e3;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,Helvetica,Arial,sans-serif;padding-right:16px;">02</td>
                   <td valign="top">
-                    <h3 style="margin:0 0 10px;font-size:18px;line-height:1.35;letter-spacing:-0.01em;font-weight:600;color:#1d1d1f;">Reply to this email with the details</h3>
-                    <p style="margin:0;font-size:15px;line-height:1.6;color:#424245;">The new email address, a temporary password (we rotate it after setup), and whether it's hosted on Google Workspace, Microsoft 365, or another provider.</p>
+                    <h3 style="margin:0 0 10px;font-size:18px;line-height:1.35;letter-spacing:-0.01em;font-weight:600;color:#1d1d1f;">Reply to confirm</h3>
+                    <p style="margin:0;font-size:15px;line-height:1.6;color:#424245;">Just let us know the address is ready. <strong style="font-weight:600;">You don't need to send the password</strong> — we'll handle the credentials together on our first setup call.</p>
                   </td>
                 </tr>
               </table>
@@ -222,8 +220,8 @@ P.S. The faster the email credentials reach us, the faster we ship. Most clients
                 <tr>
                   <td width="56" valign="top" style="font-size:48px;line-height:1;font-weight:600;letter-spacing:-0.04em;color:#0071e3;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,Helvetica,Arial,sans-serif;padding-right:16px;">03</td>
                   <td valign="top">
-                    <h3 style="margin:0 0 10px;font-size:18px;line-height:1.35;letter-spacing:-0.01em;font-weight:600;color:#1d1d1f;">We take it from there</h3>
-                    <p style="margin:0;font-size:15px;line-height:1.6;color:#424245;">Configuration, integration, testing. Within 24 hours of receiving your details, we run pre-flight checks and you hear back with confirmation that everything is set up.</p>
+                    <h3 style="margin:0 0 10px;font-size:18px;line-height:1.35;letter-spacing:-0.01em;font-weight:600;color:#1d1d1f;">We schedule a 30-minute setup call</h3>
+                    <p style="margin:0;font-size:15px;line-height:1.6;color:#424245;">We send you a Calendly link within 2 business hours. On the call, we walk through the onboarding form with you, capture credentials securely, and answer any questions.</p>
                   </td>
                 </tr>
               </table>
@@ -237,7 +235,7 @@ P.S. The faster the email credentials reach us, the faster we ship. Most clients
                 <tr>
                   <td style="padding:24px 28px;font-size:14px;line-height:1.55;color:#424245;">
                     <span style="display:inline-block;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#86868b;font-weight:600;margin-bottom:8px;">On security</span><br>
-                    Any credentials you share are stored encrypted, used only for the one-time setup, and either rotated or fully revoked at your discretion once your agent is operational. We never store passwords in plain text.
+                    We never ask for passwords by email. All credentials shared on the setup call are stored encrypted, used only for the one-time setup, and either rotated or fully revoked at your discretion once your agent is operational.
                   </td>
                 </tr>
               </table>
@@ -254,23 +252,29 @@ P.S. The faster the email credentials reach us, the faster we ship. Most clients
                   <td width="32" valign="top" style="padding:0 0 18px;">
                     <div style="width:24px;height:24px;border-radius:50%;background:#0071e3;color:#fff;font-size:12px;font-weight:600;line-height:24px;text-align:center;">1</div>
                   </td>
-                  <td valign="top" style="padding:2px 0 18px;font-size:15px;color:#1d1d1f;line-height:1.5;">You send us the new email address (today).</td>
+                  <td valign="top" style="padding:2px 0 18px;font-size:15px;color:#1d1d1f;line-height:1.5;">You create the email address (today, 5 minutes).</td>
                 </tr>
                 <tr>
                   <td width="32" valign="top" style="padding:0 0 18px;">
                     <div style="width:24px;height:24px;border-radius:50%;background:#0071e3;color:#fff;font-size:12px;font-weight:600;line-height:24px;text-align:center;">2</div>
                   </td>
-                  <td valign="top" style="padding:2px 0 18px;font-size:15px;color:#1d1d1f;line-height:1.5;">We configure your agent and connect it to your tools (within 24 hours).</td>
+                  <td valign="top" style="padding:2px 0 18px;font-size:15px;color:#1d1d1f;line-height:1.5;">You reply to confirm it's ready.</td>
                 </tr>
                 <tr>
                   <td width="32" valign="top" style="padding:0 0 18px;">
                     <div style="width:24px;height:24px;border-radius:50%;background:#0071e3;color:#fff;font-size:12px;font-weight:600;line-height:24px;text-align:center;">3</div>
                   </td>
-                  <td valign="top" style="padding:2px 0 18px;font-size:15px;color:#1d1d1f;line-height:1.5;">We run pre-flight checks. You hear back within 2 business hours of completion.</td>
+                  <td valign="top" style="padding:2px 0 18px;font-size:15px;color:#1d1d1f;line-height:1.5;">We send a Calendly link for a 30-minute setup call.</td>
+                </tr>
+                <tr>
+                  <td width="32" valign="top" style="padding:0 0 18px;">
+                    <div style="width:24px;height:24px;border-radius:50%;background:#0071e3;color:#fff;font-size:12px;font-weight:600;line-height:24px;text-align:center;">4</div>
+                  </td>
+                  <td valign="top" style="padding:2px 0 18px;font-size:15px;color:#1d1d1f;line-height:1.5;">On the call, we complete the onboarding form together and capture credentials securely.</td>
                 </tr>
                 <tr>
                   <td width="32" valign="top">
-                    <div style="width:24px;height:24px;border-radius:50%;background:#0071e3;color:#fff;font-size:12px;font-weight:600;line-height:24px;text-align:center;">4</div>
+                    <div style="width:24px;height:24px;border-radius:50%;background:#0071e3;color:#fff;font-size:12px;font-weight:600;line-height:24px;text-align:center;">5</div>
                   </td>
                   <td valign="top" style="padding:2px 0 0;font-size:15px;color:#1d1d1f;line-height:1.5;"><strong style="font-weight:600;">Day 7</strong>: your Mac Mini is in your office, your agent is running.</td>
                 </tr>
@@ -283,7 +287,7 @@ P.S. The faster the email credentials reach us, the faster we ship. Most clients
             <td style="background:#0a0a0a;border-radius:0 0 20px 20px;padding:40px;" align="left">
               <p style="margin:0 0 8px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#86868b;font-weight:600;">P.S.</p>
               <p style="margin:0 0 28px;font-size:17px;line-height:1.5;color:#f5f5f7;letter-spacing:-0.01em;">
-                The faster the email credentials reach us, the faster we ship. Most clients reply within an hour and have their agent running by day 5.
+                The faster you create the address and reply, the sooner we lock in your call slot. Most clients are on a call within 24 hours.
               </p>
               <div style="height:1px;background:#1d1d1f;line-height:1px;font-size:1px;margin:0 0 24px;">&nbsp;</div>
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">

@@ -62,9 +62,11 @@ function buildEmail({ firstName, businessName, industry, packageInterest }) {
 
   const text = `Hi ${firstName},
 
-Got your brief. Your AI agent is already on our build queue and we've started on our end.
+Got your brief. Your AI agent is on our build queue and we've started on our end.
 
-There's one task for you today, and it takes 5 minutes:
+We'll be in touch within 2 business hours to schedule your setup call.
+
+In the meantime, there's one task for you, and it takes 5 minutes:
 
 Create a new email address for your AI agent.
 
@@ -75,23 +77,22 @@ What to do (5 minutes):
 
 1. Create a new mailbox at your business domain, for example: ai@yourbusiness.com.au. Or a fresh Google Workspace or Microsoft 365 account if that's faster.
 
-2. Reply to this email to confirm the address is ready. You don't need to send the password — we'll handle the credentials together on our first setup call.
+2. That's it. Just have the address and a temporary password ready for our call.
 
-3. We send you a Calendly link within 2 business hours for a 30-minute setup call. On that call, we walk through the onboarding form with you, capture the credentials securely, and answer any questions.
+${recap ? recap + '\n\n' : ''}On the call, we'll walk through the onboarding form together (it captures all the access details and workflow specifics), and you'll be set up by Day 7.
 
-${recap ? recap + '\n\n' : ''}A note on security: we never ask for passwords by email. All credentials shared on the setup call are stored encrypted, used only for the one-time setup, and either rotated or fully revoked at your discretion once your agent is operational.
+A note on security: we never ask for passwords by email. All credentials shared on the call are stored encrypted, used only for the one-time setup, and either rotated or fully revoked at your discretion once your agent is operational.
 
 What happens next:
 - You create the email address (today, 5 minutes).
-- You reply to confirm it's ready.
-- We send a Calendly link for a 30-minute setup call.
+- We contact you within 2 business hours to schedule the call.
 - On the call, we complete the onboarding form together and capture credentials securely.
 - Day 7: your Mac Mini is in your office, your AI agent is running.
 
 Talk soon,
 TurnkeyAI
 
-P.S. The faster you create the address and reply, the sooner we lock in your call slot. Most clients are on a call within 24 hours.
+P.S. The faster you create the address, the smoother the call. Most clients have it ready before we even pick up the phone.
 `;
 
   const html = `<!doctype html>
@@ -111,7 +112,7 @@ P.S. The faster you create the address and reply, the sooner we lock in your cal
 
   <!-- Preheader (hidden) -->
   <div style="display:none;font-size:1px;color:#f2f2f4;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;">
-    Your AI agent build has started. One quick task from you to keep us moving.
+    Your AI agent build has started. We'll be in touch shortly. One quick task for you in the meantime.
   </div>
 
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f2f2f4;">
@@ -141,8 +142,11 @@ P.S. The faster you create the address and reply, the sooner we lock in your cal
             <td style="background:#ffffff;padding:56px 40px 32px;" align="left">
               <p style="margin:0 0 14px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#0071e3;font-weight:600;">Brief received · work has started</p>
               <h1 style="margin:0 0 20px;font-size:36px;line-height:1.1;letter-spacing:-0.02em;font-weight:600;color:#1d1d1f;">Thanks, ${escapeHtml(firstName)}.</h1>
+              <p style="margin:0 0 12px;font-size:17px;line-height:1.55;color:#1d1d1f;">
+                Your AI agent is on our build queue. We've started on our end.
+              </p>
               <p style="margin:0;font-size:17px;line-height:1.55;color:#1d1d1f;">
-                Your AI agent is on our build queue. We've started on our end. There's <strong style="font-weight:600;">one task for you today</strong>, and it takes 5 minutes.
+                We'll be in touch <strong style="font-weight:600;">within 2 business hours</strong> to schedule your setup call. In the meantime, there's <strong style="font-weight:600;">one task for you</strong>, and it takes 5 minutes.
               </p>
             </td>
           </tr>
@@ -200,28 +204,13 @@ P.S. The faster you create the address and reply, the sooner we lock in your cal
 
           <!-- STEP 2 -->
           <tr>
-            <td style="background:#ffffff;padding:32px 40px 0;" align="left">
+            <td style="background:#ffffff;padding:32px 40px 48px;" align="left">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td width="56" valign="top" style="font-size:48px;line-height:1;font-weight:600;letter-spacing:-0.04em;color:#0071e3;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,Helvetica,Arial,sans-serif;padding-right:16px;">02</td>
                   <td valign="top">
-                    <h3 style="margin:0 0 10px;font-size:18px;line-height:1.35;letter-spacing:-0.01em;font-weight:600;color:#1d1d1f;">Reply to confirm</h3>
-                    <p style="margin:0;font-size:15px;line-height:1.6;color:#424245;">Just let us know the address is ready. <strong style="font-weight:600;">You don't need to send the password</strong> — we'll handle the credentials together on our first setup call.</p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- STEP 3 -->
-          <tr>
-            <td style="background:#ffffff;padding:32px 40px 48px;" align="left">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-                <tr>
-                  <td width="56" valign="top" style="font-size:48px;line-height:1;font-weight:600;letter-spacing:-0.04em;color:#0071e3;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,Helvetica,Arial,sans-serif;padding-right:16px;">03</td>
-                  <td valign="top">
-                    <h3 style="margin:0 0 10px;font-size:18px;line-height:1.35;letter-spacing:-0.01em;font-weight:600;color:#1d1d1f;">We schedule a 30-minute setup call</h3>
-                    <p style="margin:0;font-size:15px;line-height:1.6;color:#424245;">We send you a Calendly link within 2 business hours. On the call, we walk through the onboarding form with you, capture credentials securely, and answer any questions.</p>
+                    <h3 style="margin:0 0 10px;font-size:18px;line-height:1.35;letter-spacing:-0.01em;font-weight:600;color:#1d1d1f;">Have it ready for our call</h3>
+                    <p style="margin:0;font-size:15px;line-height:1.6;color:#424245;">That's it. Just have the email address and a temporary password ready when we call. We'll walk through the onboarding form together and capture everything securely on the call.</p>
                   </td>
                 </tr>
               </table>
@@ -235,7 +224,7 @@ P.S. The faster you create the address and reply, the sooner we lock in your cal
                 <tr>
                   <td style="padding:24px 28px;font-size:14px;line-height:1.55;color:#424245;">
                     <span style="display:inline-block;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#86868b;font-weight:600;margin-bottom:8px;">On security</span><br>
-                    We never ask for passwords by email. All credentials shared on the setup call are stored encrypted, used only for the one-time setup, and either rotated or fully revoked at your discretion once your agent is operational.
+                    We never ask for passwords by email. All credentials shared on the call are stored encrypted, used only for the one-time setup, and either rotated or fully revoked at your discretion once your agent is operational.
                   </td>
                 </tr>
               </table>
@@ -258,23 +247,17 @@ P.S. The faster you create the address and reply, the sooner we lock in your cal
                   <td width="32" valign="top" style="padding:0 0 18px;">
                     <div style="width:24px;height:24px;border-radius:50%;background:#0071e3;color:#fff;font-size:12px;font-weight:600;line-height:24px;text-align:center;">2</div>
                   </td>
-                  <td valign="top" style="padding:2px 0 18px;font-size:15px;color:#1d1d1f;line-height:1.5;">You reply to confirm it's ready.</td>
+                  <td valign="top" style="padding:2px 0 18px;font-size:15px;color:#1d1d1f;line-height:1.5;">We contact you within 2 business hours to schedule the setup call.</td>
                 </tr>
                 <tr>
                   <td width="32" valign="top" style="padding:0 0 18px;">
                     <div style="width:24px;height:24px;border-radius:50%;background:#0071e3;color:#fff;font-size:12px;font-weight:600;line-height:24px;text-align:center;">3</div>
                   </td>
-                  <td valign="top" style="padding:2px 0 18px;font-size:15px;color:#1d1d1f;line-height:1.5;">We send a Calendly link for a 30-minute setup call.</td>
-                </tr>
-                <tr>
-                  <td width="32" valign="top" style="padding:0 0 18px;">
-                    <div style="width:24px;height:24px;border-radius:50%;background:#0071e3;color:#fff;font-size:12px;font-weight:600;line-height:24px;text-align:center;">4</div>
-                  </td>
                   <td valign="top" style="padding:2px 0 18px;font-size:15px;color:#1d1d1f;line-height:1.5;">On the call, we complete the onboarding form together and capture credentials securely.</td>
                 </tr>
                 <tr>
                   <td width="32" valign="top">
-                    <div style="width:24px;height:24px;border-radius:50%;background:#0071e3;color:#fff;font-size:12px;font-weight:600;line-height:24px;text-align:center;">5</div>
+                    <div style="width:24px;height:24px;border-radius:50%;background:#0071e3;color:#fff;font-size:12px;font-weight:600;line-height:24px;text-align:center;">4</div>
                   </td>
                   <td valign="top" style="padding:2px 0 0;font-size:15px;color:#1d1d1f;line-height:1.5;"><strong style="font-weight:600;">Day 7</strong>: your Mac Mini is in your office, your agent is running.</td>
                 </tr>
@@ -287,7 +270,7 @@ P.S. The faster you create the address and reply, the sooner we lock in your cal
             <td style="background:#0a0a0a;border-radius:0 0 20px 20px;padding:40px;" align="left">
               <p style="margin:0 0 8px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#86868b;font-weight:600;">P.S.</p>
               <p style="margin:0 0 28px;font-size:17px;line-height:1.5;color:#f5f5f7;letter-spacing:-0.01em;">
-                The faster you create the address and reply, the sooner we lock in your call slot. Most clients are on a call within 24 hours.
+                The faster you create the address, the smoother the call. Most clients have it ready before we even pick up the phone.
               </p>
               <div style="height:1px;background:#1d1d1f;line-height:1px;font-size:1px;margin:0 0 24px;">&nbsp;</div>
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">

@@ -28,19 +28,36 @@ const exposed = src
 const tmp = resolve(__dirname, '_pipeline-test-module.mjs');
 writeFileSync(tmp, exposed);
 
-const { generateSpinContent, renderPdf, buildPdfHtml } = await import('./_pipeline-test-module.mjs?t=' + Date.now());
+const exposed2 = exposed + '\nexport { fetchSiteContent };\n';
+writeFileSync(tmp, exposed2);
+const { generateSpinContent, renderPdf, buildPdfHtml, fetchSiteContent } = await import('./_pipeline-test-module.mjs?t=' + Date.now());
 
 const fakeLead = {
-  firstName: 'Sarah',
-  lastName: 'Mitchell',
-  businessName: 'Brisbane Bookkeeping Co',
-  industry: 'accounting',
+  firstName: 'Kurt',
+  lastName: 'Tester',
+  businessName: 'High St',
+  website: 'high-st.com.au',
+  industry: 'hospitality',
   packageInterest: 'business',
 };
 
+console.log('\n=== Step 0: Fetch lead website ===');
+let siteContent = null;
+if (fakeLead.website) {
+  const ts = Date.now();
+  siteContent = await fetchSiteContent(fakeLead.website);
+  console.log(`✓ Site fetched in ${((Date.now() - ts) / 1000).toFixed(1)}s`);
+  if (siteContent) {
+    console.log(`  ${siteContent.length} chars extracted`);
+    console.log(`  preview (first 400 chars):\n    ${siteContent.slice(0, 400).replace(/\n/g, ' ')}...`);
+  } else {
+    console.log('  Site fetch returned null — falling back to no-site mode');
+  }
+}
+
 console.log('\n=== Step 1: Calling Claude Sonnet 4.5 for SPIN content ===');
 const t0 = Date.now();
-const spin = await generateSpinContent(fakeLead);
+const spin = await generateSpinContent({ ...fakeLead, siteContent });
 console.log(`✓ Claude responded in ${((Date.now() - t0) / 1000).toFixed(1)}s`);
 console.log(`  headline: ${spin.headline}`);
 console.log(`  recommended_package: ${spin.recommended_package}`);

@@ -1922,9 +1922,15 @@ body {
         </div>
       </div>
 
-      <div class="tk-field">
-        <label class="tk-label">Business name</label>
-        <input class="tk-input" type="text" name="businessName" placeholder="e.g. Smith Plumbing" required>
+      <div class="tk-field-row">
+        <div>
+          <label class="tk-label">Business name</label>
+          <input class="tk-input" type="text" name="businessName" placeholder="e.g. Smith Plumbing" required>
+        </div>
+        <div>
+          <label class="tk-label">Website</label>
+          <input class="tk-input" type="text" name="website" placeholder="yourbusiness.com.au" autocomplete="url" inputmode="url">
+        </div>
       </div>
 
       <div class="tk-field">
@@ -2361,6 +2367,7 @@ body {
         email:     form.email.value,
         phone:     form.phone.value || '',
         businessName:    form.businessName.value,
+        website:         (form.website?.value || '').trim(),
         industry:        form.industry.value,
         packageInterest: form.packageInterest.value
       });

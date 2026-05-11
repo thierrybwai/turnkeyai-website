@@ -22,6 +22,7 @@ export default async (req) => {
     const email = (data.email || '').trim();
     const phone = (data.phone || '').trim();
     const businessName = (data.businessName || '').trim();
+    const website = (data.website || '').trim();
     const industry = (data.industry || '').trim();
     const packageInterest = (data.packageInterest || '').trim();
 
@@ -29,12 +30,23 @@ export default async (req) => {
       return new Response('No email on submission', { status: 200 });
     }
 
-    const leadCtx = { firstName, lastName, email, phone, businessName, industry, packageInterest };
+    const leadCtx = { firstName, lastName, email, phone, businessName, website, industry, packageInterest };
 
-    // 1. Generate SPIN content via Claude (graceful fallback if it fails)
+    // 1a. Fetch the lead's website (graceful skip if missing/fails)
+    let siteContent = null;
+    if (website) {
+      try {
+        siteContent = await fetchSiteContent(website);
+        console.log(`Site content fetched: ${siteContent ? siteContent.length + ' chars' : 'empty'}`);
+      } catch (err) {
+        console.error('Site fetch failed:', err.message);
+      }
+    }
+
+    // 1b. Generate SPIN content via Claude (graceful fallback if it fails)
     let spin = null;
     try {
-      spin = await generateSpinContent(leadCtx);
+      spin = await generateSpinContent({ ...leadCtx, siteContent });
       console.log('Claude SPIN content generated successfully');
     } catch (err) {
       console.error('Claude generation failed:', err.message);
@@ -107,10 +119,13 @@ export default async (req) => {
 // ─────────────────────────────────────────────────────
 // CLAUDE — SPIN content generation
 // ─────────────────────────────────────────────────────
-async function generateSpinContent({ firstName, businessName, industry, packageInterest }) {
+async function generateSpinContent({ firstName, businessName, website, industry, packageInterest, siteContent }) {
   const industryLabel = prettyIndustry(industry) || 'their business';
   const businessLabel = businessName || 'their business';
   const packageLabel = prettyPackage(packageInterest);
+  const siteBlock = siteContent
+    ? `\n\nReal website content from ${website} (use specific details from this — services they offer, team size, suburbs, named tools, anything that proves you actually read their site):\n----- SITE CONTENT START -----\n${siteContent}\n----- SITE CONTENT END -----\n\nReference at least 2 specific facts from the site in your output (e.g. an actual service they advertise, a suburb they serve, a tool they mention, a tagline they use). Make it obvious you've done your homework.`
+    : '';
 
   const systemPrompt = `You are a senior sales strategist for TurnkeyAI, a done-for-you AI automation service for Australian SMEs.
 
@@ -138,8 +153,9 @@ Your task: generate a personalized SPIN-selling deployment plan for a specific l
   const userPrompt = `Lead context:
 - First name: ${firstName}
 - Business: ${businessLabel}
+- Website: ${website || 'not provided'}
 - Industry: ${industryLabel}
-- Package they're considering: ${packageLabel}
+- Package they're considering: ${packageLabel}${siteBlock}
 
 Generate JSON in this exact shape:
 
@@ -217,6 +233,91 @@ Reply with the JSON object only. No backticks, no markdown fences.`;
   const cleaned = text.replace(/^```(?:json)?\s*/i, '').replace(/```\s*$/i, '').trim();
   const parsed = JSON.parse(cleaned);
   return parsed;
+}
+
+// ─────────────────────────────────────────────────────
+// SITE FETCH — pull text content from lead's website for hyper-personalization
+// ─────────────────────────────────────────────────────
+async function fetchSiteContent(rawUrl) {
+  // Normalize URL: add https:// if missing, strip whitespace
+  let url = String(rawUrl).trim();
+  if (!url) return null;
+  if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+
+  // Validate it's a plausible URL (basic safety filter — no internal/private addresses)
+  let parsed;
+  try { parsed = new URL(url); } catch { return null; }
+  const host = parsed.hostname.toLowerCase();
+  if (host === 'localhost' || host.startsWith('127.') || host.startsWith('10.') || host.startsWith('192.168.') || host.endsWith('.local')) {
+    return null; // refuse internal/local hosts
+  }
+
+  // Fetch with hard timeout
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+  let html = '';
+  try {
+    const res = await fetch(url, {
+      headers: {
+        'User-Agent': 'TurnkeyAI-Audit/1.0 (+https://turnkeyai.com.au)',
+        'Accept': 'text/html,application/xhtml+xml',
+        'Accept-Language': 'en-AU,en;q=0.8',
+      },
+      signal: controller.signal,
+      redirect: 'follow',
+    });
+    clearTimeout(timeout);
+    if (!res.ok) return null;
+    // Cap raw response at 200KB to avoid pulling massive pages
+    const reader = res.body.getReader();
+    const chunks = [];
+    let total = 0;
+    while (total < 200_000) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      chunks.push(value);
+      total += value.length;
+    }
+    reader.cancel();
+    const buf = Buffer.concat(chunks.map(c => Buffer.from(c)));
+    html = buf.toString('utf8');
+  } catch (err) {
+    clearTimeout(timeout);
+    console.error('fetchSiteContent network error:', err.message);
+    return null;
+  }
+
+  // Extract title + meta description for high-signal context
+  const titleMatch = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+  const descMatch = html.match(/<meta\s+name=["']description["']\s+content=["']([^"']+)["']/i)
+                 || html.match(/<meta\s+property=["']og:description["']\s+content=["']([^"']+)["']/i);
+
+  // Strip scripts, styles, html comments, and remaining tags
+  const stripped = html
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<noscript[\s\S]*?<\/noscript>/gi, ' ')
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(/<svg[\s\S]*?<\/svg>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&[a-z]+;/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  const meta = [];
+  if (titleMatch?.[1]) meta.push(`TITLE: ${titleMatch[1].trim()}`);
+  if (descMatch?.[1]) meta.push(`DESCRIPTION: ${descMatch[1].trim()}`);
+
+  // Cap at 8000 chars total. Front-load with title + description.
+  const metaBlock = meta.length ? meta.join('\n') + '\n\nPAGE TEXT:\n' : '';
+  const remainingBudget = Math.max(0, 8000 - metaBlock.length);
+  return (metaBlock + stripped.slice(0, remainingBudget)).trim();
 }
 
 // ─────────────────────────────────────────────────────

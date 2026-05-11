@@ -16,3 +16,6 @@ video/
 *~
 *.swp
 *.swo
+
+# Generated social media assets (videos, large files)
+social/

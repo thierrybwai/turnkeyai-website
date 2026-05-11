@@ -154,8 +154,7 @@ Your task: generate a personalized SPIN-selling deployment plan for a specific l
 - First name: ${firstName}
 - Business: ${businessLabel}
 - Website: ${website || 'not provided'}
-- Industry: ${industryLabel}
-- Package they're considering: ${packageLabel}${siteBlock}
+- Industry: ${industryLabel}${packageLabel ? `\n- Package they mentioned: ${packageLabel}` : ''}${siteBlock}
 
 Generate JSON in this exact shape:
 
@@ -364,14 +363,14 @@ function buildPdfHtml({ firstName, lastName, businessName, industry, packageInte
     enterprise: { name: 'Enterprise', price: '$24,999 AUD', specs: '5 Mac Minis · 10+ workflows · 3-month priority support' },
   }[recommendedPackage] || { name: 'Business', price: '$10,999 AUD', specs: '2 Mac Minis · 7 workflows · multi-agent · 60-day support' };
 
-  const observationRows = (spin.situation_observations || []).map((obs, i) => `
+  const observationRows = (spin.situation_observations || []).slice(0, 3).map((obs, i) => `
     <div class="obs-row">
       <div class="obs-num">${String(i + 1).padStart(2, '0')}</div>
       <p class="obs-text">${escapeHtml(obs)}</p>
     </div>
   `).join('');
 
-  const problemRows = (spin.problems || []).map((p, i) => `
+  const problemRows = (spin.problems || []).slice(0, 3).map((p, i) => `
     <div class="problem-card">
       <div class="problem-num">${String(i + 1).padStart(2, '0')}</div>
       <h3 class="problem-title">${escapeHtml(p.title)}</h3>
@@ -379,7 +378,7 @@ function buildPdfHtml({ firstName, lastName, businessName, industry, packageInte
     </div>
   `).join('');
 
-  const workflowRows = (spin.workflows || []).map((w) => `
+  const workflowRows = (spin.workflows || []).slice(0, 3).map((w) => `
     <div class="workflow-row">
       <div class="workflow-name-col">
         <p class="workflow-eyebrow">Workflow</p>
@@ -560,7 +559,16 @@ function buildPdfHtml({ firstName, lastName, businessName, industry, packageInte
     line-height: 1.4;
     color: rgba(255,255,255,0.78);
     max-width: 160mm;
-    margin-bottom: 0;
+    margin-bottom: 8mm;
+  }
+  .cover-disclaimer {
+    font-size: 10pt;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.50);
+    max-width: 160mm;
+    font-style: italic;
+    padding-top: 6mm;
+    border-top: 1px solid rgba(255,255,255,0.12);
   }
   .cover-footer {
     position: relative; z-index: 2;
@@ -746,6 +754,28 @@ function buildPdfHtml({ firstName, lastName, businessName, industry, packageInte
     font-weight: 600;
     color: #0071e3;
     letter-spacing: -0.018em;
+  }
+
+  /* ── PREVIEW CALLOUT (used on workflows page) ── */
+  .preview-callout {
+    margin-top: 10mm;
+    padding: 8mm 9mm;
+    background: rgba(0,113,227,0.06);
+    border-radius: 5mm;
+    border-left: 3pt solid #0071e3;
+  }
+  .preview-callout-label {
+    font-size: 9pt;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #0071e3;
+    font-weight: 600;
+    margin-bottom: 3mm;
+  }
+  .preview-callout p:not(.preview-callout-label) {
+    font-size: 10pt;
+    line-height: 1.55;
+    color: #424245;
   }
 
   /* ── HOW IT WORKS PAGE ── */
@@ -965,9 +995,10 @@ function buildPdfHtml({ firstName, lastName, businessName, industry, packageInte
     </div>
 
     <div class="cover-headline-block">
-      <p class="cover-eyebrow">Personalized for ${escapeHtml(businessDisplay)}</p>
+      <p class="cover-eyebrow">A preview · personalized for ${escapeHtml(businessDisplay)}</p>
       <h1 class="cover-headline">${escapeHtml(spin.headline || `${firstName}, your AI deployment plan.`)}<span class="accent">.</span></h1>
       <p class="cover-sub">${escapeHtml(spin.subheadline || `What we'd build for ${businessDisplay} and what it would save you in year one.`)}</p>
+      <p class="cover-disclaimer">A 5-minute preview of what's possible. The full plan, mapped to your exact workflows, tools, and team, lands on our 20-minute call.</p>
     </div>
 
     <div class="cover-footer">
@@ -1063,6 +1094,11 @@ function buildPdfHtml({ firstName, lastName, businessName, industry, packageInte
     <p class="lede" style="margin-bottom: 12mm;">Each runs on a Mac Mini in your office, operated through Slack or Telegram in plain English. No SaaS subscription. No developers.</p>
 
     <div>${workflowRows}</div>
+
+    <div class="preview-callout">
+      <p class="preview-callout-label">A small example</p>
+      <p>These are three of the workflows we'd build for you. The full deployment is broader: typically 5 to 10 workflows tailored to your exact tools and pain points. We map the complete scope on our 20-minute call.</p>
+    </div>
 
     <div class="page-foot">
       <span>${escapeHtml(businessDisplay)}</span>

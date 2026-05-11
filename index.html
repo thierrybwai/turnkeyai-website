@@ -1600,7 +1600,7 @@ body {
           <li>2-hour staff onboarding session</li>
           <li>30-day access to our dedicated online support</li>
         </ul>
-        <a href="#booking" onclick="setPkg('professional')" class="tk-btn tk-btn--ghost tk-btn--block tk-pkg-cta">Get started</a>
+        <a href="#booking" class="tk-btn tk-btn--ghost tk-btn--block tk-pkg-cta">Get started</a>
       </div>
 
       <!-- BUSINESS -->
@@ -1628,7 +1628,7 @@ body {
           <li>Half-day staff onboarding session</li>
           <li>60-day access to our dedicated online support</li>
         </ul>
-        <a href="#booking" onclick="setPkg('business')" class="tk-btn tk-btn--primary tk-btn--block tk-pkg-cta">Get started <span class="arrow">→</span></a>
+        <a href="#booking" class="tk-btn tk-btn--primary tk-btn--block tk-pkg-cta">Get started <span class="arrow">→</span></a>
       </div>
 
       <!-- ENTERPRISE -->
@@ -1656,7 +1656,7 @@ body {
           <li>Full-day staff training session</li>
           <li>3-month priority access to our dedicated online support</li>
         </ul>
-        <a href="#booking" onclick="setPkg('enterprise')" class="tk-btn tk-btn--ghost tk-btn--block tk-pkg-cta">Get started</a>
+        <a href="#booking" class="tk-btn tk-btn--ghost tk-btn--block tk-pkg-cta">Get started</a>
       </div>
     </div>
   </div>
@@ -1970,16 +1970,6 @@ body {
         <div id="examplesContent"></div>
       </div>
 
-      <div class="tk-field">
-        <label class="tk-label">Which package interests you most?</label>
-        <select class="tk-select" name="packageInterest">
-          <option value="">Select a package…</option>
-          <option value="professional">Professional · 1 Mac Mini ($5,999)</option>
-          <option value="business">Business · 2 Mac Minis ($10,999) ← Most Popular</option>
-          <option value="enterprise">Enterprise · AI Command Centre ($24,999)</option>
-          <option value="unsure">Not sure yet, help me decide</option>
-        </select>
-      </div>
 
       <button type="submit" id="submitBtn" class="tk-btn tk-btn--primary tk-btn--lg tk-btn--block" style="margin-top: 12px;">Get my personalized plan →</button>
       <p class="tk-small tk-center" style="margin-top: 16px;">Personalized 8-page PDF in your inbox in 30 seconds. Human follow-up within 2 business hours. No spam.</p>
@@ -2372,8 +2362,7 @@ body {
         phone:     form.phone.value || '',
         businessName:    form.businessName.value,
         website:         (form.website?.value || '').trim(),
-        industry:        form.industry.value,
-        packageInterest: form.packageInterest.value
+        industry:        form.industry.value
       });
       const r = await fetch('/', { method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: params.toString() });
       if (r.ok) {
@@ -2383,7 +2372,6 @@ body {
             gtag('event', 'generate_lead', {
               event_category: 'engagement',
               event_label: form.industry.value || 'unknown',
-              package_interest: form.packageInterest.value || 'unknown',
               value: 1
             });
             gtag('event', 'form_submission', {

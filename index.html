@@ -1890,10 +1890,14 @@ body {
 <section id="booking" class="tk-section">
   <div class="tk-content tk-center" style="margin-bottom: 48px;">
     <p class="tk-eyebrow">Get started</p>
-    <h2 class="tk-h1" data-mask-reveal style="margin-bottom: 16px;">Tell us about your business. We'll be in touch within 2 hours.</h2>
-    <p class="tk-lede tk-muted" style="max-width: 620px; margin: 0 auto;">
-      A real person reads what you send and replies with the next step. No sales pitch. No obligation. No hard sell.
+    <h2 class="tk-h1" data-mask-reveal style="margin-bottom: 20px;">Tell us about your business. Get a personalized AI plan in 30 seconds.</h2>
+    <p class="tk-lede tk-muted" style="max-width: 640px; margin: 0 auto 24px;">
+      Our AI reads your website, drafts an 8-page deployment plan specific to your business, and emails it to you instantly. A real person follows up within 2 business hours.
     </p>
+    <div style="display: inline-flex; align-items: center; gap: 10px; padding: 8px 18px; background: rgba(0,113,227,0.08); border-radius: 100px; font-size: 13px; font-weight: 500; color: #0071e3; margin: 0 auto;">
+      <span style="width: 6px; height: 6px; border-radius: 50%; background: #0071e3;"></span>
+      Includes your industry's 3 highest-ROI workflows, year-1 ROI estimate, and recommended package
+    </div>
   </div>
 
   <div class="tk-card tk-content" style="padding: 48px;">
@@ -1977,8 +1981,8 @@ body {
         </select>
       </div>
 
-      <button type="submit" id="submitBtn" class="tk-btn tk-btn--primary tk-btn--lg tk-btn--block" style="margin-top: 12px;">Send my request →</button>
-      <p class="tk-small tk-center" style="margin-top: 16px;">We'll respond within 2 business hours. No spam. No hard sell. Just a clear next step.</p>
+      <button type="submit" id="submitBtn" class="tk-btn tk-btn--primary tk-btn--lg tk-btn--block" style="margin-top: 12px;">Get my personalized plan →</button>
+      <p class="tk-small tk-center" style="margin-top: 16px;">Personalized 8-page PDF in your inbox in 30 seconds. Human follow-up within 2 business hours. No spam.</p>
     </form>
   </div>
 
@@ -2397,9 +2401,9 @@ body {
         } catch (e) { /* idem */ }
         window.location.href = '/thank-you';
       }
-      else { alert('Something went wrong. Try again.'); submitBtn.disabled = false; submitBtn.textContent = 'Send my request →'; }
+      else { alert('Something went wrong. Try again.'); submitBtn.disabled = false; submitBtn.textContent = 'Get my personalized plan →'; }
     } catch (err) {
-      alert('Error sending form'); submitBtn.disabled = false; submitBtn.textContent = 'Send my request →';
+      alert('Error sending form'); submitBtn.disabled = false; submitBtn.textContent = 'Get my personalized plan →';
     }
   }
 </script>

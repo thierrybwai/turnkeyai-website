@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Support: When something breaks, your AI gets fixed in hours | TurnkeyAI</title>
+<meta name="description" content="Submit a ticket and our support agent diagnoses your Mac Mini, drafts the fix, and applies it with your OK. Average resolution: 2 business hours. From $200 per incident or $1,000/month unlimited.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="canonical" href="https://turnkeyai.com.au/support/">
+<meta property="og:title" content="TurnkeyAI Support: AI-led remote support for your Mac Mini deployment">
+<meta property="og:description" content="Average resolution: 2 business hours. From $200 per incident or $1,000/month unlimited.">
+<meta property="og:url" content="https://turnkeyai.com.au/support/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://turnkeyai.com.au/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://turnkeyai.com.au/og-image.png">
+<link rel="stylesheet" href="/assets/brand.css">
+<style>
+  /* Support-page specific overlays */
+  .sp-tier-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    align-items: stretch;
+  }
+  .sp-tier {
+    position: relative;
+    background: var(--tk-bg-elev);
+    border-radius: 22px;
+    padding: 36px 32px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.03), 0 12px 32px -16px hsl(var(--tk-shadow-color) / 0.18);
+    display: flex;
+    flex-direction: column;
+    transition: transform 500ms var(--tk-ease-out), box-shadow 500ms var(--tk-ease-out);
+  }
+  .sp-tier:hover { transform: translateY(-4px); box-shadow: 0 1px 1px rgba(0,0,0,0.04), 0 24px 48px -20px hsl(var(--tk-shadow-color) / 0.25); }
+  .sp-tier--featured {
+    background: var(--tk-bg-deep);
+    color: #f5f5f7;
+    transform: translateY(-6px);
+  }
+  .sp-tier--featured:hover { transform: translateY(-12px); }
+  .sp-tier--featured .sp-tier-eyebrow { color: #4aa1ff; }
+  .sp-tier--featured .sp-tier-price-amount { color: #ffffff; }
+  .sp-tier--featured .sp-tier-price-cadence { color: rgba(255,255,255,0.55); }
+  .sp-tier--featured .sp-tier-feature { color: rgba(255,255,255,0.78); }
+  .sp-tier--featured .sp-tier-feature::before { color: #4aa1ff; }
+  .sp-badge-most-picked {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--tk-accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  .sp-tier-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--tk-accent);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .sp-tier-name {
+    font-family: var(--tk-font-display);
+    font-size: 26px;
+    line-height: 1.15;
+    letter-spacing: -0.022em;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .sp-tier-price {
+    margin-bottom: 24px;
+  }
+  .sp-tier-price-amount {
+    font-family: var(--tk-font-display);
+    font-size: 44px;
+    line-height: 1;
+    letter-spacing: -0.032em;
+    font-weight: 600;
+    color: var(--tk-fg);
+  }
+  .sp-tier-price-cadence {
+    font-size: 14px;
+    color: var(--tk-fg-muted);
+    margin-top: 6px;
+  }
+  .sp-tier-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+  }
+  .sp-tier-feature {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--tk-fg);
+    padding-left: 24px;
+    position: relative;
+  }
+  .sp-tier-feature::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--tk-accent);
+    font-weight: 600;
+  }
+  .sp-cta {
+    margin-top: auto;
+  }
+
+  /* How-it-works grid */
+  .sp-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .sp-step {
+    padding: 28px;
+    background: var(--tk-bg-elev);
+    border-radius: 20px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.03), 0 12px 32px -16px hsl(var(--tk-shadow-color) / 0.12);
+  }
+  .sp-step-num {
+    font-family: var(--tk-font-display);
+    font-size: 36px;
+    line-height: 1;
+    letter-spacing: -0.035em;
+    font-weight: 600;
+    color: var(--tk-accent);
+    margin-bottom: 16px;
+  }
+  .sp-step h3 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+  .sp-step p { font-size: 14px; line-height: 1.55; color: var(--tk-fg-muted); }
+
+  /* FAQ */
+  .sp-faq-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 56px;
+  }
+  @media (max-width: 720px) { .sp-faq-grid { grid-template-columns: 1fr; } }
+  .sp-faq-item h3 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+  .sp-faq-item p { font-size: 15px; line-height: 1.6; color: var(--tk-fg-muted); }
+
+  /* Stat strip */
+  .sp-stat-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 40px;
+    text-align: left;
+  }
+  .sp-stat-num {
+    font-family: var(--tk-font-display);
+    font-size: 44px;
+    line-height: 1;
+    letter-spacing: -0.032em;
+    font-weight: 600;
+    color: var(--tk-fg);
+    margin-bottom: 6px;
+  }
+  .sp-stat-label {
+    font-size: 13px;
+    color: var(--tk-fg-muted);
+  }
+</style>
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "wikl0ltns0");
+</script>
+<!-- Google Analytics (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DHZ47DHP0B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DHZ47DHP0B');
+</script>
+</head>
+<body>
+
+<nav class="tk-nav">
+  <div class="tk-nav-inner">
+    <a href="/" class="tk-brand">TurnkeyAI</a>
+    <ul class="tk-nav-links">
+      <li><a href="/#packages" class="tk-nav-link">Packages</a></li>
+      <li><a href="/#roi" class="tk-nav-link">ROI</a></li>
+      <li><a href="/#how" class="tk-nav-link">How it works</a></li>
+      <li><a href="/blog/" class="tk-nav-link">Blog</a></li>
+      <li><a href="/support/" class="tk-nav-link" style="opacity: 1;">Support</a></li>
+    </ul>
+    <a href="#tiers" class="tk-btn tk-btn--primary tk-btn--sm">Get support</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="tk-section tk-section--tight" style="padding-top: 80px; padding-bottom: 32px;">
+  <div class="tk-content tk-fade-up">
+    <p class="tk-eyebrow">Support · for existing TurnkeyAI clients</p>
+    <h1 class="tk-h1" style="margin-bottom: 20px;">When something breaks, your AI gets fixed in hours, not days.</h1>
+    <p class="tk-lede tk-muted" style="max-width: 720px; margin-bottom: 28px;">
+      Submit a ticket. Our support agent connects to your Mac Mini, diagnoses the issue, drafts the fix, and either applies it with your OK or hands you the exact steps. Average resolution: 2 business hours.
+    </p>
+    <div style="display: inline-flex; gap: 12px; flex-wrap: wrap;">
+      <a href="#tiers" class="tk-btn tk-btn--primary tk-btn--lg">See support plans</a>
+      <a href="/support/new-ticket/" class="tk-btn tk-btn--ghost tk-btn--lg">Already a subscriber? Open a ticket</a>
+    </div>
+  </div>
+</header>
+
+<!-- STAT STRIP -->
+<section style="padding: 32px 22px 64px;">
+  <div class="tk-content tk-fade-up">
+    <div class="sp-stat-strip">
+      <div>
+        <div class="sp-stat-num">2h</div>
+        <div class="sp-stat-label">Average resolution time</div>
+      </div>
+      <div>
+        <div class="sp-stat-num">98.4%</div>
+        <div class="sp-stat-label">First-pass fix rate</div>
+      </div>
+      <div>
+        <div class="sp-stat-num">$0</div>
+        <div class="sp-stat-label">If we can't fix it</div>
+      </div>
+      <div>
+        <div class="sp-stat-num">24/7</div>
+        <div class="sp-stat-label">Ticket intake (Always-On tier)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIERS -->
+<section id="tiers" class="tk-section tk-section--alt" style="padding-top: 96px; padding-bottom: 96px;">
+  <div class="tk-wide">
+    <div class="tk-fade-up tk-center" style="margin-bottom: 56px;">
+      <p class="tk-eyebrow">Plans</p>
+      <h2 class="tk-h2" style="margin-bottom: 16px;">Pay when you break it. Or never worry again.</h2>
+      <p class="tk-lede tk-muted" style="max-width: 640px; margin: 0 auto;">
+        Most clients pick Always-On after their first incident. The math is obvious.
+      </p>
+    </div>
+
+    <div class="sp-tier-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); max-width: 880px; margin: 0 auto;">
+
+      <!-- TIER 1: Pay-per-incident -->
+      <div class="sp-tier tk-fade-up">
+        <p class="sp-tier-eyebrow">One-off fix</p>
+        <h3 class="sp-tier-name">Pay-per-Incident</h3>
+        <div class="sp-tier-price">
+          <div class="sp-tier-price-amount">$200</div>
+          <div class="sp-tier-price-cadence">AUD · one-time, per ticket</div>
+        </div>
+        <ul class="sp-tier-features">
+          <li class="sp-tier-feature">1 ticket, end-to-end resolution</li>
+          <li class="sp-tier-feature">Resolution within 4 business hours</li>
+          <li class="sp-tier-feature">Includes up to 1 hour of agent work</li>
+          <li class="sp-tier-feature">Escalates to human engineer if needed</li>
+          <li class="sp-tier-feature">Refund if we can't fix it</li>
+          <li class="sp-tier-feature">No subscription, no commitment</li>
+        </ul>
+        <a href="https://buy.stripe.com/3cIbJ36cj0nmbFDdMv2Ji01" class="tk-btn tk-btn--ghost tk-btn--block sp-cta">Get one-off support</a>
+      </div>
+
+      <!-- TIER 2: Always-On (FEATURED) -->
+      <div class="sp-tier sp-tier--featured tk-fade-up">
+        <span class="sp-badge-most-picked">Most picked</span>
+        <p class="sp-tier-eyebrow">For businesses that depend on their AI</p>
+        <h3 class="sp-tier-name">Always-On</h3>
+        <div class="sp-tier-price">
+          <div class="sp-tier-price-amount">$1,000</div>
+          <div class="sp-tier-price-cadence">AUD / month · cancel anytime</div>
+        </div>
+        <ul class="sp-tier-features">
+          <li class="sp-tier-feature">Unlimited support tickets</li>
+          <li class="sp-tier-feature">Priority queue: response within 1 hour</li>
+          <li class="sp-tier-feature">Monthly automated health check</li>
+          <li class="sp-tier-feature">1 new workflow built per month</li>
+          <li class="sp-tier-feature">Phone support, business hours</li>
+          <li class="sp-tier-feature">Quarterly performance review (30 min)</li>
+          <li class="sp-tier-feature">99.5% uptime SLA, credit-backed</li>
+          <li class="sp-tier-feature">Cancel anytime, no penalty</li>
+        </ul>
+        <a href="https://buy.stripe.com/7sYbJ39ovc64bFDcIr2Ji02" class="tk-btn tk-btn--primary tk-btn--block sp-cta">Subscribe Always-On <span class="arrow">→</span></a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="tk-section" id="how-it-works">
+  <div class="tk-content">
+    <div class="tk-fade-up tk-center" style="margin-bottom: 56px;">
+      <p class="tk-eyebrow">How it works</p>
+      <h2 class="tk-h2" style="margin-bottom: 16px;">5 steps from ticket to resolution.</h2>
+      <p class="tk-lede tk-muted" style="max-width: 640px; margin: 0 auto;">
+        Our support agent does the heavy lifting. You stay in control of every change applied to your system.
+      </p>
+    </div>
+
+    <div class="sp-steps tk-fade-up">
+      <div class="sp-step">
+        <div class="sp-step-num">01</div>
+        <h3>Submit a ticket</h3>
+        <p>Describe the problem in plain English. Tell us how urgent it is and how we can reach your Mac Mini.</p>
+      </div>
+      <div class="sp-step">
+        <div class="sp-step-num">02</div>
+        <h3>Agent reads your system</h3>
+        <p>Through your existing OpenClaw extension, our support agent pulls logs, config, and health metrics. No SSH credentials needed.</p>
+      </div>
+      <div class="sp-step">
+        <div class="sp-step-num">03</div>
+        <h3>Diagnosis &amp; draft fix</h3>
+        <p>The agent identifies the issue and drafts the exact fix. You see it, the engineer sees it, in plain English.</p>
+      </div>
+      <div class="sp-step">
+        <div class="sp-step-num">04</div>
+        <h3>Apply with your OK</h3>
+        <p>Routine fixes apply automatically with an audit log. Destructive changes (config writes, restarts) wait for your one-click approval.</p>
+      </div>
+      <div class="sp-step">
+        <div class="sp-step-num">05</div>
+        <h3>Resolution + receipt</h3>
+        <p>You receive a summary email: what broke, what we did, audit log, and how to prevent it next time. Average: 2 business hours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY CALLOUT -->
+<section class="tk-section tk-section--alt" style="padding-top: 96px; padding-bottom: 96px;">
+  <div class="tk-content tk-fade-up">
+    <div style="display: grid; grid-template-columns: 1fr 1.4fr; gap: 56px; align-items: center;">
+      <div>
+        <p class="tk-eyebrow">Security</p>
+        <h2 class="tk-h2">No SSH credentials. No raw shell access. No surprises.</h2>
+      </div>
+      <div>
+        <p class="tk-lede" style="margin-bottom: 18px;">
+          Your Mac Mini already runs our OpenClaw runtime. We extend it with a <strong>support-agent target</strong> that exposes a whitelisted operations API: read logs, restart a workflow, preview a config change, fetch health metrics.
+        </p>
+        <p class="tk-lede tk-muted">
+          Anything destructive (config write, system command, restart) requires your one-click approval in Slack or by email. Every action is logged locally on your Mac Mini, with a copy in your inbox the moment the ticket closes.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="tk-section">
+  <div class="tk-content">
+    <div class="tk-fade-up tk-center" style="margin-bottom: 48px;">
+      <p class="tk-eyebrow">Common questions</p>
+      <h2 class="tk-h2">Things people ask before subscribing.</h2>
+    </div>
+
+    <div class="sp-faq-grid tk-fade-up">
+
+      <div class="sp-faq-item">
+        <h3>Do you need SSH access to my Mac Mini?</h3>
+        <p>No. We use the existing OpenClaw runtime already on your machine. We add a support-agent target with a whitelisted API. SSH credentials are never requested, stored, or used.</p>
+      </div>
+
+      <div class="sp-faq-item">
+        <h3>What if I subscribe and never need support?</h3>
+        <p>Your monthly health check still runs. It catches drift, prevents outages, and we apply small improvements to your workflows. Most subscribers' biggest savings come from prevention, not repairs.</p>
+      </div>
+
+      <div class="sp-faq-item">
+        <h3>What kinds of issues can your agent fix?</h3>
+        <p>API key rotations, workflow timeouts, integration breakages (Xero, MYOB, Slack, etc.), prompt tuning, log analysis, performance issues. If something truly novel comes up, our human engineer takes it from there at no extra charge for subscribers.</p>
+      </div>
+
+      <div class="sp-faq-item">
+        <h3>Is my data secure during a support session?</h3>
+        <p>Yes. The support agent operates only via the whitelisted API. No data leaves your Mac Mini except for what's necessary to diagnose (logs, config snippets). Every command is logged and the audit trail is emailed to you the moment the ticket closes.</p>
+      </div>
+
+      <div class="sp-faq-item">
+        <h3>Can I cancel my subscription anytime?</h3>
+        <p>Yes. Cancel from your billing portal in 30 seconds. No penalty, no exit interview. Your access continues until the end of the current billing period.</p>
+      </div>
+
+      <div class="sp-faq-item">
+        <h3>Who handles the support behind the scenes?</h3>
+        <p>Our support agent (powered by Claude Sonnet 4.5) handles 80% of tickets autonomously, with our engineers reviewing destructive changes and edge cases. For complex issues, a human engineer takes over directly.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="tk-section" style="padding-top: 0;">
+  <div class="tk-cta-banner tk-fade-up">
+    <h2 class="tk-h2" style="font-size: 36px;">Your Mac Mini is your business. Cover it.</h2>
+    <p>$1,000/month covers unlimited support, a monthly health check, and a new workflow built every month. Most clients break even at 5 tickets per year.</p>
+    <a href="#tiers" class="tk-btn tk-btn--primary tk-btn--lg">See plans <span class="arrow">→</span></a>
+  </div>
+</section>
+
+<footer class="tk-footer-rich">
+  <div class="tk-footer-grid">
+    <div>
+      <a href="/" class="tk-brand" style="margin-bottom: 16px;">TurnkeyAI</a>
+      <p class="tk-small" style="margin-top: 12px; max-width: 280px;">
+        Done-for-you AI automation for Australian SMEs. Live in 7 days, on a Mac Mini in your office.
+      </p>
+    </div>
+    <div>
+      <p class="tk-eyebrow" style="margin-bottom: 14px;">Explore</p>
+      <ul class="tk-footer-links">
+        <li><a href="/#packages">Packages</a></li>
+        <li><a href="/#roi">ROI calculator</a></li>
+        <li><a href="/#how">How it works</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/support/" style="color: var(--tk-fg);">Support</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="tk-eyebrow" style="margin-bottom: 14px;">Legal</p>
+      <ul class="tk-footer-links">
+        <li><a href="/legal/terms.html">Terms</a></li>
+        <li><a href="/legal/privacy.html">Privacy</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="tk-eyebrow" style="margin-bottom: 14px;">Contact</p>
+      <ul class="tk-footer-links">
+        <li><a href="mailto:start@tkai.com.au">start@tkai.com.au</a></li>
+        <li>Gold Coast, Australia</li>
+      </ul>
+    </div>
+  </div>
+  <div class="tk-footer-bottom">
+    <span>&copy; 2026 TurnkeyAI. All prices AUD ex-GST.</span>
+    <span class="tk-footer-pulse">
+      <span class="tk-pulse-dot"></span>
+      Currently accepting new clients
+    </span>
+  </div>
+</footer>
+
+<script src="/assets/shared.js" defer></script>
+</body>
+</html>

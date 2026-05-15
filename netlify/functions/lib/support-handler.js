@@ -1,20 +1,14 @@
-// Triggered automatically by Netlify whenever the 'support-ticket' form is submitted.
-// Background function (15-min timeout). Orchestrates:
+// Support ticket handler — called from submission-created-background.js
+// when form_name === 'support-ticket'.
+//
+// Orchestrates:
 //   1. Generate ticket ID (e.g. TK-202605-A1B2C3)
 //   2. Send branded confirmation email to client (Resend)
 //   3. Send detailed notification to team (start@tkai.com.au)
-//   4. (Future Phase 2) Dispatch ticket to support agent on ops Mac Mini
+//   4. Dispatch ticket payload (HMAC-signed) to ops Mac Mini support agent
 
-export default async (req) => {
+export async function handleSupportTicket({ data }) {
   try {
-    const payload = await req.json();
-    const data = payload?.payload?.data || {};
-    const formName = payload?.payload?.form_name || '';
-
-    if (formName !== 'support-ticket') {
-      return new Response('Ignored: not the support form', { status: 200 });
-    }
-
     // Anti-spam: honeypot check
     if ((data['hp-field'] || '').trim()) {
       console.log('Honeypot tripped, dropping submission');
@@ -111,10 +105,10 @@ export default async (req) => {
 
     return new Response(`Ticket ${ticketId} processed`, { status: 200 });
   } catch (err) {
-    console.error('support-submission-created-background error:', err);
+    console.error('handleSupportTicket error:', err);
     return new Response('Error', { status: 500 });
   }
-};
+}
 
 // ─────────────────────────────────────────────────────
 // Resend wrapper

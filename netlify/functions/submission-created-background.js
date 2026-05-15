@@ -1,11 +1,11 @@
 // Triggered automatically by Netlify whenever a form on the site is submitted.
-// Background function (15-min timeout): orchestrates Claude + PDFShift + Resend.
+// Background function (15-min timeout). Routes by form_name:
+//   - 'ai-audit'       → lead form: Claude + PDFShift + branded PDF email
+//   - 'support-ticket' → support ticket: confirmation email + team email + dispatch to ops Mac Mini agent
 //
-// Pipeline (resilient — each step try/catch'd, email always sent):
-//   1. Parse form data
-//   2. Call Claude Sonnet 4.5 → personalized SPIN content (JSON)
-//   3. Render branded A4 HTML → PDF via PDFShift
-//   4. Send Resend email with PDF attached (or fall back to email-only if anything fails)
+// All steps try/catch'd, email always sent.
+
+import { handleSupportTicket } from './lib/support-handler.js';
 
 export default async (req) => {
   try {
@@ -13,8 +13,12 @@ export default async (req) => {
     const data = payload?.payload?.data || {};
     const formName = payload?.payload?.form_name || '';
 
+    // Route by form name
+    if (formName === 'support-ticket') {
+      return await handleSupportTicket({ data });
+    }
     if (formName !== 'ai-audit') {
-      return new Response('Ignored: not the lead form', { status: 200 });
+      return new Response('Ignored: not a handled form', { status: 200 });
     }
 
     const firstName = (data.firstName || 'there').trim();

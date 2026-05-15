@@ -81,6 +81,34 @@ export default async (req) => {
       console.error('Failed to send team notification:', err.message);
     }
 
+    // 3. Dispatch to the support agent on the ops Mac Mini (if configured)
+    try {
+      const agentUrl = (process.env.SUPPORT_AGENT_WEBHOOK_URL || '').trim();
+      const agentSecret = (process.env.SUPPORT_AGENT_WEBHOOK_SECRET || '').trim();
+      if (agentUrl && agentSecret) {
+        const agentPayload = JSON.stringify(ctx);
+        const sig = await hmacSha256Hex(agentSecret, agentPayload);
+        const agentRes = await fetch(agentUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Signature': sig,
+          },
+          body: agentPayload,
+        });
+        if (!agentRes.ok) {
+          const errBody = await agentRes.text();
+          console.error(`Agent webhook returned ${agentRes.status}: ${errBody.slice(0, 200)}`);
+        } else {
+          console.log(`Dispatched ticket ${ticketId} to support agent`);
+        }
+      } else {
+        console.log('Agent webhook not configured (SUPPORT_AGENT_WEBHOOK_URL/SECRET missing) — skipping');
+      }
+    } catch (err) {
+      console.error('Failed to dispatch to support agent:', err.message);
+    }
+
     return new Response(`Ticket ${ticketId} processed`, { status: 200 });
   } catch (err) {
     console.error('support-submission-created-background error:', err);
@@ -451,4 +479,22 @@ function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
   }[c]));
+}
+
+// HMAC-SHA256 hex digest using Web Crypto (available in Netlify Functions runtime).
+async function hmacSha256Hex(secret, message) {
+  const enc = new TextEncoder();
+  const keyData = enc.encode(secret);
+  const msgData = enc.encode(message);
+  const cryptoKey = await crypto.subtle.importKey(
+    'raw',
+    keyData,
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign'],
+  );
+  const sigBuf = await crypto.subtle.sign('HMAC', cryptoKey, msgData);
+  return Array.from(new Uint8Array(sigBuf))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
 }

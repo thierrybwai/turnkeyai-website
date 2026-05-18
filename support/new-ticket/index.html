@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Open a support ticket | TurnkeyAI</title>
-<meta name="description" content="Describe your issue. Our support agent diagnoses and drafts the fix within 2 business hours.">
+<meta name="description" content="Tell us what's not working on your TurnkeyAI deployment. A real person replies within one business day.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta name="robots" content="noindex">
 <link rel="stylesheet" href="/assets/brand.css">
@@ -23,35 +23,9 @@
   .tk-input:focus, .tk-select:focus, .tk-textarea:focus {
     outline: none; border-color: var(--tk-accent); box-shadow: 0 0 0 3px var(--tk-accent-soft);
   }
-  .tk-textarea { min-height: 140px; resize: vertical; font-family: inherit; }
+  .tk-textarea { min-height: 160px; resize: vertical; font-family: inherit; }
   .tk-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   @media (max-width: 600px) { .tk-field-row { grid-template-columns: 1fr; } }
-
-  /* Radio cards */
-  .nt-radio-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-  @media (max-width: 600px) { .nt-radio-grid { grid-template-columns: 1fr; } }
-  .nt-radio { position: relative; cursor: pointer; }
-  .nt-radio input { position: absolute; opacity: 0; }
-  .nt-radio-body {
-    padding: 14px 16px;
-    background: var(--tk-bg-alt);
-    border: 1px solid transparent;
-    border-radius: 12px;
-    transition: all 180ms var(--tk-ease);
-  }
-  .nt-radio input:checked + .nt-radio-body {
-    background: rgba(0,113,227,0.05);
-    border-color: var(--tk-accent);
-    box-shadow: 0 0 0 1px var(--tk-accent);
-  }
-  .nt-radio-title { font-size: 14px; font-weight: 600; color: var(--tk-fg); margin-bottom: 2px; }
-  .nt-radio-sub { font-size: 12px; color: var(--tk-fg-muted); }
-
-  /* Inline check */
-  .nt-check { display: flex; gap: 10px; align-items: flex-start; padding: 14px 16px; background: var(--tk-bg-alt); border-radius: 10px; }
-  .nt-check input { margin-top: 3px; flex-shrink: 0; }
-  .nt-check label { font-size: 13px; line-height: 1.5; color: var(--tk-fg-muted); cursor: pointer; }
-  .nt-check label strong { color: var(--tk-fg); font-weight: 600; }
 </style>
 <!-- Microsoft Clarity -->
 <script type="text/javascript">
@@ -79,21 +53,21 @@
       <li><a href="/support/" class="tk-nav-link" style="opacity: 1;">Support</a></li>
       <li><a href="/" class="tk-nav-link">Home</a></li>
     </ul>
-    <a href="/support/" class="tk-btn tk-btn--ghost tk-btn--sm">Back to plans</a>
+    <a href="/support/" class="tk-btn tk-btn--ghost tk-btn--sm">Back to support</a>
   </div>
 </nav>
 
 <div class="nt-shell">
   <div style="margin-bottom: 32px;">
     <p class="tk-eyebrow">Open a ticket</p>
-    <h1 class="tk-h1" style="font-size: 40px; margin-bottom: 14px;">What's broken?</h1>
+    <h1 class="tk-h1" style="font-size: 40px; margin-bottom: 14px;">What's not working?</h1>
     <p class="tk-lede tk-muted">
-      Describe the issue. Our support agent reads it, pulls your Mac Mini's logs, drafts the fix, and emails you the resolution. Average: 2 business hours.
+      Describe the issue in plain English. A real person on our team reads it, replies within one business day, and works with you in email until it's resolved.
     </p>
   </div>
 
   <div class="nt-card">
-    <form id="ticketForm" name="support-ticket" method="POST" data-netlify="true" onsubmit="handleTicketSubmit(event)">
+    <form id="ticketForm" name="support-ticket" method="POST" data-netlify="true" data-netlify-honeypot="hp-field" onsubmit="handleTicketSubmit(event)">
       <input type="hidden" name="form-name" value="support-ticket">
 
       <!-- ID ──────────────────────────────────── -->
@@ -128,40 +102,14 @@
         </div>
       </div>
 
-      <!-- PLAN ──────────────────────────────────── -->
-      <div class="nt-section">
-        <p class="nt-label-section">Your support plan</p>
-
-        <div class="nt-radio-grid" style="grid-template-columns: 1fr 1fr;">
-          <label class="nt-radio">
-            <input type="radio" name="planType" value="pay-per-incident" required>
-            <span class="nt-radio-body">
-              <span class="nt-radio-title">Pay-per-Incident</span>
-              <span class="nt-radio-sub">$200 one-shot</span>
-            </span>
-          </label>
-          <label class="nt-radio">
-            <input type="radio" name="planType" value="always-on">
-            <span class="nt-radio-body">
-              <span class="nt-radio-title">Always-On subscriber</span>
-              <span class="nt-radio-sub">$1,000/month</span>
-            </span>
-          </label>
-        </div>
-
-        <p class="tk-small" style="margin-top: 14px;">
-          Not subscribed yet? <a href="/support/#tiers" style="color: var(--tk-accent);">See plans</a>. Pay-per-incident is invoiced after submission, before the agent starts.
-        </p>
-      </div>
-
       <!-- TICKET ──────────────────────────────────── -->
       <div class="nt-section">
         <p class="nt-label-section">The issue</p>
 
         <div class="tk-field">
-          <label class="tk-label">What's broken?</label>
-          <textarea class="tk-textarea" name="problemDescription" placeholder="Describe what's happening. Be as specific as possible: which workflow, what error, when did it start, what you've already tried." minlength="40" required></textarea>
-          <p class="tk-small" style="margin-top: 8px;">Minimum 40 characters. More context = faster fix.</p>
+          <label class="tk-label">What's not working?</label>
+          <textarea class="tk-textarea" name="problemDescription" placeholder="Tell us what's happening. Be as specific as possible: which workflow, what error, when did it start, what you've already tried. The more context, the faster we can help." minlength="40" required></textarea>
+          <p class="tk-small" style="margin-top: 8px;">Minimum 40 characters. More context = faster reply.</p>
         </div>
 
         <div class="tk-field-row">
@@ -173,56 +121,43 @@
               <option value="degraded">Performance degraded</option>
               <option value="question">Question or how-to</option>
               <option value="tweak">Workflow improvement</option>
+              <option value="new-workflow">New workflow request</option>
               <option value="security">Security concern</option>
             </select>
           </div>
           <div>
             <label class="tk-label">Urgency</label>
             <select class="tk-select" name="urgency" required>
-              <option value="standard">Standard · 4 business hours</option>
-              <option value="urgent">Urgent · 1 hour (Always-On subscribers)</option>
+              <option value="standard">Standard · within 1 business day</option>
+              <option value="urgent">Urgent · same-day if possible</option>
             </select>
           </div>
         </div>
-      </div>
-
-      <!-- ACCESS ──────────────────────────────────── -->
-      <div class="nt-section">
-        <p class="nt-label-section">How we connect to your Mac Mini</p>
 
         <div class="tk-field">
-          <label class="tk-label">Connection method</label>
-          <select class="tk-select" name="accessMethod" required>
-            <option value="openclaw-extension" selected>OpenClaw support extension (recommended, already installed)</option>
-            <option value="screen-share">Slack / Telegram screen share (you drive)</option>
-            <option value="time-limited-ssh">Time-limited SSH (you generate a 1-hour key)</option>
+          <label class="tk-label">Deployment type (optional)</label>
+          <select class="tk-select" name="deploymentType">
+            <option value="">Not sure / skip</option>
+            <option value="cloud">Cloud OpenClaw (VPS hosted)</option>
+            <option value="mac-mini">Mac Mini (on-premise)</option>
           </select>
-          <p class="tk-small" style="margin-top: 8px;">
-            <strong>OpenClaw extension</strong> is the default. Your Mac Mini already has it. No new credentials required.
-          </p>
-        </div>
-
-        <div class="nt-check">
-          <input type="checkbox" id="dataBackup" name="dataBackupConfirmed" required>
-          <label for="dataBackup">
-            <strong>I confirm my Mac Mini data is backed up.</strong> Daily snapshots are part of every TurnkeyAI deployment. If yours hasn't been verified recently, run a manual snapshot before submitting.
-          </label>
         </div>
       </div>
 
       <!-- Honeypot anti-spam -->
-      <input type="text" name="hp-field" tabindex="-1" autocomplete="off" style="position: absolute; left: -9999px;">
+      <p style="position: absolute; left: -9999px;" aria-hidden="true">
+        <label>Don't fill this out if you're human: <input name="hp-field" tabindex="-1" autocomplete="off"></label>
+      </p>
 
       <!-- Hidden context -->
       <input type="hidden" name="referrer" id="referrerField" value="">
-      <input type="hidden" name="stripeSessionId" id="stripeSessionIdField" value="">
 
       <button type="submit" id="submitBtn" class="tk-btn tk-btn--primary tk-btn--lg tk-btn--block" style="margin-top: 28px;">
-        Open ticket &rarr;
+        Send the ticket &rarr;
       </button>
 
       <p class="tk-small tk-center" style="margin-top: 14px;">
-        Confirmation email lands in your inbox in 30 seconds. Agent picks it up immediately.
+        Confirmation email lands in your inbox in 30 seconds. A real person replies within one business day.
       </p>
     </form>
   </div>
@@ -233,14 +168,15 @@
     <div>
       <a href="/" class="tk-brand" style="margin-bottom: 16px;">TurnkeyAI</a>
       <p class="tk-small" style="margin-top: 12px; max-width: 280px;">
-        Done-for-you AI automation for Australian SMEs. Live in 7 days, on a Mac Mini in your office.
+        Done-for-you AI automation for Australian SMEs. Live in 7 days, on a Mac Mini in your office or on a dedicated VPS we manage.
       </p>
     </div>
     <div>
       <p class="tk-eyebrow" style="margin-bottom: 14px;">Support</p>
       <ul class="tk-footer-links">
-        <li><a href="/support/">Support plans</a></li>
+        <li><a href="/support/">Support overview</a></li>
         <li><a href="/support/new-ticket/">Open a ticket</a></li>
+        <li><a href="mailto:start@tkai.com.au">start@tkai.com.au</a></li>
       </ul>
     </div>
     <div>
@@ -259,39 +195,31 @@
     </div>
   </div>
   <div class="tk-footer-bottom">
-    <span>&copy; 2026 TurnkeyAI. All prices AUD ex-GST.</span>
+    <span>&copy; 2026 TurnkeyAI</span>
     <span class="tk-footer-pulse">
       <span class="tk-pulse-dot"></span>
-      Support agent live
+      Support team online
     </span>
   </div>
 </footer>
 
 <script>
-  // Capture referrer + Stripe session_id (if user came from a Stripe success redirect)
+  // Capture referrer
   document.getElementById('referrerField').value = document.referrer || '';
-  const urlParams = new URLSearchParams(window.location.search);
-  const sessionId = urlParams.get('session_id') || urlParams.get('cs') || '';
-  if (sessionId) {
-    document.getElementById('stripeSessionIdField').value = sessionId;
-    // If they came from Stripe Checkout, auto-select pay-per-incident
-    const planRadio = document.querySelector('input[name="planType"][value="pay-per-incident"]');
-    if (planRadio) planRadio.checked = true;
-  }
 
   async function handleTicketSubmit(event) {
     event.preventDefault();
     const form = document.getElementById('ticketForm');
     const submitBtn = document.getElementById('submitBtn');
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Opening ticket…';
+    submitBtn.textContent = 'Sending…';
 
     try {
       const formData = new FormData(form);
       const params = new URLSearchParams();
       for (const [k, v] of formData.entries()) {
         if (k === 'hp-field' && v) {
-          // honeypot tripped, silently bail
+          // honeypot tripped, silently bail to the confirmation page
           window.location.href = '/support/ticket-received/?spam=1';
           return;
         }
@@ -309,7 +237,7 @@
           if (typeof gtag === 'function') {
             gtag('event', 'support_ticket_submitted', {
               event_category: 'support',
-              event_label: form.planType.value || 'unknown',
+              event_label: form.ticketType.value || 'unknown',
               urgency: form.urgency.value || 'standard',
               value: 1,
             });
@@ -318,16 +246,16 @@
             clarity('event', 'support_ticket_submitted');
           }
         } catch (e) {}
-        window.location.href = `/support/ticket-received/?plan=${encodeURIComponent(form.planType.value)}`;
+        window.location.href = '/support/ticket-received/';
       } else {
         alert('Something went wrong. Please try again or email start@tkai.com.au directly.');
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Open ticket →';
+        submitBtn.textContent = 'Send the ticket →';
       }
     } catch (err) {
       alert('Network error. Try again or email start@tkai.com.au.');
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Open ticket →';
+      submitBtn.textContent = 'Send the ticket →';
     }
   }
 </script>

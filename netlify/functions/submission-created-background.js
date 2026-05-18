@@ -136,7 +136,7 @@ async function generateSpinContent({ firstName, businessName, website, industry,
 TurnkeyAI's offer in one line: we deploy a complete AI system (powered by Claude) on a Mac Mini installed in the client's office, live in 7 business days, with hardware they own forever. Workflows are operated via Slack or Telegram in plain English.
 
 Hard facts you can use (do not invent others):
-- Packages: Professional $5,999 AUD (1 Mac Mini M4, 5 workflows, 30-day support), Business $10,999 AUD (2 Mac Minis, 7 workflows, multi-agent, 60-day support), Enterprise $24,999 AUD (5 Mac Minis Command Centre, 10+ workflows, 3-month priority support).
+- Packages: Cloud OpenClaw $2,999 AUD (hosted on a dedicated VPS we manage, 3 workflows, remote setup, 30-day support, 12 months hosting included) and Mac Mini $5,999 AUD (1 Apple Mac Mini M4 yours to keep, 5 workflows, on-site setup in Gold Coast or Brisbane, 30-day support). Pick the right one based on whether the client wants on-premise hardware or a cloud-managed setup.
 - Average client savings: $1,500-$2,000 per week per Mac Mini.
 - Average break-even: 3 weeks.
 - Average Year-1 ROI: 13x.
@@ -188,7 +188,7 @@ Generate JSON in this exact shape:
     { "name": "Workflow 2 name", "what": "What it does", "saves": "Time saved" },
     { "name": "Workflow 3 name", "what": "What it does", "saves": "Time saved" }
   ],
-  "recommended_package": "Professional | Business | Enterprise",
+  "recommended_package": "Cloud | Mac Mini",
   "package_rationale": "1 sentence (≤25 words) explaining why this tier fits their stage.",
   "year_one_roi": "ROI figure, e.g. '13x' or '$78,000 net first year'",
   "break_even_weeks": "Integer or short range, e.g. '3' or '3-4'",
@@ -360,12 +360,12 @@ function buildPdfHtml({ firstName, lastName, businessName, industry, packageInte
   const industryDisplay = prettyIndustry(industry) || 'your sector';
   const dateLabel = new Date().toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' });
 
-  const recommendedPackage = (spin.recommended_package || 'Business').toLowerCase();
-  const packagePrice = {
-    professional: { name: 'Professional', price: '$5,999 AUD', specs: '1 Mac Mini M4 · 5 workflows · 30-day support' },
-    business: { name: 'Business', price: '$10,999 AUD', specs: '2 Mac Minis · 7 workflows · multi-agent · 60-day support' },
-    enterprise: { name: 'Enterprise', price: '$24,999 AUD', specs: '5 Mac Minis · 10+ workflows · 3-month priority support' },
-  }[recommendedPackage] || { name: 'Business', price: '$10,999 AUD', specs: '2 Mac Minis · 7 workflows · multi-agent · 60-day support' };
+  const recommendedRaw = (spin.recommended_package || 'Mac Mini').toLowerCase().trim();
+  // Normalize Claude's output: accept "cloud", "cloud openclaw", "vps", "mac mini", "mac-mini", "mini"
+  const isCloud = /^(cloud|vps)/.test(recommendedRaw);
+  const packagePrice = isCloud
+    ? { name: 'Cloud OpenClaw', price: '$2,999 AUD', specs: 'Hosted VPS · 3 workflows · remote setup · 30-day support · 12 months hosting included' }
+    : { name: 'Mac Mini', price: '$5,999 AUD', specs: '1 Mac Mini M4 yours to keep · 5 workflows · on-site setup · 30-day support' };
 
   const observationRows = (spin.situation_observations || []).slice(0, 3).map((obs, i) => `
     <div class="obs-row">
@@ -1487,9 +1487,11 @@ function prettyIndustry(slug) {
 
 function prettyPackage(slug) {
   const map = {
-    professional: 'Professional ($5,999)',
-    business: 'Business ($10,999)',
-    enterprise: 'Enterprise ($24,999)',
+    cloud: 'Cloud OpenClaw ($2,999)',
+    'mac-mini': 'Mac Mini ($5,999)',
+    professional: 'Mac Mini ($5,999)', // legacy form values
+    business: 'Mac Mini ($5,999)',     // legacy form values
+    enterprise: 'Mac Mini ($5,999)',   // legacy form values
     unsure: 'Help me decide',
   };
   return map[slug] || slug;

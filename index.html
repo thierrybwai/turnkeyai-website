@@ -6,7 +6,7 @@
 
 <!-- Primary -->
 <title>TurnkeyAI: Done-For-You AI Automation in 7 Days | Gold Coast, Australia</title>
-<meta name="description" content="TurnkeyAI deploys fully operational AI systems for Australian SMEs in 7 days. Mac Mini installed in your office, configured for your workflows, $1,500+/week saved on average. From $5,999 AUD.">
+<meta name="description" content="TurnkeyAI deploys fully operational AI systems for Australian SMEs in 7 days. Cloud-hosted or on a Mac Mini in your office, configured for your workflows, $1,000+/week saved on average. From $2,999 AUD.">
 <meta name="keywords" content="AI automation Australia, done-for-you AI, AI deployment Gold Coast, business AI Brisbane, Mac Mini AI, AI agents Australia, Claude AI implementation, AI for SMEs, automate workflows Australia, AI consultant Queensland, AI installation service, on-site AI setup, business automation Gold Coast">
 <meta name="author" content="TurnkeyAI">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -137,29 +137,21 @@
       "serviceType": "AI System Deployment",
       "provider": { "@id": "https://turnkeyai.com.au/#organization" },
       "areaServed": { "@type": "Country", "name": "Australia" },
-      "description": "Fully operational AI systems built, configured, and deployed for Australian SMEs in 7 business days. Includes Apple Mac Mini hardware, Claude AI configuration, custom workflows, on-site installation, staff training, and dedicated online support.",
+      "description": "Fully operational AI systems built, configured, and deployed for Australian SMEs in 7 business days. Two paths: cloud-hosted on a dedicated VPS we manage, or installed on an Apple Mac Mini in your office. Both include Claude AI configuration, custom workflows, staff onboarding, and dedicated online support.",
       "offers": [
         {
           "@type": "Offer",
-          "name": "Professional",
-          "description": "1 Apple Mac Mini M4 with 5 custom workflows, Slack & Telegram integration, on-site setup, 30-day dedicated online support.",
+          "name": "Cloud OpenClaw",
+          "description": "OpenClaw + Claude hosted on a dedicated VPS we manage. 3 custom workflows, Slack & Telegram integration, remote setup, 30-day dedicated online support, 12 months hosting included.",
+          "price": "2999",
+          "priceCurrency": "AUD",
+          "availability": "https://schema.org/InStock"
+        },
+        {
+          "@type": "Offer",
+          "name": "Mac Mini",
+          "description": "1 Apple Mac Mini M4 (yours to keep) with 5 custom workflows, Slack & Telegram integration, on-site setup in Gold Coast or Brisbane, 30-day dedicated online support.",
           "price": "5999",
-          "priceCurrency": "AUD",
-          "availability": "https://schema.org/InStock"
-        },
-        {
-          "@type": "Offer",
-          "name": "Business",
-          "description": "2 Mac Minis (M4 + M4 Pro) with 7 custom workflows, multi-agent coordination, on-site setup, 60-day dedicated online support.",
-          "price": "10999",
-          "priceCurrency": "AUD",
-          "availability": "https://schema.org/InStock"
-        },
-        {
-          "@type": "Offer",
-          "name": "Enterprise",
-          "description": "5 Mac Minis Command Centre with 10+ custom workflows, department-level automation, full-day staff training, 3-month priority online support.",
-          "price": "24999",
           "priceCurrency": "AUD",
           "availability": "https://schema.org/InStock"
         }
@@ -190,7 +182,7 @@
           "name": "How much does TurnkeyAI cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Three one-time packages: Professional at $5,999 AUD (1 Mac Mini, 5 workflows), Business at $10,999 AUD (2 Mac Minis, 7 workflows, multi-agent coordination), and Enterprise at $24,999 AUD (5 Mac Minis, 10+ workflows, full department automation). No subscriptions. The Mac Minis are yours to keep."
+            "text": "Two one-time packages: Cloud OpenClaw at $2,999 AUD (hosted on a dedicated VPS we manage, 3 workflows, 12 months hosting included), and Mac Mini at $5,999 AUD (Apple Mac Mini M4 installed in your office, 5 workflows, hardware yours to keep). No subscriptions in either path."
           }
         },
         {
@@ -222,7 +214,7 @@
           "name": "Where is TurnkeyAI based and which areas do you cover?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "TurnkeyAI is based on the Gold Coast, Queensland. We provide on-site installation across Australia, with most engagements in Gold Coast, Brisbane, Sydney, and Melbourne. The Enterprise package includes on-site setup anywhere in Australia."
+            "text": "TurnkeyAI is based on the Gold Coast, Queensland. The Cloud OpenClaw path works anywhere in Australia with no on-site visit required. The Mac Mini path includes on-site installation in Gold Coast or Brisbane, with optional travel to Sydney, Melbourne, and elsewhere on quote."
           }
         },
         {
@@ -230,7 +222,7 @@
           "name": "What happens after the initial 7-day deployment?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "You receive 30 days (Professional), 60 days (Business), or 3 months priority (Enterprise) of dedicated online support. The Mac Mini is yours forever, no subscription. Workflows continue running 24/7 once the support window closes."
+            "text": "Every deployment includes 30 days of dedicated online support, and the workflows continue running 24/7 after that window closes. Need ongoing help beyond 30 days? Open a ticket on our support page and we'll respond within one business day."
           }
         }
       ]
@@ -627,7 +619,7 @@ body {
 /* Grids */
 .tk-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; }
 .tk-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-.tk-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.tk-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; align-items: stretch; }
 @media (max-width: 980px) {
   .tk-grid-3, .tk-grid-4 { grid-template-columns: 1fr; }
   .tk-grid-2 { grid-template-columns: 1fr; }
@@ -749,9 +741,12 @@ body {
 
 .tk-roi-be {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 12px;
   margin-top: 24px;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
 }
 @media (max-width: 740px) { .tk-roi-be { grid-template-columns: 1fr; } }
 .tk-roi-be-card {
@@ -1566,98 +1561,69 @@ body {
   <div class="tk-wide">
     <div class="tk-fade-up tk-center" style="margin-bottom: 64px;">
       <p class="tk-eyebrow">Pricing</p>
-      <h2 class="tk-h1" data-mask-reveal style="margin-bottom: 16px;">Three packages. One outcome.</h2>
+      <h2 class="tk-h1" data-mask-reveal style="margin-bottom: 16px;">Two ways to deploy. One outcome.</h2>
       <p class="tk-lede tk-muted" style="max-width: 620px; margin: 0 auto;">
-        All packages include setup, configuration, training, and a running AI system on Day&nbsp;1.
+        Both options include setup, configuration, training, and a running AI system on Day&nbsp;1.
       </p>
       <p class="tk-small" style="margin-top: 18px; display: inline-flex; align-items: center; gap: 8px; color: var(--tk-fg-muted);">
         <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--tk-success);"></span>
-        Day-7 deployment guaranteed · Mac Mini hardware yours forever · No subscription
+        Day-7 deployment guaranteed · One-time price · No subscription
       </p>
     </div>
 
-    <div class="tk-stagger tk-grid-3">
-      <!-- PROFESSIONAL -->
+    <div class="tk-stagger tk-grid-2" style="max-width: 920px; margin: 0 auto;">
+      <!-- CLOUD VPS -->
       <div class="tk-card tk-pkg-card">
         <div class="tk-pkg-head">
-          <p class="tk-eyebrow" style="margin-bottom: 12px;">Professional</p>
+          <p class="tk-eyebrow" style="margin-bottom: 12px;">Cloud</p>
+          <h3 class="tk-h3">Cloud OpenClaw</h3>
+          <p class="tk-small" style="margin-top: 6px;">Hosted on a dedicated VPS · No hardware</p>
+        </div>
+        <div class="tk-pkg-price-block">
+          <div class="tk-pkg-price">$2,999<small>AUD</small></div>
+          <p class="tk-small" style="margin-top: 4px;">One-time. Hosting included for 12 months.</p>
+          <div class="tk-pkg-saving">Avg saving $1,000–$1,500/wk</div>
+          <div class="tk-small" style="margin-top: 4px; color: var(--tk-fg-subtle); font-size: 12.5px;">Pays for itself in roughly 3 weeks.</div>
+        </div>
+        <ul class="tk-pkg-features">
+          <li>OpenClaw + Claude hosted on a dedicated VPS we manage</li>
+          <li>3 custom workflows built to spec</li>
+          <li>Slack and Telegram integration</li>
+          <li>Connected to email, calendar &amp; CRM</li>
+          <li>Remote setup &amp; configuration</li>
+          <li>1-hour staff onboarding (video)</li>
+          <li>30-day access to our dedicated online support</li>
+          <li>12 months of VPS hosting included</li>
+          <li>Migrate to a Mac Mini at any time</li>
+        </ul>
+        <a href="#booking" class="tk-btn tk-btn--ghost tk-btn--block tk-pkg-cta">Get started</a>
+      </div>
+
+      <!-- MAC MINI -->
+      <div class="tk-card tk-card--featured tk-pkg-card">
+        <div class="tk-pkg-head">
+          <p class="tk-eyebrow" style="margin-bottom: 12px; color: var(--tk-accent);">On-premise</p>
           <h3 class="tk-h3">Mac Mini</h3>
           <p class="tk-small" style="margin-top: 6px;">1 Mac Mini M4 · On-site setup</p>
         </div>
         <div class="tk-pkg-price-block">
           <div class="tk-pkg-price">$5,999<small>AUD</small></div>
-          <p class="tk-small" style="margin-top: 4px;">One-time. Yours to keep.</p>
+          <p class="tk-small" style="margin-top: 4px;">One-time. Hardware yours to keep.</p>
           <div class="tk-pkg-saving">Avg saving $1,500–$2,000/wk</div>
           <div class="tk-small" style="margin-top: 4px; color: var(--tk-fg-subtle); font-size: 12.5px;">Less than 4 weeks of a $78k hire.</div>
         </div>
         <ul class="tk-pkg-features">
           <li>Apple Mac Mini M4 (16GB, 256GB), yours to keep</li>
-          <li>OpenClaw fully installed & configured</li>
-          <li>Slack and Telegram integration</li>
+          <li>OpenClaw fully installed &amp; configured locally</li>
           <li>5 custom workflows built to spec</li>
-          <li>Sub-agent setup & configuration</li>
-          <li>Connected to email, calendar & CRM</li>
+          <li>Slack and Telegram integration</li>
+          <li>Sub-agent setup &amp; configuration</li>
+          <li>Connected to email, calendar &amp; CRM</li>
           <li>On-site setup in Gold Coast or Brisbane</li>
           <li>2-hour staff onboarding session</li>
           <li>30-day access to our dedicated online support</li>
         </ul>
-        <a href="#booking" class="tk-btn tk-btn--ghost tk-btn--block tk-pkg-cta">Get started</a>
-      </div>
-
-      <!-- BUSINESS -->
-      <div class="tk-card tk-card--featured tk-pkg-card">
-        <div class="tk-pkg-head">
-          <p class="tk-eyebrow" style="margin-bottom: 12px; color: var(--tk-accent);">Business</p>
-          <h3 class="tk-h3">Dual Mac Mini</h3>
-          <p class="tk-small" style="margin-top: 6px;">2 Mac Minis · On-site setup</p>
-        </div>
-        <div class="tk-pkg-price-block">
-          <div class="tk-pkg-price">$10,999<small>AUD</small></div>
-          <p class="tk-small" style="margin-top: 4px;">One-time. Yours to keep.</p>
-          <div class="tk-pkg-saving">Avg saving $2,500–$3,500/wk</div>
-          <div class="tk-small" style="margin-top: 4px; color: var(--tk-fg-subtle); font-size: 12.5px;">Less than 2 months of one $78k hire.</div>
-        </div>
-        <ul class="tk-pkg-features">
-          <li>1 × Mac Mini M4 Pro (24GB), local LLM host</li>
-          <li>1 × Mac Mini M4 (16GB), OpenClaw + Claude</li>
-          <li>OpenClaw fully installed & configured</li>
-          <li>Slack and Telegram integration</li>
-          <li>7 custom workflows built to spec</li>
-          <li>Multi-agent coordination & sub-agent setup</li>
-          <li>Connected to email, calendar, CRM & accounting</li>
-          <li>On-site setup in Gold Coast or Brisbane</li>
-          <li>Half-day staff onboarding session</li>
-          <li>60-day access to our dedicated online support</li>
-        </ul>
         <a href="#booking" class="tk-btn tk-btn--primary tk-btn--block tk-pkg-cta">Get started <span class="arrow">→</span></a>
-      </div>
-
-      <!-- ENTERPRISE -->
-      <div class="tk-card tk-pkg-card">
-        <div class="tk-pkg-head">
-          <p class="tk-eyebrow" style="margin-bottom: 12px;">Enterprise</p>
-          <h3 class="tk-h3">AI Command Centre</h3>
-          <p class="tk-small" style="margin-top: 6px;">5 Mac Minis · Full department</p>
-        </div>
-        <div class="tk-pkg-price-block">
-          <div class="tk-pkg-price">$24,999<small>AUD</small></div>
-          <p class="tk-small" style="margin-top: 4px;">One-time. Yours to keep.</p>
-          <div class="tk-pkg-saving">Avg saving $4,000–$6,000/wk</div>
-          <div class="tk-small" style="margin-top: 4px; color: var(--tk-fg-subtle); font-size: 12.5px;">Less than 4 months of one $78k hire.</div>
-        </div>
-        <ul class="tk-pkg-features">
-          <li>1 × Mac Mini M4 Pro (48GB), local LLM host</li>
-          <li>4 × Mac Mini M4 (16GB), OpenClaw + Claude</li>
-          <li>Department-level automation</li>
-          <li>Up to 10 custom workflows</li>
-          <li>Slack and Telegram integration</li>
-          <li>Dedicated team HQ for AI agents</li>
-          <li>All units connected to email, CRM & accounting</li>
-          <li>On-site setup anywhere in Australia</li>
-          <li>Full-day staff training session</li>
-          <li>3-month priority access to our dedicated online support</li>
-        </ul>
-        <a href="#booking" class="tk-btn tk-btn--ghost tk-btn--block tk-pkg-cta">Get started</a>
       </div>
     </div>
   </div>
@@ -1710,16 +1676,12 @@ body {
         <p class="tk-small tk-center" style="margin-bottom: 16px;">Break-even on your investment</p>
         <div class="tk-roi-be">
           <div class="tk-roi-be-card">
-            <div class="tk-label" style="margin-bottom: 6px;">Professional · $5,999</div>
-            <div class="tk-h3" id="be-pro" style="color: var(--tk-accent);">·</div>
+            <div class="tk-label" style="margin-bottom: 6px;">Cloud · $2,999</div>
+            <div class="tk-h3" id="be-cloud" style="color: var(--tk-accent);">·</div>
           </div>
           <div class="tk-roi-be-card tk-roi-be-card--featured">
-            <div class="tk-label" style="margin-bottom: 6px;">Business · $10,999</div>
-            <div class="tk-h3" id="be-business" style="color: var(--tk-accent);">·</div>
-          </div>
-          <div class="tk-roi-be-card">
-            <div class="tk-label" style="margin-bottom: 6px;">Enterprise · $24,999</div>
-            <div class="tk-h3" id="be-enterprise" style="color: var(--tk-accent);">·</div>
+            <div class="tk-label" style="margin-bottom: 6px;">Mac Mini · $5,999</div>
+            <div class="tk-h3" id="be-mac" style="color: var(--tk-accent);">·</div>
           </div>
         </div>
       </div>
@@ -1819,11 +1781,10 @@ body {
           <span class="tk-faq-icon" aria-hidden="true"></span>
         </summary>
         <div class="tk-faq-body">
-          <p>Three one-time packages:</p>
-          <p><strong>Professional: $5,999 AUD.</strong> 1 Apple Mac Mini M4, 5 custom workflows, Slack and Telegram integration, on-site setup, 30-day dedicated online support.</p>
-          <p><strong>Business: $10,999 AUD.</strong> 2 Mac Minis (M4 + M4 Pro), 7 custom workflows, multi-agent coordination, half-day staff training, 60-day dedicated online support.</p>
-          <p><strong>Enterprise: $24,999 AUD.</strong> 5 Mac Minis Command Centre, 10+ workflows, department-level automation, full-day training, 3-month priority online support.</p>
-          <p>No subscriptions. The Mac Minis are yours to keep.</p>
+          <p>Two one-time packages:</p>
+          <p><strong>Cloud OpenClaw: $2,999 AUD.</strong> OpenClaw + Claude hosted on a dedicated VPS we manage. 3 custom workflows, Slack and Telegram integration, remote setup, 30-day support, 12 months of hosting included.</p>
+          <p><strong>Mac Mini: $5,999 AUD.</strong> 1 Apple Mac Mini M4, yours to keep. 5 custom workflows, Slack and Telegram integration, on-site setup in Gold Coast or Brisbane, 30-day support.</p>
+          <p>No subscriptions in either path. You can start with the Cloud option and migrate to the Mac Mini later.</p>
         </div>
       </details>
 
@@ -1863,7 +1824,7 @@ body {
           <span class="tk-faq-icon" aria-hidden="true"></span>
         </summary>
         <div class="tk-faq-body">
-          <p>TurnkeyAI is based on the <strong>Gold Coast, Queensland</strong>. We provide on-site installation across Australia, with most engagements in Gold Coast, Brisbane, Sydney, and Melbourne. The Enterprise package includes on-site setup anywhere in Australia.</p>
+          <p>TurnkeyAI is based on the <strong>Gold Coast, Queensland</strong>. The Cloud OpenClaw path works anywhere in Australia (no on-site visit required). For the Mac Mini path, on-site installation is included in Gold Coast or Brisbane, with optional travel for Sydney, Melbourne, and elsewhere on quote.</p>
         </div>
       </details>
 
@@ -1873,7 +1834,7 @@ body {
           <span class="tk-faq-icon" aria-hidden="true"></span>
         </summary>
         <div class="tk-faq-body">
-          <p>You receive <strong>30 days (Professional), 60 days (Business), or 3 months priority (Enterprise)</strong> of dedicated online support through our portal. The Mac Mini is yours forever, no subscription. Workflows continue running 24/7 once the support window closes. Most clients only contact us again to add new workflows as their business evolves.</p>
+          <p>Every deployment includes <strong>30 days of dedicated online support</strong>. The workflows continue running 24/7 once that window closes. Need help beyond that? Open a ticket on our <a href="/support/" style="color: var(--tk-accent);">support page</a> and we'll respond within one business day. Most clients only reach out again to add new workflows as their business evolves.</p>
         </div>
       </details>
 
@@ -2282,9 +2243,8 @@ body {
     document.getElementById('total-annual').textContent = formatAUD(totalAnnual);
     document.getElementById('total-weekly').textContent = weeklyTotal > 0 ? '$' + Math.round(weeklyTotal).toLocaleString() : '$0';
     document.getElementById('total-yearly').textContent = formatAUD(totalSaving);
-    document.getElementById('be-pro').textContent        = weeklyTotal > 0 ? formatWeeks(5999  / weeklyTotal) : '·';
-    document.getElementById('be-business').textContent   = weeklyTotal > 0 ? formatWeeks(10999 / weeklyTotal) : '·';
-    document.getElementById('be-enterprise').textContent = weeklyTotal > 0 ? formatWeeks(24999 / weeklyTotal) : '·';
+    document.getElementById('be-cloud').textContent = weeklyTotal > 0 ? formatWeeks(2999 / weeklyTotal) : '·';
+    document.getElementById('be-mac').textContent   = weeklyTotal > 0 ? formatWeeks(5999 / weeklyTotal) : '·';
   }
   function removeRow(btn) { btn.closest('.tk-roi-row').remove(); recalc(); }
   function onRoleSelect(sel) {

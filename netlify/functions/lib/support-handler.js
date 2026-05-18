@@ -5,13 +5,16 @@
 //   1. Generate ticket ID (e.g. TK-202605-A1B2C3)
 //   2. Send branded confirmation email to client (Resend)
 //   3. Send detailed notification to team (start@tkai.com.au)
-//   4. Dispatch ticket payload (HMAC-signed) to ops Mac Mini support agent
+//
+// Note: this used to dispatch to an autonomous Claude agent over a webhook.
+// The product now routes every ticket straight to a human on the team — no AI
+// repair, no SSH, just a real person replying within one business day.
 
 export async function handleSupportTicket({ data }) {
   try {
     // Anti-spam: honeypot check
     if ((data['hp-field'] || '').trim()) {
-      console.log('Honeypot tripped, dropping submission');
+      console.log('Honeypot tripped, dropping support ticket');
       return new Response('Ignored: spam', { status: 200 });
     }
 
@@ -20,13 +23,11 @@ export async function handleSupportTicket({ data }) {
     const email = (data.email || '').trim();
     const phone = (data.phone || '').trim();
     const businessName = (data.businessName || '').trim();
-    const planType = (data.planType || '').trim();
     const ticketType = (data.ticketType || '').trim();
     const urgency = (data.urgency || 'standard').trim();
     const problemDescription = (data.problemDescription || '').trim();
-    const accessMethod = (data.accessMethod || 'openclaw-extension').trim();
-    const dataBackupConfirmed = (data.dataBackupConfirmed || '').trim();
-    const stripeSessionId = (data.stripeSessionId || '').trim();
+    const deploymentType = (data.deploymentType || '').trim();
+    const referrer = (data.referrer || '').trim();
 
     if (!email) {
       return new Response('No email on ticket', { status: 200 });
@@ -36,21 +37,16 @@ export async function handleSupportTicket({ data }) {
     const ctx = {
       ticketId,
       firstName, lastName, email, phone, businessName,
-      planType, ticketType, urgency, problemDescription, accessMethod,
-      dataBackupConfirmed, stripeSessionId,
+      ticketType, urgency, problemDescription, deploymentType, referrer,
       submittedAt: new Date().toISOString(),
     };
 
     // 1. Send confirmation email to client
     try {
       const { html: clientHtml, text: clientText } = buildClientEmail(ctx);
-      const clientSubject = isPayPerIncident(planType)
-        ? `Ticket ${ticketId} received. One step left: pay your $200 incident fee.`
-        : `Ticket ${ticketId} received. Agent picking it up now.`;
-
       await sendResend({
         to: [email],
-        subject: clientSubject,
+        subject: `Ticket ${ticketId} received. We'll reply within one business day.`,
         html: clientHtml,
         text: clientText,
       });
@@ -73,34 +69,6 @@ export async function handleSupportTicket({ data }) {
       console.log(`Team notification sent for ticket ${ticketId}`);
     } catch (err) {
       console.error('Failed to send team notification:', err.message);
-    }
-
-    // 3. Dispatch to the support agent on the ops Mac Mini (if configured)
-    try {
-      const agentUrl = (process.env.SUPPORT_AGENT_WEBHOOK_URL || '').trim();
-      const agentSecret = (process.env.SUPPORT_AGENT_WEBHOOK_SECRET || '').trim();
-      if (agentUrl && agentSecret) {
-        const agentPayload = JSON.stringify(ctx);
-        const sig = await hmacSha256Hex(agentSecret, agentPayload);
-        const agentRes = await fetch(agentUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Signature': sig,
-          },
-          body: agentPayload,
-        });
-        if (!agentRes.ok) {
-          const errBody = await agentRes.text();
-          console.error(`Agent webhook returned ${agentRes.status}: ${errBody.slice(0, 200)}`);
-        } else {
-          console.log(`Dispatched ticket ${ticketId} to support agent`);
-        }
-      } else {
-        console.log('Agent webhook not configured (SUPPORT_AGENT_WEBHOOK_URL/SECRET missing) — skipping');
-      }
-    } catch (err) {
-      console.error('Failed to dispatch to support agent:', err.message);
     }
 
     return new Response(`Ticket ${ticketId} processed`, { status: 200 });
@@ -139,7 +107,6 @@ async function sendResend({ to, subject, html, text, reply_to }) {
 function generateTicketId() {
   const now = new Date();
   const yyyymm = `${now.getUTCFullYear()}${String(now.getUTCMonth() + 1).padStart(2, '0')}`;
-  // 6-char base32-ish suffix (no ambiguous chars)
   const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   let suffix = '';
   for (let i = 0; i < 6; i++) {
@@ -148,39 +115,28 @@ function generateTicketId() {
   return `TK-${yyyymm}-${suffix}`;
 }
 
-function isPayPerIncident(plan) {
-  return plan === 'pay-per-incident';
-}
-
-function prettyPlan(plan) {
-  return ({
-    'pay-per-incident': 'Pay-per-Incident ($200 one-shot)',
-    'always-on': 'Always-On subscriber ($1,000/mo)',
-  })[plan] || plan || 'Unknown';
-}
-
 function prettyTicketType(t) {
   return ({
     broken: 'Broken / down',
     degraded: 'Performance degraded',
     question: 'Question / how-to',
     tweak: 'Workflow improvement',
+    'new-workflow': 'New workflow request',
     security: 'Security concern',
   })[t] || t || 'Unknown';
 }
 
-function prettyAccess(m) {
+function prettyDeployment(d) {
   return ({
-    'openclaw-extension': 'OpenClaw support extension (recommended)',
-    'screen-share': 'Slack / Telegram screen share',
-    'time-limited-ssh': 'Time-limited SSH (1-hour key)',
-  })[m] || m || 'Unknown';
+    cloud: 'Cloud OpenClaw (VPS hosted)',
+    'mac-mini': 'Mac Mini (on-premise)',
+  })[d] || (d ? d : 'Not specified');
 }
 
 function prettyUrgency(u) {
   return ({
-    standard: 'Standard (4 business hours)',
-    urgent: 'Urgent (1 hour, Always-On only)',
+    standard: 'Standard (within 1 business day)',
+    urgent: 'Urgent (same-day if possible)',
   })[u] || u || 'Standard';
 }
 
@@ -188,36 +144,29 @@ function prettyUrgency(u) {
 // Client confirmation email (branded, Apple-style)
 // ─────────────────────────────────────────────────────
 function buildClientEmail(ctx) {
-  const { ticketId, firstName, businessName, ticketType, urgency, planType, problemDescription } = ctx;
-  const isPpi = isPayPerIncident(planType);
+  const { ticketId, firstName, ticketType, urgency, problemDescription } = ctx;
   const slaLabel = prettyUrgency(urgency);
-  const preview = isPpi
-    ? `Ticket ${ticketId}. One quick step: pay your $200 incident fee to activate the agent.`
-    : `Ticket ${ticketId}. Our support agent is picking it up right now.`;
+  const preview = `Ticket ${ticketId}. A real person on our team replies within one business day.`;
 
   const text = `Hi ${firstName},
 
-Ticket ${ticketId} received. ${isPpi ? 'Your support agent will start the moment we receive your $200 incident payment.' : 'Our support agent is picking it up right now.'}
+Ticket ${ticketId} received. A real person on our team will reply within one business day, usually faster.
 
 Your ticket:
 - Type: ${prettyTicketType(ticketType)}
 - Urgency: ${slaLabel}
 - Description: ${problemDescription.slice(0, 200)}${problemDescription.length > 200 ? '…' : ''}
 
-${isPpi ? `Pay now to activate: https://buy.stripe.com/3cIbJ36cj0nmbFDdMv2Ji01
-After payment, the agent picks up your ticket within 5 minutes.
+What happens next:
+1. Your ticket lands at start@tkai.com.au.
+2. A real person reads it, pulls up your deployment notes, and drafts a reply.
+3. You receive a reply within one business day.
+4. The thread stays open in email until everything works.
 
-` : `What happens next:
-1. Agent reads your description and pulls Mac Mini logs.
-2. Draft fix prepared, sent to you for one-click approval (destructive changes only).
-3. Resolution emailed within ${slaLabel}.
-
-`}You'll receive a resolution email with the full audit log: what we changed, what we ran, and how to prevent it next time.
-
-Need to add details? Reply to this email directly. The thread is attached to ticket ${ticketId}.
+Need to add details? Just reply to this email — the thread is attached to ticket ${ticketId}.
 
 TurnkeyAI Support
-support@tkai.com.au · turnkeyai.com.au
+start@tkai.com.au · turnkeyai.com.au
 `;
 
   const html = `<!doctype html>
@@ -254,31 +203,12 @@ support@tkai.com.au · turnkeyai.com.au
       <tr>
         <td style="background:#ffffff;padding:56px 40px 24px;" align="left">
           <p style="margin:0 0 14px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#0071e3;font-weight:600;">Ticket ${escapeHtml(ticketId)}</p>
-          <h1 style="margin:0 0 20px;font-size:32px;line-height:1.1;letter-spacing:-0.02em;font-weight:600;color:#1d1d1f;">${isPpi ? `One step left, ${escapeHtml(firstName)}.` : `We're on it, ${escapeHtml(firstName)}.`}</h1>
+          <h1 style="margin:0 0 20px;font-size:32px;line-height:1.1;letter-spacing:-0.02em;font-weight:600;color:#1d1d1f;">Got it, ${escapeHtml(firstName)}.</h1>
           <p style="margin:0;font-size:17px;line-height:1.55;color:#1d1d1f;">
-            ${isPpi
-              ? `Your $200 incident fee activates the support agent. After payment, the agent picks up your ticket within 5 minutes.`
-              : `Our support agent is reading your ticket right now. Expected resolution: <strong style="font-weight:600;">${escapeHtml(slaLabel)}</strong>.`}
+            A real person on our team will reply within <strong style="font-weight:600;">one business day</strong>, usually faster. Sit tight &mdash; or reply to this email if anything's changed.
           </p>
         </td>
       </tr>
-
-      ${isPpi ? `
-      <!-- PAYMENT CTA -->
-      <tr>
-        <td style="background:#ffffff;padding:24px 40px 32px;" align="left">
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0a0a0a;border-radius:16px;">
-            <tr>
-              <td style="padding:28px 32px;" align="left">
-                <p style="margin:0 0 10px;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#4aa1ff;font-weight:600;">One quick step</p>
-                <p style="margin:0 0 16px;font-size:20px;font-weight:600;color:#ffffff;line-height:1.25;">Pay your $200 incident fee.</p>
-                <a href="https://buy.stripe.com/3cIbJ36cj0nmbFDdMv2Ji01" style="display:inline-block;background:#ffffff;color:#1d1d1f;font-weight:500;font-size:15px;padding:13px 22px;border-radius:100px;text-decoration:none;">Pay $200 &amp; activate ticket &rarr;</a>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      ` : ''}
 
       <!-- TICKET SUMMARY -->
       <tr>
@@ -289,7 +219,6 @@ support@tkai.com.au · turnkeyai.com.au
                 <span style="display:inline-block;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#86868b;font-weight:600;margin-bottom:8px;">Your ticket</span><br>
                 <strong style="font-weight:600;color:#1d1d1f;">Type:</strong> ${escapeHtml(prettyTicketType(ticketType))}<br>
                 <strong style="font-weight:600;color:#1d1d1f;">Urgency:</strong> ${escapeHtml(slaLabel)}<br>
-                <strong style="font-weight:600;color:#1d1d1f;">Plan:</strong> ${escapeHtml(prettyPlan(planType))}<br>
                 <br>
                 <strong style="font-weight:600;color:#1d1d1f;">Description:</strong><br>
                 <span style="color:#424245;">${escapeHtml(problemDescription.slice(0, 400))}${problemDescription.length > 400 ? '&hellip;' : ''}</span>
@@ -305,10 +234,10 @@ support@tkai.com.au · turnkeyai.com.au
           <p style="margin:0 0 18px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#86868b;font-weight:600;">What happens next</p>
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
             ${[
-              isPpi ? 'You pay your $200 fee (link above).' : 'Agent reads your ticket and pulls Mac Mini logs.',
-              isPpi ? 'Agent picks up the ticket within 5 minutes.' : 'Draft fix prepared, sent to you for one-click approval if needed.',
-              `Resolution email arrives within ${slaLabel.toLowerCase()}.`,
-              'You receive the full audit log: what we changed, what we ran, prevention tips.',
+              'Your ticket lands at start@tkai.com.au.',
+              'A real person reads it, pulls up your deployment notes, and drafts a reply.',
+              'You receive a reply within one business day.',
+              "The thread stays open in email until everything works.",
             ].map((step, i) => `
             <tr>
               <td width="32" valign="top" style="padding:0 0 14px;">
@@ -332,7 +261,7 @@ support@tkai.com.au · turnkeyai.com.au
             <tr>
               <td align="left" style="font-size:13px;color:#86868b;line-height:1.5;">
                 <span style="display:inline-block;width:6px;height:6px;background:#0071e3;border-radius:50%;margin-right:8px;vertical-align:middle;"></span><span style="color:#f5f5f7;font-weight:600;">TurnkeyAI Support</span><br>
-                <span style="font-size:11px;color:#6e6e73;">support@tkai.com.au</span>
+                <span style="font-size:11px;color:#6e6e73;">start@tkai.com.au</span>
               </td>
               <td align="right" style="font-size:11px;color:#6e6e73;">
                 <a href="https://turnkeyai.com.au/support/" style="color:#86868b;text-decoration:none;">turnkeyai.com.au/support</a>
@@ -364,27 +293,23 @@ support@tkai.com.au · turnkeyai.com.au
 function buildTeamEmail(ctx) {
   const {
     ticketId, firstName, lastName, email, phone, businessName,
-    planType, ticketType, urgency, problemDescription, accessMethod,
-    dataBackupConfirmed, stripeSessionId, submittedAt,
+    ticketType, urgency, problemDescription, deploymentType, referrer, submittedAt,
   } = ctx;
-  const isPpi = isPayPerIncident(planType);
 
   const text = `New support ticket: ${ticketId}
 
-Plan: ${prettyPlan(planType)}${isPpi ? ' — ⚠️ PAYMENT REQUIRED before action' : ''}
 Urgency: ${prettyUrgency(urgency)}
 Ticket type: ${prettyTicketType(ticketType)}
+Deployment: ${prettyDeployment(deploymentType)}
 
-Lead:
+Client:
 - Name: ${firstName} ${lastName}
 - Business: ${businessName}
 - Email: ${email}
 - Phone: ${phone || 'not provided'}
 
-Access method: ${prettyAccess(accessMethod)}
-Data backup confirmed: ${dataBackupConfirmed ? 'YES' : 'NO'}
-Stripe session: ${stripeSessionId || 'none'}
 Submitted at: ${submittedAt}
+Referrer: ${referrer || 'direct'}
 
 ────── PROBLEM DESCRIPTION ──────
 
@@ -407,18 +332,18 @@ Reply to this email to respond directly to ${firstName} (Reply-To set to ${email
   <table cellpadding="0" cellspacing="0" border="0" style="background:#fff;border-radius:14px;width:100%;border:1px solid #e8e8ed;">
     <tr>
       <td style="padding:16px 20px;border-bottom:1px solid #e8e8ed;">
-        <span style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#86868b;font-weight:600;">Plan</span>
-        <p style="margin:4px 0 0;font-size:15px;font-weight:500;">${escapeHtml(prettyPlan(planType))}${isPpi ? ' <span style="color:#d70015;font-weight:600;">· PAYMENT REQUIRED</span>' : ''}</p>
-      </td>
-      <td style="padding:16px 20px;border-bottom:1px solid #e8e8ed;border-left:1px solid #e8e8ed;">
         <span style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#86868b;font-weight:600;">Urgency</span>
         <p style="margin:4px 0 0;font-size:15px;font-weight:500;color:${urgencyColor};">${escapeHtml(prettyUrgency(urgency))}</p>
+      </td>
+      <td style="padding:16px 20px;border-bottom:1px solid #e8e8ed;border-left:1px solid #e8e8ed;">
+        <span style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#86868b;font-weight:600;">Ticket type</span>
+        <p style="margin:4px 0 0;font-size:15px;font-weight:500;">${escapeHtml(prettyTicketType(ticketType))}</p>
       </td>
     </tr>
     <tr>
       <td style="padding:16px 20px;border-bottom:1px solid #e8e8ed;" colspan="2">
-        <span style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#86868b;font-weight:600;">Ticket type</span>
-        <p style="margin:4px 0 0;font-size:15px;font-weight:500;">${escapeHtml(prettyTicketType(ticketType))}</p>
+        <span style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#86868b;font-weight:600;">Deployment</span>
+        <p style="margin:4px 0 0;font-size:15px;font-weight:500;">${escapeHtml(prettyDeployment(deploymentType))}</p>
       </td>
     </tr>
     <tr>
@@ -442,15 +367,9 @@ Reply to this email to respond directly to ${firstName} (Reply-To set to ${email
       </td>
     </tr>
     <tr>
-      <td style="padding:16px 20px;border-bottom:1px solid #e8e8ed;" colspan="2">
-        <span style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#86868b;font-weight:600;">Access method</span>
-        <p style="margin:4px 0 0;font-size:14px;">${escapeHtml(prettyAccess(accessMethod))}</p>
-      </td>
-    </tr>
-    <tr>
       <td style="padding:16px 20px;" colspan="2">
-        <span style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#86868b;font-weight:600;">Backup confirmed</span>
-        <p style="margin:4px 0 0;font-size:14px;color:${dataBackupConfirmed ? '#1d9d4f' : '#d70015'};font-weight:500;">${dataBackupConfirmed ? '✓ YES' : '✗ NO'}</p>
+        <span style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#86868b;font-weight:600;">Referrer</span>
+        <p style="margin:4px 0 0;font-size:13px;color:#6e6e73;">${escapeHtml(referrer) || 'direct'}</p>
       </td>
     </tr>
   </table>
@@ -473,22 +392,4 @@ function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
   }[c]));
-}
-
-// HMAC-SHA256 hex digest using Web Crypto (available in Netlify Functions runtime).
-async function hmacSha256Hex(secret, message) {
-  const enc = new TextEncoder();
-  const keyData = enc.encode(secret);
-  const msgData = enc.encode(message);
-  const cryptoKey = await crypto.subtle.importKey(
-    'raw',
-    keyData,
-    { name: 'HMAC', hash: 'SHA-256' },
-    false,
-    ['sign'],
-  );
-  const sigBuf = await crypto.subtle.sign('HMAC', cryptoKey, msgData);
-  return Array.from(new Uint8Array(sigBuf))
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('');
 }

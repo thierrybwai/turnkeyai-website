@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Support · Open a ticket | TurnkeyAI</title>
-<meta name="description" content="Something not working on your TurnkeyAI deployment? Open a ticket. A real person reads it and responds within one business day.">
+<title>Support · $200 per intervention | TurnkeyAI</title>
+<meta name="description" content="Every deployment includes 2 weeks of dedicated support. Past that window, each support intervention is $200 AUD, paid upfront. No subscription.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="canonical" href="https://turnkeyai.com.au/support/">
-<meta property="og:title" content="TurnkeyAI Support · Open a ticket">
-<meta property="og:description" content="Tell us what's not working. A real person reads it and responds within one business day.">
+<meta property="og:title" content="TurnkeyAI Support · $200 per intervention">
+<meta property="og:description" content="2 weeks of support included with every deployment. Past that, $200 per intervention. No subscription.">
 <meta property="og:url" content="https://turnkeyai.com.au/support/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://turnkeyai.com.au/og-image.png">
@@ -18,6 +18,65 @@
 <meta name="twitter:image" content="https://turnkeyai.com.au/og-image.png">
 <link rel="stylesheet" href="/assets/brand.css">
 <style>
+  /* Two-path cards */
+  .sp-path-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 920px;
+    margin: 0 auto;
+    align-items: stretch;
+  }
+  @media (max-width: 760px) { .sp-path-grid { grid-template-columns: 1fr; } }
+  .sp-path {
+    background: var(--tk-bg-elev);
+    border-radius: 22px;
+    padding: 36px 32px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.03), 0 12px 32px -16px hsl(var(--tk-shadow-color) / 0.18);
+    display: flex;
+    flex-direction: column;
+    transition: transform 500ms var(--tk-ease-out), box-shadow 500ms var(--tk-ease-out);
+  }
+  .sp-path:hover { transform: translateY(-4px); box-shadow: 0 1px 1px rgba(0,0,0,0.04), 0 24px 48px -20px hsl(var(--tk-shadow-color) / 0.25); }
+  .sp-path--featured {
+    background: var(--tk-bg-deep);
+    color: #f5f5f7;
+  }
+  .sp-path--featured .sp-path-eyebrow { color: #4aa1ff; }
+  .sp-path--featured .sp-path-price { color: #ffffff; }
+  .sp-path--featured .sp-path-body { color: rgba(255,255,255,0.78); }
+  .sp-path--featured .sp-path-note { color: rgba(255,255,255,0.55); }
+  .sp-path-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--tk-accent);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .sp-path-title {
+    font-family: var(--tk-font-display);
+    font-size: 26px;
+    line-height: 1.15;
+    letter-spacing: -0.022em;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .sp-path-price {
+    font-family: var(--tk-font-display);
+    font-size: 38px;
+    line-height: 1;
+    letter-spacing: -0.032em;
+    font-weight: 600;
+    color: var(--tk-fg);
+    margin: 18px 0 6px;
+  }
+  .sp-path-price small { font-size: 13px; font-weight: 500; color: var(--tk-fg-muted); margin-left: 6px; }
+  .sp-path--featured .sp-path-price small { color: rgba(255,255,255,0.55); }
+  .sp-path-body { font-size: 15px; line-height: 1.55; color: var(--tk-fg); margin-bottom: 20px; }
+  .sp-path-note { font-size: 13px; color: var(--tk-fg-muted); margin-top: 12px; line-height: 1.5; }
+  .sp-path-cta { margin-top: auto; }
+
   /* How-it-works grid */
   .sp-steps {
     display: grid;
@@ -52,19 +111,6 @@
   .sp-faq-item h3 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
   .sp-faq-item p { font-size: 15px; line-height: 1.6; color: var(--tk-fg-muted); }
 
-  /* CTA card */
-  .sp-cta-card {
-    max-width: 720px;
-    margin: 0 auto;
-    background: var(--tk-bg-elev);
-    border-radius: 24px;
-    padding: 48px;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.03), 0 24px 56px -24px hsl(var(--tk-shadow-color) / 0.22);
-    text-align: center;
-  }
-  .sp-cta-card h2 { margin-bottom: 14px; }
-  .sp-cta-card p { font-size: 16px; line-height: 1.6; color: var(--tk-fg-muted); max-width: 520px; margin: 0 auto 28px; }
-
   /* Promise strip */
   .sp-promise {
     display: grid;
@@ -82,6 +128,30 @@
     margin-bottom: 6px;
   }
   .sp-promise-label { font-size: 13px; color: var(--tk-fg-muted); line-height: 1.5; }
+
+  /* Pricing explainer card */
+  .sp-explainer {
+    max-width: 720px;
+    margin: 0 auto;
+    background: var(--tk-bg-elev);
+    border-radius: 22px;
+    padding: 36px 40px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.03), 0 12px 32px -16px hsl(var(--tk-shadow-color) / 0.18);
+  }
+  .sp-explainer-row { display: flex; gap: 20px; padding: 14px 0; align-items: flex-start; }
+  .sp-explainer-row + .sp-explainer-row { border-top: 1px solid var(--tk-line); }
+  .sp-explainer-dot {
+    width: 32px; height: 32px; flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--tk-accent-soft);
+    color: var(--tk-accent);
+    font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 2px;
+  }
+  .sp-explainer-text { flex: 1; }
+  .sp-explainer-text strong { color: var(--tk-fg); font-weight: 600; display: block; margin-bottom: 4px; }
+  .sp-explainer-text p { font-size: 15px; line-height: 1.55; color: var(--tk-fg-muted); margin: 0; }
 </style>
 <!-- Microsoft Clarity -->
 <script type="text/javascript">
@@ -112,7 +182,7 @@
       <li><a href="/blog/" class="tk-nav-link">Blog</a></li>
       <li><a href="/support/" class="tk-nav-link" style="opacity: 1;">Support</a></li>
     </ul>
-    <a href="/support/new-ticket/" class="tk-btn tk-btn--primary tk-btn--sm">Open a ticket</a>
+    <a href="#paths" class="tk-btn tk-btn--primary tk-btn--sm">Get support</a>
   </div>
 </nav>
 
@@ -122,11 +192,11 @@
     <p class="tk-eyebrow">Support · for existing TurnkeyAI clients</p>
     <h1 class="tk-h1" style="margin-bottom: 20px;">Something not working? Tell us. We'll fix it.</h1>
     <p class="tk-lede tk-muted" style="max-width: 720px; margin-bottom: 28px;">
-      Open a ticket. A real person on our team reads it, replies within one business day, and works with you until your AI is running again. No bots, no AI repair scripts, no SSH-into-your-machine surprises &mdash; just a human who knows your deployment.
+      Every TurnkeyAI deployment includes <strong>2 weeks of dedicated support</strong> after we hand it over. Past that window, each intervention is <strong>$200 AUD</strong>, paid upfront. No subscription, no retainer, no surprise bills.
     </p>
     <div style="display: inline-flex; gap: 12px; flex-wrap: wrap;">
-      <a href="/support/new-ticket/" class="tk-btn tk-btn--primary tk-btn--lg">Open a ticket</a>
-      <a href="mailto:start@tkai.com.au" class="tk-btn tk-btn--ghost tk-btn--lg">Email start@tkai.com.au</a>
+      <a href="#paths" class="tk-btn tk-btn--primary tk-btn--lg">See your options</a>
+      <a href="#how-it-works" class="tk-btn tk-btn--ghost tk-btn--lg">How it works</a>
     </div>
   </div>
 </header>
@@ -136,31 +206,109 @@
   <div class="tk-content tk-fade-up">
     <div class="sp-promise">
       <div>
+        <div class="sp-promise-num">2 weeks</div>
+        <div class="sp-promise-label">Of dedicated support included with every deployment</div>
+      </div>
+      <div>
+        <div class="sp-promise-num">$200</div>
+        <div class="sp-promise-label">Per intervention beyond the window, paid upfront</div>
+      </div>
+      <div>
         <div class="sp-promise-num">&lt; 1 day</div>
-        <div class="sp-promise-label">First reply, every business day</div>
+        <div class="sp-promise-label">First reply after payment confirmed</div>
       </div>
       <div>
         <div class="sp-promise-num">Human</div>
-        <div class="sp-promise-label">A real person, who knows your setup</div>
-      </div>
-      <div>
-        <div class="sp-promise-num">No fees</div>
-        <div class="sp-promise-label">Support is included with every deployment</div>
-      </div>
-      <div>
-        <div class="sp-promise-num">Email</div>
-        <div class="sp-promise-label">Whole conversation stays in your inbox</div>
+        <div class="sp-promise-label">A real person from the team that deployed your system</div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- PRICING EXPLAINER -->
+<section class="tk-section" style="padding-top: 48px; padding-bottom: 64px;">
+  <div class="tk-content tk-fade-up">
+    <div class="tk-center" style="margin-bottom: 40px;">
+      <p class="tk-eyebrow">How support works</p>
+      <h2 class="tk-h2" style="margin-bottom: 12px;">Two weeks free, then pay-as-you-go.</h2>
+      <p class="tk-lede tk-muted" style="max-width: 600px; margin: 0 auto;">
+        No retainer, no monthly fee, no obligation. You only pay when you need us.
+      </p>
+    </div>
+    <div class="sp-explainer">
+      <div class="sp-explainer-row">
+        <div class="sp-explainer-dot">1</div>
+        <div class="sp-explainer-text">
+          <strong>First 2 weeks after deployment &mdash; free.</strong>
+          <p>Anything that breaks or feels off in your first two weeks is on us. Email <a href="mailto:start@tkai.com.au" style="color: var(--tk-accent);">start@tkai.com.au</a> directly &mdash; no form, no payment, no fuss.</p>
+        </div>
+      </div>
+      <div class="sp-explainer-row">
+        <div class="sp-explainer-dot">2</div>
+        <div class="sp-explainer-text">
+          <strong>After 2 weeks &mdash; $200 per intervention.</strong>
+          <p>Pay $200 AUD upfront via Stripe, then describe what's not working in the ticket form. A real person reads it and replies within one business day. One payment covers one full resolution &mdash; back-and-forth in the same thread is included.</p>
+        </div>
+      </div>
+      <div class="sp-explainer-row">
+        <div class="sp-explainer-dot">3</div>
+        <div class="sp-explainer-text">
+          <strong>If we can't fix it, you get a refund.</strong>
+          <p>No hand-waving. If your issue is out of scope or unsolvable, we say so and refund your $200 in full. You only pay for resolutions that work.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TWO PATHS -->
+<section id="paths" class="tk-section tk-section--alt" style="padding-top: 96px; padding-bottom: 96px;">
+  <div class="tk-wide">
+    <div class="tk-fade-up tk-center" style="margin-bottom: 56px;">
+      <p class="tk-eyebrow">Pick your path</p>
+      <h2 class="tk-h2" style="margin-bottom: 16px;">Are you still in your 2-week window?</h2>
+    </div>
+
+    <div class="sp-path-grid">
+
+      <!-- PATH 1: In-window (FREE) -->
+      <div class="sp-path tk-fade-up">
+        <p class="sp-path-eyebrow">Still in your 2-week window</p>
+        <h3 class="sp-path-title">Email us directly</h3>
+        <div class="sp-path-price">Free<small>included with your deployment</small></div>
+        <p class="sp-path-body">
+          Within 2 weeks of your handover? Skip the form. Email <a href="mailto:start@tkai.com.au" style="color: var(--tk-accent); font-weight: 500;">start@tkai.com.au</a> with what's happening and we'll reply within one business day. No payment, no friction.
+        </p>
+        <p class="sp-path-note">
+          Reply directly to your handover email if you still have it &mdash; the thread is already attached to your deployment notes.
+        </p>
+        <a href="mailto:start@tkai.com.au?subject=Support%20request%20%28in-window%29" class="tk-btn tk-btn--ghost tk-btn--block sp-path-cta">Email start@tkai.com.au</a>
+      </div>
+
+      <!-- PATH 2: Out-of-window (PAID) FEATURED -->
+      <div class="sp-path sp-path--featured tk-fade-up">
+        <p class="sp-path-eyebrow">Past your 2-week window</p>
+        <h3 class="sp-path-title">Pay $200, open a ticket</h3>
+        <div class="sp-path-price">$200<small>AUD &middot; per intervention</small></div>
+        <p class="sp-path-body">
+          One-off payment, no subscription. After Stripe confirms your payment, you'll land on the ticket form. Fill it in, hit send, and a real person on the team replies within one business day. Refund if we can't fix it.
+        </p>
+        <p class="sp-path-note">
+          Secure payment via Stripe. You'll be redirected to the ticket form the moment payment goes through.
+        </p>
+        <a href="https://buy.stripe.com/3cIbJ36cj0nmbFDdMv2Ji01" class="tk-btn tk-btn--primary tk-btn--block sp-path-cta">Pay $200 &amp; open a ticket <span class="arrow">&rarr;</span></a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- HOW IT WORKS -->
-<section class="tk-section tk-section--alt" id="how-it-works" style="padding-top: 96px; padding-bottom: 96px;">
+<section class="tk-section" id="how-it-works">
   <div class="tk-content">
     <div class="tk-fade-up tk-center" style="margin-bottom: 56px;">
-      <p class="tk-eyebrow">How it works</p>
-      <h2 class="tk-h2" style="margin-bottom: 16px;">From ticket to resolution, in four steps.</h2>
+      <p class="tk-eyebrow">How a paid ticket works</p>
+      <h2 class="tk-h2" style="margin-bottom: 16px;">From payment to resolution, in four steps.</h2>
       <p class="tk-lede tk-muted" style="max-width: 640px; margin: 0 auto;">
         Plain English, plain email. No portal logins to remember.
       </p>
@@ -169,38 +317,24 @@
     <div class="sp-steps tk-fade-up">
       <div class="sp-step">
         <div class="sp-step-num">01</div>
-        <h3>Open a ticket</h3>
-        <p>Fill the short form. Describe what's not working, how urgent it is, and where in your business it shows up.</p>
+        <h3>Pay $200 via Stripe</h3>
+        <p>Click the button, pay securely, and you're redirected to the ticket form the moment payment confirms.</p>
       </div>
       <div class="sp-step">
         <div class="sp-step-num">02</div>
-        <h3>We read it</h3>
-        <p>Your ticket lands at <strong>start@tkai.com.au</strong>. A real person on our team reads it, looks up your deployment, and drafts a response.</p>
+        <h3>Open the ticket</h3>
+        <p>Describe what's not working in plain English. The form attaches your payment receipt automatically.</p>
       </div>
       <div class="sp-step">
         <div class="sp-step-num">03</div>
-        <h3>We reply by email</h3>
-        <p>First reply within one business day. Most issues are diagnosed in the same thread &mdash; clear, written explanation, no jargon.</p>
+        <h3>We read &amp; reply</h3>
+        <p>Your ticket lands at <strong>start@tkai.com.au</strong>. First reply within one business day, from a real person who knows your deployment.</p>
       </div>
       <div class="sp-step">
         <div class="sp-step-num">04</div>
-        <h3>We fix it</h3>
-        <p>Workflow tweaks, config updates, integration re-auth, on-site visit if needed. The thread stays open until everything works.</p>
+        <h3>Resolved or refunded</h3>
+        <p>The thread stays open until everything works. If we can't fix it, we refund the $200 in full.</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="tk-section">
-  <div class="tk-content tk-fade-up">
-    <div class="sp-cta-card">
-      <p class="tk-eyebrow" style="margin-bottom: 14px;">Ready when you are</p>
-      <h2 class="tk-h2">Open a ticket in 60 seconds.</h2>
-      <p>
-        Tell us what's broken and we'll take it from there. If you'd rather just email, send a note to <a href="mailto:start@tkai.com.au" style="color: var(--tk-accent);">start@tkai.com.au</a> &mdash; same inbox, same response time.
-      </p>
-      <a href="/support/new-ticket/" class="tk-btn tk-btn--primary tk-btn--lg">Open a ticket <span class="arrow">&rarr;</span></a>
     </div>
   </div>
 </section>
@@ -216,28 +350,28 @@
     <div class="sp-faq-grid tk-fade-up">
 
       <div class="sp-faq-item">
-        <h3>How fast do you reply?</h3>
-        <p>First reply within one business day, every time. Most tickets are resolved within the same email thread over a day or two. Anything truly urgent? Call out "urgent" in the form and email <a href="mailto:start@tkai.com.au">start@tkai.com.au</a> directly.</p>
+        <h3>How do I know if I'm still in my 2-week window?</h3>
+        <p>The window starts the day we hand over your deployment. If you can't remember the date, check your handover email or just ask &mdash; email <a href="mailto:start@tkai.com.au">start@tkai.com.au</a> and we'll tell you, no payment needed.</p>
       </div>
 
       <div class="sp-faq-item">
-        <h3>Does it cost anything?</h3>
-        <p>No. Support is included with every deployment. There's no subscription, no incident fee, no surprise invoice. If a fix needs new work (e.g. a brand-new workflow), we'll quote it before starting &mdash; never after.</p>
+        <h3>What counts as one "intervention"?</h3>
+        <p>One issue, one full resolution, including all the back-and-forth needed to fix it. If a fix uncovers a separate, unrelated issue, that's a new intervention. We always tell you upfront if we think a follow-up will be billable.</p>
       </div>
 
       <div class="sp-faq-item">
-        <h3>Do you access my Mac Mini or VPS to fix things?</h3>
-        <p>Only if you ask us to and only with credentials you generate. By default, all troubleshooting happens by email: we describe the fix, you apply it or we screen-share. Nothing is remote-controlled behind your back.</p>
+        <h3>What if my issue is really fast to fix?</h3>
+        <p>The $200 is for the resolution, not the time. A 5-minute fix and a 4-hour debugging session both cost the same. In exchange, you don't watch the clock &mdash; we take whatever time the issue needs.</p>
+      </div>
+
+      <div class="sp-faq-item">
+        <h3>Is the $200 refundable?</h3>
+        <p>Yes &mdash; in full, if we can't resolve your issue. If your problem is out of scope (e.g. a third-party tool we don't manage), we'll say so before we start and refund automatically. No emails, no chase.</p>
       </div>
 
       <div class="sp-faq-item">
         <h3>What kinds of issues do you handle?</h3>
-        <p>Anything related to your deployment: workflow failures, integration breakages (Xero, MYOB, Slack, Telegram), prompt tuning, API key rotations, performance drops, "how do I" questions, and small workflow improvements. If it's outside scope, we'll say so clearly.</p>
-      </div>
-
-      <div class="sp-faq-item">
-        <h3>What if I just want to add a new workflow?</h3>
-        <p>Open a ticket and describe what you want it to do. We'll quote it (typically one to three hours of work) and turn it around within a week of acceptance. New workflows are billed separately from support.</p>
+        <p>Anything related to your deployment: workflow failures, integration breakages (Xero, MYOB, Slack, Telegram), prompt tuning, API key rotations, performance drops, "how do I" questions. New workflow requests are quoted separately, not part of $200 support.</p>
       </div>
 
       <div class="sp-faq-item">
@@ -252,9 +386,12 @@
 <!-- CTA -->
 <section class="tk-section" style="padding-top: 0;">
   <div class="tk-cta-banner tk-fade-up">
-    <h2 class="tk-h2" style="font-size: 36px;">Tell us what's broken. We'll fix it.</h2>
-    <p>One form, one human reply, one thread until it's resolved. No portal, no subscription.</p>
-    <a href="/support/new-ticket/" class="tk-btn tk-btn--primary tk-btn--lg">Open a ticket <span class="arrow">&rarr;</span></a>
+    <h2 class="tk-h2" style="font-size: 36px;">Need help right now?</h2>
+    <p>Pay $200, open a ticket, get a real human response within one business day. Or email us directly if you're still in your 2-week window.</p>
+    <div style="display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 8px;">
+      <a href="https://buy.stripe.com/3cIbJ36cj0nmbFDdMv2Ji01" class="tk-btn tk-btn--primary tk-btn--lg">Pay $200 &amp; open a ticket <span class="arrow">&rarr;</span></a>
+      <a href="mailto:start@tkai.com.au" class="tk-btn tk-btn--ghost tk-btn--lg">Email instead</a>
+    </div>
   </div>
 </section>
 

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Open a support ticket | TurnkeyAI</title>
-<meta name="description" content="Tell us what's not working on your TurnkeyAI deployment. A real person replies within one business day.">
+<meta name="description" content="Tell us what's not working. A real person replies within one business day.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta name="robots" content="noindex">
 <link rel="stylesheet" href="/assets/brand.css">
@@ -26,6 +26,53 @@
   .tk-textarea { min-height: 160px; resize: vertical; font-family: inherit; }
   .tk-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   @media (max-width: 600px) { .tk-field-row { grid-template-columns: 1fr; } }
+
+  /* Paywall card */
+  .nt-paywall {
+    background: var(--tk-bg-deep);
+    color: #f5f5f7;
+    border-radius: 22px;
+    padding: 48px 40px;
+    text-align: center;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.03), 0 24px 56px -24px rgba(0,0,0,0.35);
+    position: relative;
+    overflow: hidden;
+  }
+  .nt-paywall::before {
+    content: '';
+    position: absolute;
+    width: 360px; height: 360px;
+    right: -100px; top: -180px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,113,227,0.28) 0%, rgba(0,113,227,0) 70%);
+    pointer-events: none;
+  }
+  .nt-paywall-eyebrow { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #4aa1ff; font-weight: 600; margin-bottom: 14px; position: relative; }
+  .nt-paywall-title { font-family: var(--tk-font-display); font-size: 30px; line-height: 1.15; letter-spacing: -0.022em; font-weight: 600; margin-bottom: 14px; position: relative; }
+  .nt-paywall-body { font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.78); max-width: 480px; margin: 0 auto 28px; position: relative; }
+  .nt-paywall-cta { background: #fff; color: #1d1d1f; position: relative; }
+  .nt-paywall-cta:hover { background: #f5f5f7; color: #1d1d1f; }
+  .nt-paywall-note { font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 22px; position: relative; }
+  .nt-paywall-note a { color: rgba(255,255,255,0.78); text-decoration: underline; }
+
+  /* Payment-confirmed banner */
+  .nt-paid-banner {
+    background: linear-gradient(90deg, rgba(29,157,79,0.08), rgba(29,157,79,0.02));
+    border: 1px solid rgba(29,157,79,0.25);
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    display: flex; gap: 12px; align-items: center;
+    font-size: 14px;
+    color: var(--tk-fg);
+  }
+  .nt-paid-check {
+    width: 22px; height: 22px; flex-shrink: 0;
+    border-radius: 50%; background: #1d9d4f;
+    color: #fff; font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nt-paid-banner strong { color: #1d9d4f; font-weight: 600; }
 </style>
 <!-- Microsoft Clarity -->
 <script type="text/javascript">
@@ -58,109 +105,132 @@
 </nav>
 
 <div class="nt-shell">
-  <div style="margin-bottom: 32px;">
-    <p class="tk-eyebrow">Open a ticket</p>
-    <h1 class="tk-h1" style="font-size: 40px; margin-bottom: 14px;">What's not working?</h1>
-    <p class="tk-lede tk-muted">
-      Describe the issue in plain English. A real person on our team reads it, replies within one business day, and works with you in email until it's resolved.
+
+  <!-- PAYWALL: shown when no session_id present -->
+  <div id="nt-paywall" class="nt-paywall" style="display: none;">
+    <p class="nt-paywall-eyebrow">Payment required</p>
+    <h1 class="nt-paywall-title">One quick step before the ticket form.</h1>
+    <p class="nt-paywall-body">
+      Pay your $200 AUD intervention fee. The moment Stripe confirms your payment, you'll be redirected back here with the form unlocked. Refund in full if we can't fix your issue.
+    </p>
+    <a href="https://buy.stripe.com/3cIbJ36cj0nmbFDdMv2Ji01" class="tk-btn nt-paywall-cta tk-btn--lg">Pay $200 &amp; unlock the form &rarr;</a>
+    <p class="nt-paywall-note">
+      Still in your 2-week support window? <a href="mailto:start@tkai.com.au">Email start@tkai.com.au</a> directly &mdash; no payment needed.
     </p>
   </div>
 
-  <div class="nt-card">
-    <form id="ticketForm" name="support-ticket" method="POST" data-netlify="true" data-netlify-honeypot="hp-field" onsubmit="handleTicketSubmit(event)">
-      <input type="hidden" name="form-name" value="support-ticket">
+  <!-- FORM: shown when session_id is present -->
+  <div id="nt-form-shell" style="display: none;">
+    <div style="margin-bottom: 32px;">
+      <p class="tk-eyebrow">Open a ticket</p>
+      <h1 class="tk-h1" style="font-size: 40px; margin-bottom: 14px;">What's not working?</h1>
+      <p class="tk-lede tk-muted">
+        Describe the issue in plain English. A real person on our team reads it, replies within one business day, and works with you in email until it's resolved.
+      </p>
+    </div>
 
-      <!-- ID ──────────────────────────────────── -->
-      <div class="nt-section">
-        <p class="nt-label-section">Your details</p>
+    <div class="nt-paid-banner">
+      <div class="nt-paid-check">&#10003;</div>
+      <div><strong>Payment received.</strong> One $200 intervention unlocked. Reference: <span id="ntSessionRef" style="font-family: ui-monospace, SFMono-Regular, monospace; font-size: 12.5px; color: var(--tk-fg-muted);">&mdash;</span></div>
+    </div>
 
-        <div class="tk-field-row">
-          <div>
-            <label class="tk-label">First name</label>
-            <input class="tk-input" type="text" name="firstName" placeholder="Sarah" required>
+    <div class="nt-card">
+      <form id="ticketForm" name="support-ticket" method="POST" data-netlify="true" data-netlify-honeypot="hp-field" onsubmit="handleTicketSubmit(event)">
+        <input type="hidden" name="form-name" value="support-ticket">
+
+        <!-- ID ──────────────────────────────────── -->
+        <div class="nt-section">
+          <p class="nt-label-section">Your details</p>
+
+          <div class="tk-field-row">
+            <div>
+              <label class="tk-label">First name</label>
+              <input class="tk-input" type="text" name="firstName" placeholder="Sarah" required>
+            </div>
+            <div>
+              <label class="tk-label">Last name</label>
+              <input class="tk-input" type="text" name="lastName" placeholder="Mitchell" required>
+            </div>
           </div>
-          <div>
-            <label class="tk-label">Last name</label>
-            <input class="tk-input" type="text" name="lastName" placeholder="Mitchell" required>
+
+          <div class="tk-field-row">
+            <div>
+              <label class="tk-label">Email (must match Stripe receipt)</label>
+              <input class="tk-input" type="email" name="email" placeholder="you@yourbusiness.com.au" required>
+            </div>
+            <div>
+              <label class="tk-label">Phone (for urgent only)</label>
+              <input class="tk-input" type="tel" name="phone" placeholder="+61 4XX XXX XXX">
+            </div>
+          </div>
+
+          <div class="tk-field">
+            <label class="tk-label">Business name (must match deployment)</label>
+            <input class="tk-input" type="text" name="businessName" placeholder="Brisbane Bookkeeping Co" required>
           </div>
         </div>
 
-        <div class="tk-field-row">
-          <div>
-            <label class="tk-label">Email (must match billing)</label>
-            <input class="tk-input" type="email" name="email" placeholder="you@yourbusiness.com.au" required>
+        <!-- TICKET ──────────────────────────────────── -->
+        <div class="nt-section">
+          <p class="nt-label-section">The issue</p>
+
+          <div class="tk-field">
+            <label class="tk-label">What's not working?</label>
+            <textarea class="tk-textarea" name="problemDescription" placeholder="Tell us what's happening. Be as specific as possible: which workflow, what error, when did it start, what you've already tried. The more context, the faster we can help." minlength="40" required></textarea>
+            <p class="tk-small" style="margin-top: 8px;">Minimum 40 characters. More context = faster reply.</p>
           </div>
-          <div>
-            <label class="tk-label">Phone (for urgent only)</label>
-            <input class="tk-input" type="tel" name="phone" placeholder="+61 4XX XXX XXX">
+
+          <div class="tk-field-row">
+            <div>
+              <label class="tk-label">Ticket type</label>
+              <select class="tk-select" name="ticketType" required>
+                <option value="">Select…</option>
+                <option value="broken">Something is broken / down</option>
+                <option value="degraded">Performance degraded</option>
+                <option value="question">Question or how-to</option>
+                <option value="tweak">Workflow improvement</option>
+                <option value="security">Security concern</option>
+              </select>
+            </div>
+            <div>
+              <label class="tk-label">Urgency</label>
+              <select class="tk-select" name="urgency" required>
+                <option value="standard">Standard · within 1 business day</option>
+                <option value="urgent">Urgent · same-day if possible</option>
+              </select>
+            </div>
           </div>
-        </div>
 
-        <div class="tk-field">
-          <label class="tk-label">Business name (must match deployment)</label>
-          <input class="tk-input" type="text" name="businessName" placeholder="Brisbane Bookkeeping Co" required>
-        </div>
-      </div>
-
-      <!-- TICKET ──────────────────────────────────── -->
-      <div class="nt-section">
-        <p class="nt-label-section">The issue</p>
-
-        <div class="tk-field">
-          <label class="tk-label">What's not working?</label>
-          <textarea class="tk-textarea" name="problemDescription" placeholder="Tell us what's happening. Be as specific as possible: which workflow, what error, when did it start, what you've already tried. The more context, the faster we can help." minlength="40" required></textarea>
-          <p class="tk-small" style="margin-top: 8px;">Minimum 40 characters. More context = faster reply.</p>
-        </div>
-
-        <div class="tk-field-row">
-          <div>
-            <label class="tk-label">Ticket type</label>
-            <select class="tk-select" name="ticketType" required>
-              <option value="">Select…</option>
-              <option value="broken">Something is broken / down</option>
-              <option value="degraded">Performance degraded</option>
-              <option value="question">Question or how-to</option>
-              <option value="tweak">Workflow improvement</option>
-              <option value="new-workflow">New workflow request</option>
-              <option value="security">Security concern</option>
+          <div class="tk-field">
+            <label class="tk-label">Deployment type (optional)</label>
+            <select class="tk-select" name="deploymentType">
+              <option value="">Not sure / skip</option>
+              <option value="cloud">Cloud OpenClaw (VPS hosted)</option>
+              <option value="mac-mini">Mac Mini (on-premise)</option>
             </select>
           </div>
-          <div>
-            <label class="tk-label">Urgency</label>
-            <select class="tk-select" name="urgency" required>
-              <option value="standard">Standard · within 1 business day</option>
-              <option value="urgent">Urgent · same-day if possible</option>
-            </select>
-          </div>
         </div>
 
-        <div class="tk-field">
-          <label class="tk-label">Deployment type (optional)</label>
-          <select class="tk-select" name="deploymentType">
-            <option value="">Not sure / skip</option>
-            <option value="cloud">Cloud OpenClaw (VPS hosted)</option>
-            <option value="mac-mini">Mac Mini (on-premise)</option>
-          </select>
-        </div>
-      </div>
+        <!-- Honeypot anti-spam -->
+        <p style="position: absolute; left: -9999px;" aria-hidden="true">
+          <label>Don't fill this out if you're human: <input name="hp-field" tabindex="-1" autocomplete="off"></label>
+        </p>
 
-      <!-- Honeypot anti-spam -->
-      <p style="position: absolute; left: -9999px;" aria-hidden="true">
-        <label>Don't fill this out if you're human: <input name="hp-field" tabindex="-1" autocomplete="off"></label>
-      </p>
+        <!-- Hidden context -->
+        <input type="hidden" name="referrer" id="referrerField" value="">
+        <input type="hidden" name="stripeSessionId" id="stripeSessionIdField" value="">
 
-      <!-- Hidden context -->
-      <input type="hidden" name="referrer" id="referrerField" value="">
+        <button type="submit" id="submitBtn" class="tk-btn tk-btn--primary tk-btn--lg tk-btn--block" style="margin-top: 28px;">
+          Send the ticket &rarr;
+        </button>
 
-      <button type="submit" id="submitBtn" class="tk-btn tk-btn--primary tk-btn--lg tk-btn--block" style="margin-top: 28px;">
-        Send the ticket &rarr;
-      </button>
-
-      <p class="tk-small tk-center" style="margin-top: 14px;">
-        Confirmation email lands in your inbox in 30 seconds. A real person replies within one business day.
-      </p>
-    </form>
+        <p class="tk-small tk-center" style="margin-top: 14px;">
+          Confirmation email lands in your inbox in 30 seconds. A real person replies within one business day.
+        </p>
+      </form>
+    </div>
   </div>
+
 </div>
 
 <footer class="tk-footer-rich" style="margin-top: 0;">
@@ -168,7 +238,7 @@
     <div>
       <a href="/" class="tk-brand" style="margin-bottom: 16px;">TurnkeyAI</a>
       <p class="tk-small" style="margin-top: 12px; max-width: 280px;">
-        Done-for-you AI automation for Australian SMEs. Live in 7 days, on a Mac Mini in your office or on a dedicated VPS we manage.
+        Done-for-you AI automation for Australian SMEs.
       </p>
     </div>
     <div>
@@ -203,7 +273,36 @@
   </div>
 </footer>
 
+<!-- Hidden form definition so Netlify Forms still detects the form even when the visible
+     form is hidden on first paint (paywall view). Without this, Netlify can fail to
+     register the support-ticket form, breaking submissions. -->
+<form name="support-ticket" netlify netlify-honeypot="hp-field" hidden>
+  <input type="text" name="firstName">
+  <input type="text" name="lastName">
+  <input type="email" name="email">
+  <input type="tel" name="phone">
+  <input type="text" name="businessName">
+  <textarea name="problemDescription"></textarea>
+  <select name="ticketType"><option value="broken"></option></select>
+  <select name="urgency"><option value="standard"></option></select>
+  <select name="deploymentType"><option value=""></option></select>
+  <input type="hidden" name="referrer">
+  <input type="hidden" name="stripeSessionId">
+</form>
+
 <script>
+  // Paywall: show form only when ?session_id= is present (set by Stripe success redirect)
+  const urlParams = new URLSearchParams(window.location.search);
+  const sessionId = urlParams.get('session_id') || urlParams.get('cs') || '';
+
+  if (sessionId) {
+    document.getElementById('nt-form-shell').style.display = 'block';
+    document.getElementById('stripeSessionIdField').value = sessionId;
+    document.getElementById('ntSessionRef').textContent = sessionId.slice(0, 14) + '…';
+  } else {
+    document.getElementById('nt-paywall').style.display = 'block';
+  }
+
   // Capture referrer
   document.getElementById('referrerField').value = document.referrer || '';
 
@@ -219,7 +318,6 @@
       const params = new URLSearchParams();
       for (const [k, v] of formData.entries()) {
         if (k === 'hp-field' && v) {
-          // honeypot tripped, silently bail to the confirmation page
           window.location.href = '/support/ticket-received/?spam=1';
           return;
         }
@@ -239,7 +337,8 @@
               event_category: 'support',
               event_label: form.ticketType.value || 'unknown',
               urgency: form.urgency.value || 'standard',
-              value: 1,
+              value: 200,
+              currency: 'AUD',
             });
           }
           if (typeof clarity === 'function') {

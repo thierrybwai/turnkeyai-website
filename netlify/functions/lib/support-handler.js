@@ -28,6 +28,7 @@ export async function handleSupportTicket({ data }) {
     const problemDescription = (data.problemDescription || '').trim();
     const deploymentType = (data.deploymentType || '').trim();
     const referrer = (data.referrer || '').trim();
+    const stripeSessionId = (data.stripeSessionId || '').trim();
 
     if (!email) {
       return new Response('No email on ticket', { status: 200 });
@@ -38,6 +39,7 @@ export async function handleSupportTicket({ data }) {
       ticketId,
       firstName, lastName, email, phone, businessName,
       ticketType, urgency, problemDescription, deploymentType, referrer,
+      stripeSessionId,
       submittedAt: new Date().toISOString(),
     };
 
@@ -46,7 +48,7 @@ export async function handleSupportTicket({ data }) {
       const { html: clientHtml, text: clientText } = buildClientEmail(ctx);
       await sendResend({
         to: [email],
-        subject: `Ticket ${ticketId} received. We'll reply within one business day.`,
+        subject: `Ticket ${ticketId} received. Your $200 intervention is logged.`,
         html: clientHtml,
         text: clientText,
       });
@@ -144,24 +146,24 @@ function prettyUrgency(u) {
 // Client confirmation email (branded, Apple-style)
 // ─────────────────────────────────────────────────────
 function buildClientEmail(ctx) {
-  const { ticketId, firstName, ticketType, urgency, problemDescription } = ctx;
+  const { ticketId, firstName, ticketType, urgency, problemDescription, stripeSessionId } = ctx;
   const slaLabel = prettyUrgency(urgency);
-  const preview = `Ticket ${ticketId}. A real person on our team replies within one business day.`;
+  const preview = `Ticket ${ticketId}. Your $200 intervention is logged. A real person replies within one business day.`;
 
   const text = `Hi ${firstName},
 
-Ticket ${ticketId} received. A real person on our team will reply within one business day, usually faster.
+Ticket ${ticketId} received and your $200 intervention is logged. A real person on our team will reply within one business day, usually faster.
 
 Your ticket:
 - Type: ${prettyTicketType(ticketType)}
 - Urgency: ${slaLabel}
 - Description: ${problemDescription.slice(0, 200)}${problemDescription.length > 200 ? '…' : ''}
-
+${stripeSessionId ? `- Stripe reference: ${stripeSessionId}\n` : ''}
 What happens next:
 1. Your ticket lands at start@tkai.com.au.
 2. A real person reads it, pulls up your deployment notes, and drafts a reply.
 3. You receive a reply within one business day.
-4. The thread stays open in email until everything works.
+4. The thread stays open in email until everything works — or you get a full refund if we can't fix it.
 
 Need to add details? Just reply to this email — the thread is attached to ticket ${ticketId}.
 
@@ -202,10 +204,10 @@ start@tkai.com.au · turnkeyai.com.au
       <!-- HERO -->
       <tr>
         <td style="background:#ffffff;padding:56px 40px 24px;" align="left">
-          <p style="margin:0 0 14px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#0071e3;font-weight:600;">Ticket ${escapeHtml(ticketId)}</p>
+          <p style="margin:0 0 14px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#0071e3;font-weight:600;">Ticket ${escapeHtml(ticketId)} &middot; $200 intervention</p>
           <h1 style="margin:0 0 20px;font-size:32px;line-height:1.1;letter-spacing:-0.02em;font-weight:600;color:#1d1d1f;">Got it, ${escapeHtml(firstName)}.</h1>
           <p style="margin:0;font-size:17px;line-height:1.55;color:#1d1d1f;">
-            A real person on our team will reply within <strong style="font-weight:600;">one business day</strong>, usually faster. Sit tight &mdash; or reply to this email if anything's changed.
+            Your $200 intervention is logged. A real person on our team will reply within <strong style="font-weight:600;">one business day</strong>, usually faster. Sit tight &mdash; or reply to this email if anything's changed. Refund in full if we can't fix it.
           </p>
         </td>
       </tr>
@@ -293,11 +295,13 @@ start@tkai.com.au · turnkeyai.com.au
 function buildTeamEmail(ctx) {
   const {
     ticketId, firstName, lastName, email, phone, businessName,
-    ticketType, urgency, problemDescription, deploymentType, referrer, submittedAt,
+    ticketType, urgency, problemDescription, deploymentType,
+    referrer, stripeSessionId, submittedAt,
   } = ctx;
 
   const text = `New support ticket: ${ticketId}
 
+Stripe payment: ${stripeSessionId ? `${stripeSessionId} (verify at https://dashboard.stripe.com/payments)` : '⚠️ NO STRIPE SESSION ID — verify before responding'}
 Urgency: ${prettyUrgency(urgency)}
 Ticket type: ${prettyTicketType(ticketType)}
 Deployment: ${prettyDeployment(deploymentType)}
@@ -330,6 +334,13 @@ Reply to this email to respond directly to ${firstName} (Reply-To set to ${email
   <h1 style="font-size:22px;margin:0 0 20px;letter-spacing:-0.01em;">New support ticket from ${escapeHtml(firstName)} ${escapeHtml(lastName)}</h1>
 
   <table cellpadding="0" cellspacing="0" border="0" style="background:#fff;border-radius:14px;width:100%;border:1px solid #e8e8ed;">
+    <tr>
+      <td style="padding:16px 20px;border-bottom:1px solid #e8e8ed;" colspan="2">
+        <span style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#86868b;font-weight:600;">Stripe payment ($200 intervention)</span>
+        <p style="margin:4px 0 0;font-size:14px;font-family:ui-monospace,SFMono-Regular,monospace;color:${stripeSessionId ? '#1d9d4f' : '#d70015'};font-weight:500;">${stripeSessionId ? '✓ ' + escapeHtml(stripeSessionId) : '⚠️ NO STRIPE SESSION ID — verify before responding'}</p>
+        ${stripeSessionId ? `<p style="margin:6px 0 0;font-size:11px;color:#86868b;"><a href="https://dashboard.stripe.com/payments" style="color:#0071e3;">Verify in Stripe dashboard &rarr;</a></p>` : ''}
+      </td>
+    </tr>
     <tr>
       <td style="padding:16px 20px;border-bottom:1px solid #e8e8ed;">
         <span style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#86868b;font-weight:600;">Urgency</span>

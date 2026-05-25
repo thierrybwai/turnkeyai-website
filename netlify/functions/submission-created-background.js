@@ -1233,7 +1233,11 @@ function buildEmail({ firstName, businessName, industry, packageInterest, hasPdf
 
 Got your brief. Your AI agent is on our build queue and we've started on our end.${hasPdf ? '\n\nAttached: a personalized deployment plan for your business. It walks through what we\'d build, what it would save you in year one, and the package we\'d recommend.' : ''}
 
-We'll be in touch within 2 business hours to schedule your setup call.
+Book a 30-minute call with us to walk through your plan, answer your questions, and lock in your build slot:
+
+→ https://calendly.com/start-tkai/30min
+
+Prefer to wait? We'll reach out within 2 business hours either way.
 
 In the meantime, there's one task for you, and it takes 5 minutes:
 
@@ -1261,7 +1265,7 @@ What happens next:
 Talk soon,
 TurnkeyAI
 
-P.S. ${hasPdf ? 'The attached plan is built for ' + (businessName || 'your business') + ' specifically. Worth a 5-minute read before our call.' : 'The faster you create the address, the smoother the call. Most clients have it ready before we even pick up the phone.'}
+P.S. ${hasPdf ? 'The attached plan is built for ' + (businessName || 'your business') + ' specifically. Read it, then book your call: https://calendly.com/start-tkai/30min' : 'The faster you create the address, the smoother the call. Book a slot when you\'re ready: https://calendly.com/start-tkai/30min'}
 `;
 
   const html = `<!doctype html>
@@ -1281,7 +1285,7 @@ P.S. ${hasPdf ? 'The attached plan is built for ' + (businessName || 'your busin
 
   <!-- Preheader (hidden) -->
   <div style="display:none;font-size:1px;color:#f2f2f4;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;">
-    ${hasPdf ? 'Personalized AI deployment plan attached. One quick task before our call.' : 'Your AI agent build has started. One quick task for you in the meantime.'}
+    ${hasPdf ? 'Your personalized AI deployment plan is attached. Book a 30-min call to walk through it together.' : 'Your AI agent build has started. Book a 30-min call to discuss your project.'}
   </div>
 
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f2f2f4;">
@@ -1318,8 +1322,30 @@ P.S. ${hasPdf ? 'The attached plan is built for ' + (businessName || 'your busin
                 Attached is a <strong style="font-weight:600;">personalized deployment plan</strong> for ${escapeHtml(businessName || 'your business')}. It walks through what we'd build, what it would save you in year one, and the package we'd recommend. Worth 5 minutes before our call.
               </p>` : ''}
               <p style="margin:0;font-size:17px;line-height:1.55;color:#1d1d1f;">
-                We'll be in touch <strong style="font-weight:600;">within 2 business hours</strong> to schedule your setup call. In the meantime, there's <strong style="font-weight:600;">one task for you</strong>, and it takes 5 minutes.
+                Book a 30-minute call below to walk through it together &mdash; or we'll reach out within 2 business hours either way. Then there's <strong style="font-weight:600;">one quick task</strong> for you that takes 5 minutes.
               </p>
+            </td>
+          </tr>
+
+          <!-- BOOK A CALL CTA -->
+          <tr>
+            <td style="background:#ffffff;padding:0 40px 32px;" align="left">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0a0a0a;border-radius:18px;">
+                <tr>
+                  <td style="padding:34px 36px;" align="left">
+                    <p style="margin:0 0 10px;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#4aa1ff;font-weight:600;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,Helvetica,Arial,sans-serif;">Lock in your slot</p>
+                    <h2 style="margin:0 0 12px;font-size:24px;line-height:1.2;letter-spacing:-0.02em;font-weight:600;color:#ffffff;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+                      Book a 30-min call with us.
+                    </h2>
+                    <p style="margin:0 0 22px;font-size:15px;line-height:1.55;color:rgba(255,255,255,0.72);">
+                      We'll walk through your deployment plan, answer questions about your specific workflows, and reserve your build slot. Pick a time that works for you &mdash; no back-and-forth.
+                    </p>
+                    <a href="https://calendly.com/start-tkai/30min" style="display:inline-block;background:#ffffff;color:#1d1d1f;font-weight:500;font-size:15px;padding:14px 24px;border-radius:100px;text-decoration:none;letter-spacing:-0.01em;">
+                      Book your 30-min call &rarr;
+                    </a>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
 
@@ -1407,9 +1433,12 @@ P.S. ${hasPdf ? 'The attached plan is built for ' + (businessName || 'your busin
           <tr>
             <td style="background:#0a0a0a;border-radius:0 0 20px 20px;padding:40px;" align="left">
               <p style="margin:0 0 8px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#86868b;font-weight:600;">P.S.</p>
-              <p style="margin:0 0 28px;font-size:17px;line-height:1.5;color:#f5f5f7;letter-spacing:-0.01em;">
-                ${hasPdf ? `The attached plan is built for ${escapeHtml(businessName || 'your business')} specifically. Worth a 5-minute read before our call.` : 'The faster you create the address, the smoother the call. Most clients have it ready before we even pick up the phone.'}
+              <p style="margin:0 0 20px;font-size:17px;line-height:1.5;color:#f5f5f7;letter-spacing:-0.01em;">
+                ${hasPdf ? `The attached plan is built for ${escapeHtml(businessName || 'your business')} specifically. Read it, then book your call.` : 'The faster you create the address, the smoother the call.'}
               </p>
+              <a href="https://calendly.com/start-tkai/30min" style="display:inline-block;background:#ffffff;color:#1d1d1f;font-weight:500;font-size:14px;padding:11px 20px;border-radius:100px;text-decoration:none;letter-spacing:-0.005em;margin-bottom:28px;">
+                Book your 30-min call &rarr;
+              </a>
               <div style="height:1px;background:#1d1d1f;line-height:1px;font-size:1px;margin:0 0 24px;">&nbsp;</div>
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>

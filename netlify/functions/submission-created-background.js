@@ -36,6 +36,10 @@ export default async (req) => {
 
     const leadCtx = { firstName, lastName, email, phone, businessName, website, industry, packageInterest };
 
+    // 0. Push the lead into the Base44 SalesFlow CRM (TKAI pipeline) FIRST, so the lead is
+    //    captured even if Claude / PDFShift / Resend later fail. Non-blocking, never throws.
+    await pushToBase44CRM(leadCtx);
+
     // 1a. Fetch the lead's website (graceful skip if missing/fails)
     let siteContent = null;
     if (website) {
@@ -119,6 +123,53 @@ export default async (req) => {
     return new Response('Error', { status: 500 });
   }
 };
+
+// ─────────────────────────────────────────────────────
+// BASE44 SalesFlow CRM — push lead into the TKAI pipeline
+// Calls the receiveTurnkeyLead cloud function. Dedups by email on Base44's side.
+// Never throws: a CRM failure must not block the lead's audit email.
+// ─────────────────────────────────────────────────────
+async function pushToBase44CRM({ firstName, lastName, email, phone, businessName, website, industry, packageInterest }) {
+  const url = (process.env.BASE44_RECEIVE_LEAD_URL || '').trim();
+  const secret = (process.env.TURNKEY_WEBSITE_SECRET || '').trim();
+  if (!url || !secret) {
+    console.log('Base44 CRM not configured (BASE44_RECEIVE_LEAD_URL / TURNKEY_WEBSITE_SECRET missing) — skipping');
+    return;
+  }
+
+  const endpoint = `${url}?secret=${encodeURIComponent(secret)}`;
+  const body = JSON.stringify({
+    firstName, lastName, email, phone, businessName, website,
+    industry: prettyIndustry(industry) || industry || '',
+    source: 'website-audit-form',
+    value: 0,
+    metadata: {
+      packageInterest: packageInterest || '',
+      submittedVia: 'turnkeyai.com.au ai-audit form',
+    },
+  });
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 10000);
+  try {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body,
+      signal: controller.signal,
+    });
+    if (!res.ok) {
+      console.error(`Base44 CRM push failed: ${res.status} ${(await res.text()).slice(0, 200)}`);
+    } else {
+      const out = await res.json().catch(() => ({}));
+      console.log(`Base44 CRM: deal ${out.deal_id || '?'} (isNew=${out.isNew})`);
+    }
+  } catch (err) {
+    console.error('Base44 CRM push error:', err.message);
+  } finally {
+    clearTimeout(timer);
+  }
+}
 
 // ─────────────────────────────────────────────────────
 // CLAUDE — SPIN content generation

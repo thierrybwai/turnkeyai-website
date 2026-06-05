@@ -96,10 +96,12 @@ export default async (req) => {
       }];
     }
 
-    // Optional: CC the team on the same email so we receive a copy + PDF
-    const forwardTo = (process.env.LEAD_FORWARD_EMAIL || '').trim();
-    if (forwardTo) {
-      emailPayload.bcc = [forwardTo];
+    // BCC the team on the same email so they get a copy + the lead's PDF.
+    // LEAD_NOTIFY_EMAILS (comma-separated) takes precedence; falls back to LEAD_FORWARD_EMAIL.
+    const notifyRaw = (process.env.LEAD_NOTIFY_EMAILS || process.env.LEAD_FORWARD_EMAIL || '').trim();
+    const notifyList = notifyRaw.split(',').map((s) => s.trim()).filter(Boolean);
+    if (notifyList.length) {
+      emailPayload.bcc = notifyList;
     }
 
     const resendRes = await fetch('https://api.resend.com/emails', {

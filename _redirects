@@ -1,3 +1,23 @@
 # Friendly URL redirects
 /terms        /legal/terms.html      301
 /privacy      /legal/privacy.html    301
+
+# Old /public/blog build (removed) -> live blog
+/public/blog/*   /blog/   301
+/public/*        /blog/   301
+
+# Legacy short blog URLs (/blog/{slug}) -> canonical /blog/posts/{slug}.html
+/blog/mac-mini-ai-server                  /blog/posts/mac-mini-ai-server.html                  301
+/blog/ai-automation-cost-australia        /blog/posts/ai-automation-cost-australia.html        301
+/blog/how-to-integrate-ai-into-small-business  /blog/posts/how-to-integrate-ai-into-small-business.html  301
+/blog/ai-for-real-estate-australia        /blog/posts/ai-for-real-estate-australia.html        301
+/blog/ai-for-accountants-australia        /blog/posts/ai-for-accountants-australia.html        301
+
+# Legacy slugs that were never migrated -> closest live article
+/blog/process-automation-examples   /blog/posts/how-to-integrate-ai-into-small-business.html   301
+/blog/business-automation-tools     /blog/posts/ai-automation-cost-australia.html              301
+/blog/automation-agency-vs-diy      /blog/posts/why-mac-mini.html                              301
+/blog/ai-automation-australia       /blog/posts/ai-automation-cost-australia.html              301
+/blog/ai-agents-for-business        /blog/posts/ai-agent-security.html                         301
+/blog/hire-or-automate              /blog/                                                     301
+/blog/posts/hire-or-automate.html   /blog/                                                     301

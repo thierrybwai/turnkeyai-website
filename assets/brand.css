@@ -604,3 +604,32 @@ a:hover { color: var(--tk-accent-hover); }
     transition: opacity 200ms linear !important;
   }
 }
+
+/* ─────────────────────────────────────────────────────
+   FAQ accordion (shared — used on homepage + geo + vertical pages for GEO)
+───────────────────────────────────────────────────── */
+.tk-faq-list { max-width: 860px; margin: 0 auto; }
+.tk-faq-item { border-top: 1px solid var(--tk-line); padding: 0; }
+.tk-faq-item:last-child { border-bottom: 1px solid var(--tk-line); }
+.tk-faq-item summary {
+  list-style: none; cursor: pointer;
+  padding: 28px 4px;
+  display: flex; justify-content: space-between; align-items: center; gap: 24px;
+  font-family: var(--tk-font-display);
+  font-size: clamp(18px, 2vw, 22px);
+  font-weight: 500; letter-spacing: -0.018em;
+  color: var(--tk-fg); line-height: 1.35;
+  transition: color 240ms var(--tk-ease);
+}
+.tk-faq-item summary::-webkit-details-marker { display: none; }
+.tk-faq-item summary:hover { color: var(--tk-accent); }
+.tk-faq-icon { flex-shrink: 0; width: 24px; height: 24px; position: relative; transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1); }
+.tk-faq-icon::before, .tk-faq-icon::after { content: ''; position: absolute; background: currentColor; border-radius: 1px; transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1); }
+.tk-faq-icon::before { top: 50%; left: 0; right: 0; height: 1.5px; margin-top: -0.75px; }
+.tk-faq-icon::after { left: 50%; top: 0; bottom: 0; width: 1.5px; margin-left: -0.75px; }
+.tk-faq-item[open] .tk-faq-icon::after { transform: scaleY(0); }
+.tk-faq-item[open] .tk-faq-icon { transform: rotate(180deg); }
+.tk-faq-body { padding: 0 4px 28px; max-width: 720px; font-size: 16px; line-height: 1.65; color: var(--tk-fg-muted); letter-spacing: -0.005em; }
+.tk-faq-body p + p { margin-top: 12px; }
+.tk-faq-body strong { color: var(--tk-fg); font-weight: 500; }
+.tk-faq-item[open] summary { color: var(--tk-fg); }

@@ -36,6 +36,8 @@
 </script>
   <!-- OpenAI Ads Pixel -->
   <script>!function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");oaiq("init",{pixelId:"JtpXLZ6eqeZhpmC4GTipjd",debug:true});</script>
+<!-- FAQPage schema (GEO) -->
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can AI actually handle BAS prep and bookkeeping admin?","acceptedAnswer":{"@type":"Answer","text":"Yes, for the repetitive parts. TurnkeyAI deploys an autonomous AI agent that handles BAS data gathering, receipt and invoice triage, client query responses, deadline reminders, and year-end follow-ups. It works inside your existing tools and only escalates the judgment calls to you. The agent runs the routine work; the accountant signs off the lodgement."}},{"@type":"Question","name":"How much time can an accounting practice save with AI?","acceptedAnswer":{"@type":"Answer","text":"Most practitioners save 12 to 18 hours a week. Across 50+ Australian SME deployments, the average client saves $1,000 to $2,000 per week in time and recovers it within roughly three weeks. The biggest gains come from automating client inbox triage and chasing outstanding information."}},{"@type":"Question","name":"Does it integrate with Xero, MYOB, and Karbon?","acceptedAnswer":{"@type":"Answer","text":"Yes. The agent connects to the tools you already run, including Xero, MYOB, Karbon, Microsoft 365, Gmail, and Slack. You operate it in plain English over Slack or Telegram. No new software for your team to learn, and no migration off your current stack."}},{"@type":"Question","name":"How long until it's running, and what does it cost?","acceptedAnswer":{"@type":"Answer","text":"Live in 7 business days, from $2,999 AUD one-time. The Cloud option ($2,999) is hosted on a dedicated server we manage with 3 workflows. The Mac Mini option ($5,999) installs an Apple Mac Mini M4 in your office, yours to keep, with 5 workflows. No subscription. Both include 2 weeks of dedicated support."}},{"@type":"Question","name":"Where does my client data live, and is it secure?","acceptedAnswer":{"@type":"Answer","text":"On your own hardware. Your data, logs, and integration credentials stay on your Mac Mini or your dedicated VPS, not a shared cloud. The agent sends prompts to Anthropic's Claude API to run the model; Anthropic does not train on API data. Sensitive actions wait for your one-tap approval."}}]}</script>
 </head>
 <body>
 
@@ -150,6 +152,48 @@
       <span style="padding: 10px 18px; background: var(--tk-bg-alt); border-radius: 100px; font-size: 14px; font-weight: 500;">Karbon</span>
       <span style="padding: 10px 18px; background: var(--tk-bg-alt); border-radius: 100px; font-size: 14px; font-weight: 500;">Microsoft 365</span>
       <span style="padding: 10px 18px; background: var(--tk-bg-alt); border-radius: 100px; font-size: 14px; font-weight: 500;">Slack</span>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ (GEO: answer-first, AI-citable) -->
+<section class="tk-section tk-section--alt">
+  <div class="tk-content">
+    <div class="tk-fade-up tk-center" style="margin-bottom: 48px;">
+      <p class="tk-eyebrow">Common questions</p>
+      <h2 class="tk-h2">AI for accountants, answered.</h2>
+    </div>
+    <div class="tk-faq-list tk-fade-up">
+      <details class="tk-faq-item">
+        <summary>Can AI actually handle BAS prep and bookkeeping admin? <span class="tk-faq-icon" aria-hidden="true"></span></summary>
+        <div class="tk-faq-body">
+          <p><strong>Yes, for the repetitive parts.</strong> TurnkeyAI deploys an autonomous AI agent that handles BAS data gathering, receipt and invoice triage, client query responses, deadline reminders, and year-end follow-ups. It works inside your existing tools and only escalates the judgment calls to you. The agent runs the routine work; the accountant signs off the lodgement.</p>
+        </div>
+      </details>
+      <details class="tk-faq-item">
+        <summary>How much time can an accounting practice save? <span class="tk-faq-icon" aria-hidden="true"></span></summary>
+        <div class="tk-faq-body">
+          <p><strong>Most practitioners save 12 to 18 hours a week.</strong> Across 50+ Australian SME deployments, the average client saves $1,000 to $2,000 per week in time and recovers it within roughly three weeks. The biggest gains come from automating client inbox triage and chasing outstanding information, the work that interrupts everyone all day.</p>
+        </div>
+      </details>
+      <details class="tk-faq-item">
+        <summary>Does it integrate with Xero, MYOB, and Karbon? <span class="tk-faq-icon" aria-hidden="true"></span></summary>
+        <div class="tk-faq-body">
+          <p><strong>Yes.</strong> The agent connects to the tools you already run, including Xero, MYOB, Karbon, Microsoft 365, Gmail, and Slack. You operate it in plain English over Slack or Telegram. No new software for your team to learn, and no migration off your current stack.</p>
+        </div>
+      </details>
+      <details class="tk-faq-item">
+        <summary>How long until it's running, and what does it cost? <span class="tk-faq-icon" aria-hidden="true"></span></summary>
+        <div class="tk-faq-body">
+          <p><strong>Live in 7 business days, from $2,999 AUD one-time.</strong> The Cloud option ($2,999) is hosted on a dedicated server we manage with 3 workflows. The Mac Mini option ($5,999) installs an Apple Mac Mini M4 in your office, yours to keep, with 5 workflows. No subscription. Both include 2 weeks of dedicated support.</p>
+        </div>
+      </details>
+      <details class="tk-faq-item">
+        <summary>Where does my client data live, and is it secure? <span class="tk-faq-icon" aria-hidden="true"></span></summary>
+        <div class="tk-faq-body">
+          <p><strong>On your own hardware.</strong> Your data, logs, and integration credentials stay on your Mac Mini or your dedicated VPS, not a shared cloud. The agent sends prompts to Anthropic's Claude API to run the model; Anthropic does not train on API data. Sensitive actions wait for your one-tap approval. Full detail is in our <a href="/blog/posts/ai-agent-security.html">AI agent security guide</a>.</p>
+        </div>
+      </details>
     </div>
   </div>
 </section>

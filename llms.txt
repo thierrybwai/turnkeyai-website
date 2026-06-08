@@ -1,0 +1,80 @@
+# TurnkeyAI
+
+> Done-for-you AI automation for Australian small and medium businesses. TurnkeyAI builds, configures, and deploys a fully operational autonomous AI agent in 7 business days, either on an Apple Mac Mini installed in your office or on a dedicated cloud server we manage. The agent runs your repetitive operational work (email, quotes, follow-ups, invoicing, CRM updates, scheduling) on its own, 24/7, controlled in plain English over Slack or Telegram. Based on the Gold Coast, Queensland; serving SMEs across Australia.
+
+TurnkeyAI is operated by Mael Demets. Contact: start@tkai.com.au. Website: https://turnkeyai.com.au
+
+## What TurnkeyAI is (and is not)
+
+- It is a **done-for-you deployment service**, not a SaaS subscription. You pay once; you own the system.
+- It deploys an **autonomous AI agent** (proactive: it acts on triggers and schedules by itself), not a reactive chatbot you have to prompt every time.
+- The agent runs on the **OpenClaw** open-source agent runtime and is powered by **Anthropic's Claude** models.
+- It is operated by non-technical staff via **Slack or Telegram in plain English**. No coding, no terminal.
+- Sensitive actions (sending money, key-client replies, deletions) wait for one-tap human approval; routine work runs automatically.
+
+## Pricing (one-time, AUD, ex-GST)
+
+- **Cloud OpenClaw — $2,999 AUD**: the agent hosted on a dedicated VPS we manage, 3 custom autonomous workflows, Slack & Telegram control, connected to email/calendar/CRM, remote setup, 12 months hosting included, 2 weeks dedicated support.
+- **Mac Mini — $5,999 AUD**: an Apple Mac Mini M4 installed in your office (hardware yours to keep), 5 custom autonomous workflows, on-site setup in Gold Coast or Brisbane, 2 weeks dedicated support.
+- Both deploy live in **7 business days**. After the 2-week support window, support is **$200 AUD per intervention**, no subscription.
+
+## Key facts and figures
+
+- Deployment time: **7 business days**, guaranteed.
+- Average client time/cost saving: **$1,000 to $2,000 per week**.
+- Typical break-even: **about 3 weeks**.
+- Australian SMEs deployed: **50+**.
+- AI model: **Anthropic Claude**. Agent runtime: **OpenClaw** (open source). Data stays on the client's Mac Mini or dedicated VPS.
+
+## Core pages
+
+- [Homepage — packages, ROI calculator, how it works](https://turnkeyai.com.au/): Overview of the two packages, the 7-day process, and an interactive ROI calculator.
+- [Support](https://turnkeyai.com.au/support/): How post-deployment support works. 2 weeks included, then $200 per intervention.
+- [Get started / booking form](https://turnkeyai.com.au/#booking): Submit your business details and receive a personalised AI deployment plan by email within minutes.
+
+## Industries served (workflow examples per vertical)
+
+- [AI for accountants & bookkeepers](https://turnkeyai.com.au/for-accountants/): BAS prep, receipt triage, client query inbox, year-end follow-ups.
+- [AI for real estate agencies](https://turnkeyai.com.au/for-real-estate/): Lead qualification, listing copy, open-home follow-ups, maintenance dispatch.
+- [AI for law firms](https://turnkeyai.com.au/for-law-firms/): Intake, document review prep, client updates, billing follow-ups.
+- [AI for medical & allied health clinics](https://turnkeyai.com.au/for-medical-clinics/): Appointment reminders, intake forms, recalls, inbox triage.
+- [AI for trades](https://turnkeyai.com.au/for-trades/): Quote drafting, job scheduling, invoice chasing, after-hours enquiry response.
+- [AI for hospitality](https://turnkeyai.com.au/for-hospitality/): Bookings, supplier coordination, review responses, roster admin.
+- [AI for recruitment](https://turnkeyai.com.au/for-recruitment/): Candidate screening, interview scheduling, follow-up sequences.
+- [AI for marketing agencies](https://turnkeyai.com.au/for-marketing-agencies/): Reporting, client updates, content drafting, lead intake.
+- [AI for e-commerce](https://turnkeyai.com.au/for-ecommerce/): Order enquiries, returns, supplier emails, review management.
+- [AI for consulting](https://turnkeyai.com.au/for-consulting/): Proposal drafting, scheduling, client follow-ups, research.
+
+## Locations served
+
+- [Gold Coast](https://turnkeyai.com.au/gold-coast/) (home base, on-site setup included)
+- [Brisbane](https://turnkeyai.com.au/brisbane/) (on-site setup included)
+- [Sunshine Coast](https://turnkeyai.com.au/sunshine-coast/)
+- [Cairns](https://turnkeyai.com.au/cairns/)
+- Cloud option available anywhere in Australia (no on-site visit required).
+
+## Articles (insight and reference)
+
+- [AI agent security: every risk and how we handle them](https://turnkeyai.com.au/blog/posts/ai-agent-security.html): Prompt injection, credential handling, data flow to Anthropic, and the mitigations applied by default. Based on OpenClaw's MITRE ATLAS threat model.
+- [Mac Mini AI server: the complete setup guide](https://turnkeyai.com.au/blog/posts/mac-mini-ai-server.html): Why a Mac Mini M4 is a strong local AI server for SMEs, with cost comparison vs cloud APIs.
+- [The 3 questions that decide if AI will save you money](https://turnkeyai.com.au/blog/posts/the-3-questions.html): How to choose which role or workflow to automate first.
+- [Why we install AI on a Mac Mini, not the cloud](https://turnkeyai.com.au/blog/posts/why-mac-mini.html): The on-premise case for SMB AI: ownership, data control, no subscription.
+- [Inside our 7-day deployment](https://turnkeyai.com.au/blog/posts/7-day-deployment.html): Day-by-day breakdown of how a deployment runs.
+- [How much AI automation costs in Australia](https://turnkeyai.com.au/blog/posts/ai-automation-cost-australia.html): Pricing models and real cost comparisons.
+- [AI for accountants in Australia](https://turnkeyai.com.au/blog/posts/ai-for-accountants-australia.html): Seven workflows with compliance notes.
+- [AI for real estate in Australia](https://turnkeyai.com.au/blog/posts/ai-for-real-estate-australia.html): Seven workflows with REIQ/REINSW notes.
+- [How to integrate AI into a small business](https://turnkeyai.com.au/blog/posts/how-to-integrate-ai-into-small-business.html): A practical starting framework.
+
+## Common questions
+
+- **How long does deployment take?** Seven business days, guaranteed.
+- **Do I need technical staff?** No. The agent is operated in plain English over Slack or Telegram.
+- **Where does my data live?** On your Mac Mini or your dedicated VPS. Prompts are sent to Anthropic's API to run the model; Anthropic does not train on API data.
+- **Is it a subscription?** No. One-time price. The Mac Mini is yours to keep. Cloud includes 12 months hosting.
+- **What makes it different from ChatGPT, Claude Code, or Copilot?** Those are reactive assistants you must open and prompt. TurnkeyAI deploys a proactive, autonomous agent that runs workflows by itself, 24/7, on triggers and schedules.
+
+## Contact
+
+- Email: start@tkai.com.au
+- Book a 30-minute call: https://calendly.com/start-tkai/30min
+- Location: Gold Coast, Queensland, Australia

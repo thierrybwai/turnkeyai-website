@@ -36,6 +36,8 @@
 </script>
   <!-- OpenAI Ads Pixel -->
   <script>!function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");oaiq("init",{pixelId:"JtpXLZ6eqeZhpmC4GTipjd",debug:true});</script>
+<!-- FAQPage schema (GEO) -->
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can AI screen candidates and schedule interviews for me?","acceptedAnswer":{"@type":"Answer","text":"Yes, the high-volume parts of the desk. TurnkeyAI deploys an autonomous AI agent that screens CVs against the brief and books interviews across diaries. It runs candidate follow-up sequences and chases references. It also drafts job ads and offer letters for your sign-off. A consultant reviews the shortlist; the agent does the legwork."}},{"@type":"Question","name":"How much time can a recruitment desk save each week?","acceptedAnswer":{"@type":"Answer","text":"Most desks cut days off time-to-place. Across 50+ Australian SME deployments, the average client saves $1,000 to $2,000 a week and breaks even in about three weeks. The biggest gains come from CV screening at volume and ending the email tag of interview scheduling."}},{"@type":"Question","name":"Does it integrate with JobAdder, Bullhorn, and LinkedIn?","acceptedAnswer":{"@type":"Answer","text":"Yes. The agent connects to the ATS and tools you already run, including JobAdder, Bullhorn, Workable, Greenhouse, LinkedIn Recruiter, and your calendars. It reads and writes candidate records and sends email on your behalf. You operate it in plain English over Slack or Telegram, with no new system to learn."}},{"@type":"Question","name":"How long until it's running, and what does it cost?","acceptedAnswer":{"@type":"Answer","text":"Live in 7 business days, from $2,999 AUD one-time. The Cloud option ($2,999) runs on a dedicated server we manage with 3 workflows. The Mac Mini option ($5,999) installs an Apple Mac Mini M4 in your office, yours to keep, with 5 workflows. No subscription, and 2 weeks of support are included."}},{"@type":"Question","name":"Is candidate data handled securely and compliantly?","acceptedAnswer":{"@type":"Answer","text":"Yes, it stays on hardware you control. Candidate CVs, contact details, and your ATS credentials sit on your Mac Mini or dedicated VPS, not a shared cloud. The agent uses Anthropic's Claude to run the model, and Anthropic does not train on API data. Sensitive actions wait for your one-tap approval."}}]}</script>
 </head>
 <body>
 
@@ -149,6 +151,48 @@
       <span style="padding: 10px 18px; background: var(--tk-bg-alt); border-radius: 100px; font-size: 14px; font-weight: 500;">Greenhouse</span>
       <span style="padding: 10px 18px; background: var(--tk-bg-alt); border-radius: 100px; font-size: 14px; font-weight: 500;">LinkedIn Recruiter</span>
       <span style="padding: 10px 18px; background: var(--tk-bg-alt); border-radius: 100px; font-size: 14px; font-weight: 500;">Calendly</span>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ (GEO: answer-first, AI-citable) -->
+<section class="tk-section tk-section--alt">
+  <div class="tk-content">
+    <div class="tk-fade-up tk-center" style="margin-bottom: 48px;">
+      <p class="tk-eyebrow">Common questions</p>
+      <h2 class="tk-h2">AI for recruitment, answered.</h2>
+    </div>
+    <div class="tk-faq-list tk-fade-up">
+      <details class="tk-faq-item">
+        <summary>Can AI screen candidates and schedule interviews for me? <span class="tk-faq-icon" aria-hidden="true"></span></summary>
+        <div class="tk-faq-body">
+          <p><strong>Yes, the high-volume parts of the desk.</strong> TurnkeyAI deploys an autonomous AI agent that screens CVs against the brief and books interviews across diaries. It runs candidate follow-up sequences and chases references. It also drafts job ads and offer letters for your sign-off. A consultant reviews the shortlist; the agent does the legwork.</p>
+        </div>
+      </details>
+      <details class="tk-faq-item">
+        <summary>How much time can a recruitment desk save each week? <span class="tk-faq-icon" aria-hidden="true"></span></summary>
+        <div class="tk-faq-body">
+          <p><strong>Most desks cut days off time-to-place.</strong> Across 50+ Australian SME deployments, the average client saves $1,000 to $2,000 a week and breaks even in about three weeks. The biggest gains come from CV screening at volume and ending the email tag of interview scheduling.</p>
+        </div>
+      </details>
+      <details class="tk-faq-item">
+        <summary>Does it integrate with JobAdder, Bullhorn, and LinkedIn? <span class="tk-faq-icon" aria-hidden="true"></span></summary>
+        <div class="tk-faq-body">
+          <p><strong>Yes.</strong> The agent connects to the ATS and tools you already run, including JobAdder, Bullhorn, Workable, Greenhouse, LinkedIn Recruiter, and your calendars. It reads and writes candidate records and sends email on your behalf. You operate it in plain English over Slack or Telegram, with no new system to learn.</p>
+        </div>
+      </details>
+      <details class="tk-faq-item">
+        <summary>How long until it's running, and what does it cost? <span class="tk-faq-icon" aria-hidden="true"></span></summary>
+        <div class="tk-faq-body">
+          <p><strong>Live in 7 business days, from $2,999 AUD one-time.</strong> The Cloud option ($2,999) runs on a dedicated server we manage with 3 workflows. The Mac Mini option ($5,999) installs an Apple Mac Mini M4 in your office, yours to keep, with 5 workflows. No subscription, and 2 weeks of support are included.</p>
+        </div>
+      </details>
+      <details class="tk-faq-item">
+        <summary>Is candidate data handled securely and compliantly? <span class="tk-faq-icon" aria-hidden="true"></span></summary>
+        <div class="tk-faq-body">
+          <p><strong>Yes, it stays on hardware you control.</strong> Candidate CVs, contact details, and your ATS credentials sit on your Mac Mini or dedicated VPS, not a shared cloud. The agent uses Anthropic's Claude to run the model, and Anthropic does not train on API data. Sensitive actions wait for your one-tap approval.</p>
+        </div>
+      </details>
     </div>
   </div>
 </section>

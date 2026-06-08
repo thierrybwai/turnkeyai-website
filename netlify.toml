@@ -4,3 +4,15 @@
 
 [functions]
   node_bundler = "esbuild"
+
+# Asset optimization — minify CSS/JS at deploy (fixes Semrush "unminified" warnings)
+[build.processing]
+  skip_processing = false
+[build.processing.css]
+  bundle = false
+  minify = true
+[build.processing.js]
+  bundle = false
+  minify = true
+[build.processing.images]
+  compress = true

@@ -96,14 +96,6 @@ export default async (req) => {
       }];
     }
 
-    // BCC the team on the same email so they get a copy + the lead's PDF.
-    // LEAD_NOTIFY_EMAILS (comma-separated) takes precedence; falls back to LEAD_FORWARD_EMAIL.
-    const notifyRaw = (process.env.LEAD_NOTIFY_EMAILS || process.env.LEAD_FORWARD_EMAIL || '').trim();
-    const notifyList = notifyRaw.split(',').map((s) => s.trim()).filter(Boolean);
-    if (notifyList.length) {
-      emailPayload.bcc = notifyList;
-    }
-
     const resendRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -116,8 +108,13 @@ export default async (req) => {
     if (!resendRes.ok) {
       const errBody = await resendRes.text();
       console.error('Resend API error:', resendRes.status, errBody);
+      // Still try to alert the team even if the lead email failed — a lead is too valuable to lose silently.
+      await sendTeamLeadNotification(leadCtx, hasPdf).catch(() => {});
       return new Response(`Resend failed: ${resendRes.status}`, { status: 502 });
     }
+
+    // Dedicated team notification — a clear "new lead" alert, separate from the lead's audit email.
+    await sendTeamLeadNotification(leadCtx, hasPdf);
 
     return new Response(`Email sent${hasPdf ? ' with PDF' : ' (no PDF)'}`, { status: 200 });
   } catch (err) {
@@ -125,6 +122,69 @@ export default async (req) => {
     return new Response('Error', { status: 500 });
   }
 };
+
+// ─────────────────────────────────────────────────────
+// TEAM LEAD NOTIFICATION — a clear "new lead" alert to the team.
+// Separate from the lead's audit email. Never throws.
+// Recipients: LEAD_NOTIFY_EMAILS (comma-separated) | LEAD_FORWARD_EMAIL | start@tkai.com.au
+// ─────────────────────────────────────────────────────
+async function sendTeamLeadNotification(lead, hasPdf) {
+  try {
+    const notifyRaw = (process.env.LEAD_NOTIFY_EMAILS || process.env.LEAD_FORWARD_EMAIL || 'start@tkai.com.au').trim();
+    const to = notifyRaw.split(',').map((s) => s.trim()).filter(Boolean);
+    if (!to.length) return;
+
+    const { firstName, lastName, email, phone, businessName, website, industry, packageInterest } = lead;
+    const name = `${firstName} ${lastName}`.trim() || 'New lead';
+    const industryLabel = prettyIndustry(industry) || industry || 'Not specified';
+    const subject = `🔔 New lead: ${name}${businessName ? ' — ' + businessName : ''} (${industryLabel})`;
+
+    const rows = [
+      ['Name', name],
+      ['Business', businessName || '—'],
+      ['Email', email || '—'],
+      ['Phone', phone || '—'],
+      ['Website', website || '—'],
+      ['Industry', industryLabel],
+      ['Package interest', prettyPackage(packageInterest) || '—'],
+      ['Audit PDF', hasPdf ? 'Generated + emailed to the lead' : 'Not generated (Claude/PDF step failed)'],
+    ];
+
+    const text = `New lead from the website form.\n\n` +
+      rows.map(([k, v]) => `${k}: ${v}`).join('\n') +
+      `\n\nThe lead is in the TKAI pipeline (Base44). Reply to this email to reach ${firstName} directly.`;
+
+    const html = `<!doctype html><html><body style="margin:0;padding:0;background:#fafafa;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,sans-serif;color:#1d1d1f;line-height:1.55;">
+<div style="max-width:600px;margin:0 auto;padding:32px 24px;">
+  <p style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#0071e3;font-weight:600;margin:0 0 8px;">New website lead</p>
+  <h1 style="font-size:22px;margin:0 0 20px;letter-spacing:-0.01em;">${escapeHtml(name)}${businessName ? ' &middot; ' + escapeHtml(businessName) : ''}</h1>
+  <table cellpadding="0" cellspacing="0" border="0" style="background:#fff;border-radius:14px;width:100%;border:1px solid #e8e8ed;">
+    ${rows.map(([k, v], i) => `<tr><td style="padding:13px 18px;${i < rows.length - 1 ? 'border-bottom:1px solid #f0f0f2;' : ''}width:38%;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:#86868b;font-weight:600;vertical-align:top;">${escapeHtml(k)}</td><td style="padding:13px 18px;${i < rows.length - 1 ? 'border-bottom:1px solid #f0f0f2;' : ''}font-size:14px;color:#1d1d1f;">${k === 'Email' ? `<a href="mailto:${escapeHtml(v)}" style="color:#0071e3;">${escapeHtml(v)}</a>` : k === 'Website' && v !== '—' ? `<a href="${escapeHtml(v.startsWith('http') ? v : 'https://' + v)}" style="color:#0071e3;">${escapeHtml(v)}</a>` : escapeHtml(v)}</td></tr>`).join('')}
+  </table>
+  <p style="font-size:13px;color:#6e6e73;margin-top:20px;">The lead is in your TKAI pipeline (Base44). Reply to this email to reach ${escapeHtml(firstName)} directly.</p>
+</div></body></html>`;
+
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: 'TurnkeyAI Leads <start@tkai.com.au>',
+        reply_to: email || 'start@tkai.com.au',
+        to,
+        subject,
+        html,
+        text,
+      }),
+    });
+    if (!res.ok) {
+      console.error(`Team lead notification failed: ${res.status} ${(await res.text()).slice(0, 200)}`);
+    } else {
+      console.log(`Team lead notification sent to ${to.join(', ')}`);
+    }
+  } catch (err) {
+    console.error('sendTeamLeadNotification error:', err.message);
+  }
+}
 
 // ─────────────────────────────────────────────────────
 // BASE44 SalesFlow CRM — push lead into the TKAI pipeline

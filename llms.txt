@@ -55,6 +55,10 @@ TurnkeyAI is operated by Mael Demets. Contact: start@tkai.com.au. Website: https
 
 ## Articles (insight and reference)
 
+- [How to use AI in your business: a practical guide for Australian SMEs](https://turnkeyai.com.au/blog/posts/how-to-use-ai-in-your-business.html): The complete guide. Where to start, what AI can do, tools vs an autonomous agent, integration, cost, and common mistakes.
+- [Where to start with AI: the first workflow to automate](https://turnkeyai.com.au/blog/posts/where-to-start-with-ai-business.html): A 3-question test to find the first workflow to automate. Start with the boring internal task, not the customer chatbot.
+- [AI assistant vs AI agent: what your business needs](https://turnkeyai.com.au/blog/posts/ai-assistant-vs-ai-agent.html): An assistant is reactive (waits for you). An agent is proactive (runs whole workflows on its own). Which one a business actually needs.
+- [How to integrate AI without replacing your existing tools](https://turnkeyai.com.au/blog/posts/integrate-ai-without-replacing-systems.html): An agent layer sits on top of Xero, your CRM and Gmail via APIs. No rip-and-replace, no migration, live in 7 days.
 - [AI agent security: every risk and how we handle them](https://turnkeyai.com.au/blog/posts/ai-agent-security.html): Prompt injection, credential handling, data flow to Anthropic, and the mitigations applied by default. Based on OpenClaw's MITRE ATLAS threat model.
 - [Mac Mini AI server: the complete setup guide](https://turnkeyai.com.au/blog/posts/mac-mini-ai-server.html): Why a Mac Mini M4 is a strong local AI server for SMEs, with cost comparison vs cloud APIs.
 - [The 3 questions that decide if AI will save you money](https://turnkeyai.com.au/blog/posts/the-3-questions.html): How to choose which role or workflow to automate first.

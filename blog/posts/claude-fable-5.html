@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ===================== SEO ===================== -->
+<title>Claude Fable 5 Explained: Specs, Pricing &amp; What's New (2026)</title>
+<meta name="description" content="Anthropic released Claude Fable 5 on June 9, 2026 — its first public Mythos-class AI model. Full breakdown: $10/$50 pricing, 1M context window, benchmarks vs Opus 4.8, API changes.">
+<link rel="canonical" href="https://tkai.com.au/blog/posts/claude-fable-5.html">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="robots" content="index, follow, max-image-preview:large">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Claude Fable 5 Explained: Specs, Pricing &amp; What's New (2026)">
+<meta property="og:description" content="Anthropic's first public Mythos-class model: $10/$50 per million tokens, 1M context window, and benchmark scores 10%+ above Opus 4.8. Everything you need to know.">
+<meta property="og:url" content="https://tkai.com.au/blog/posts/claude-fable-5.html">
+<meta property="og:image" content="https://tkai.com.au/assets/blog/claude-fable-5.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="670">
+<meta property="og:site_name" content="TurnkeyAI">
+<meta property="article:published_time" content="2026-06-10T09:00:00+10:00">
+<meta property="article:author" content="TurnkeyAI">
+
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Claude Fable 5 Explained: Specs, Pricing &amp; What's New (2026)">
+<meta name="twitter:description" content="Anthropic's first public Mythos-class model: $10/$50 pricing, 1M context, 10%+ above Opus 4.8 on benchmarks.">
+<meta name="twitter:image" content="https://tkai.com.au/assets/blog/claude-fable-5.jpg">
+
+<!-- ===================== Schema.org JSON-LD ===================== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Claude Fable 5 Explained: Specs, Pricing & What's New",
+  "description": "Anthropic released Claude Fable 5 on June 9, 2026 — its first public Mythos-class AI model. Full breakdown of pricing, context window, benchmarks and API changes.",
+  "image": "https://tkai.com.au/assets/blog/claude-fable-5.jpg",
+  "datePublished": "2026-06-10T09:00:00+10:00",
+  "dateModified": "2026-06-10T09:00:00+10:00",
+  "author": {
+    "@type": "Organization",
+    "name": "TurnkeyAI",
+    "url": "https://tkai.com.au/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TurnkeyAI",
+    "url": "https://tkai.com.au/"
+  },
+  "mainEntityOfPage": "https://tkai.com.au/blog/posts/claude-fable-5.html"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Claude Fable 5?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Claude Fable 5 is Anthropic's most powerful publicly available AI model, released on June 9, 2026. It is the first public 'Mythos-class' model — a new tier above the Claude Opus family — and scores more than 10% higher than Claude Opus 4.8 on some benchmarks, according to Anthropic."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does Claude Fable 5 cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Claude Fable 5 costs US$10 per million input tokens and US$50 per million output tokens — exactly double the price of Claude Opus 4.8 ($5/$25). It is available to enterprise customers and paid subscribers, including via Amazon Bedrock."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is Fable 5 different from Claude Opus 4.8?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Fable 5 sits in a new tier above Opus. It outperforms Opus 4.8 by more than 10% on some benchmarks, with the biggest gains in software engineering, knowledge work, vision and scientific research. Both models share a 1M-token context window and 128K max output; Fable 5 costs twice as much."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does 'Mythos-class' mean?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Mythos is Anthropic's internal frontier model class whose capabilities previously exceeded what the company was willing to release publicly. Fable 5 is the first Mythos-class model made generally available, enabled by new safeguards that block responses in high-risk areas such as cybersecurity and biology."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the context window of Claude Fable 5?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Claude Fable 5 has a 1 million token context window — roughly 750,000 words, or several large codebases at once — and can generate up to 128,000 tokens of output in a single response."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can developers use Claude Fable 5 via the API?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The model ID is claude-fable-5 on the Claude API and Amazon Bedrock. It uses the same API surface as Opus 4.8 — adaptive thinking only, no temperature/top_p/top_k sampling parameters — with one new rule: explicitly sending thinking: {type: 'disabled'} returns a 400 error; omit the parameter instead."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Claude Fable 5 safe to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Anthropic shipped Fable 5 with new real-time safeguards: queries in high-risk domains (such as bioweapons or offensive cyber capabilities) are blocked, and the system falls back to Claude Opus 4.8 to deliver a safe answer. This safeguard architecture is what made the public release possible."
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://tkai.com.au/"},
+    {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://tkai.com.au/blog/"},
+    {"@type": "ListItem", "position": 3, "name": "Claude Fable 5 Explained", "item": "https://tkai.com.au/blog/posts/claude-fable-5.html"}
+  ]
+}
+</script>
+
+<style>
+  :root{
+    --ink:#141210;
+    --paper:#FAF6EF;
+    --card:#FFFFFF;
+    --rust:#C65A33;        /* Anthropic-adjacent rust accent */
+    --rust-soft:#F4E3DA;
+    --gold:#B8860B;
+    --line:#E5DDD0;
+    --muted:#6B6257;
+    --dark:#171311;
+    --dark2:#241D18;
+    --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.65;font-size:17px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 24px}
+
+  /* ---------- HERO ---------- */
+  header.hero{background:var(--dark);color:#F4EDE3;padding:72px 0 56px;position:relative;overflow:hidden}
+  header.hero::after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;
+    background:radial-gradient(circle,rgba(198,90,51,.35),transparent 65%);pointer-events:none}
+  .crumb{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#C9A227;margin-bottom:22px}
+  .crumb a{color:inherit;text-decoration:none}
+  h1{font-family:var(--serif);font-weight:700;font-size:clamp(34px,5.4vw,56px);line-height:1.08;letter-spacing:-.01em;max-width:18ch}
+  h1 em{font-style:italic;color:var(--rust)}
+  .standfirst{margin-top:20px;font-size:19px;color:#CBBFB0;max-width:56ch}
+  .byline{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px 22px;font-family:var(--mono);font-size:12.5px;color:#9A8E80}
+  .byline b{color:#F4EDE3;font-weight:600}
+  .chip{display:inline-block;background:rgba(198,90,51,.16);border:1px solid rgba(198,90,51,.5);color:#E8A285;
+    font-family:var(--mono);font-size:12.5px;padding:3px 10px;border-radius:999px}
+
+  /* hero stat strip */
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#3A2F27;border:1px solid #3A2F27;
+    border-radius:14px;overflow:hidden;margin-top:40px}
+  .stat-strip div{background:var(--dark2);padding:16px 14px}
+  .stat-strip .v{font-family:var(--serif);font-size:clamp(20px,2.6vw,28px);color:#F4EDE3}
+  .stat-strip .k{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#9A8E80;margin-top:4px}
+  @media(max-width:640px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+
+  /* ---------- ARTICLE ---------- */
+  main{padding:52px 0 30px}
+  article p{margin:0 0 20px;max-width:68ch}
+  article a{color:var(--rust);text-decoration-thickness:1px;text-underline-offset:3px}
+  h2{font-family:var(--serif);font-size:clamp(26px,3.4vw,34px);line-height:1.15;margin:54px 0 18px;letter-spacing:-.01em}
+  h3{font-family:var(--serif);font-size:21px;margin:34px 0 12px}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--rust);display:block;margin-bottom:8px}
+
+  /* TL;DR — answer-first box for GEO */
+  .tldr{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--rust);border-radius:12px;
+    padding:26px 28px;margin:0 0 14px;box-shadow:0 2px 14px rgba(20,18,16,.05)}
+  .tldr h2{margin:0 0 12px;font-size:18px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--rust)}
+  .tldr p{margin-bottom:10px}
+  .tldr p:last-child{margin-bottom:0}
+
+  /* spec cards */
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:28px 0 10px}
+  @media(min-width:700px){.cards{grid-template-columns:repeat(4,1fr)}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--rust),#E0935F)}
+  .card .big{font-family:var(--serif);font-size:30px;line-height:1.05}
+  .card .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:7px}
+  .card .sub{font-size:13px;color:var(--muted);margin-top:6px}
+
+  figure{margin:30px 0}
+  figcaption{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-top:10px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px}
+
+  /* table */
+  .tbl{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px}
+  .tbl th{background:var(--dark);color:#F4EDE3;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+    text-align:left;padding:13px 14px;font-weight:600}
+  .tbl td{padding:13px 14px;border-top:1px solid var(--line);vertical-align:top}
+  .tbl tr.hl td{background:var(--rust-soft);font-weight:600}
+  .tbl td:first-child{font-weight:600}
+  .tbl-scroll{overflow-x:auto;border-radius:14px}
+
+  /* code */
+  pre{background:var(--dark);color:#E8DFD2;border-radius:14px;padding:22px 24px;overflow-x:auto;
+    font-family:var(--mono);font-size:13.5px;line-height:1.6;margin:24px 0}
+  pre .c{color:#8A7B6C}
+  pre .s{color:#E0935F}
+  pre .k{color:#C9A227}
+  code.inline{font-family:var(--mono);font-size:.88em;background:var(--rust-soft);padding:2px 7px;border-radius:6px}
+
+  /* callout */
+  .note{background:var(--rust-soft);border-radius:12px;padding:18px 22px;margin:24px 0;font-size:15.5px}
+  .note b{color:var(--rust)}
+
+  /* checklist */
+  ul.flat{list-style:none;margin:0 0 22px}
+  ul.flat li{padding:10px 0 10px 34px;position:relative;border-bottom:1px dashed var(--line);max-width:68ch}
+  ul.flat li::before{content:"→";position:absolute;left:4px;color:var(--rust);font-weight:700}
+
+  /* FAQ */
+  details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:12px;overflow:hidden}
+  details summary{cursor:pointer;padding:18px 22px;font-weight:600;font-size:16.5px;list-style:none;display:flex;justify-content:space-between;gap:14px}
+  details summary::after{content:"+";font-family:var(--mono);color:var(--rust);font-size:20px;flex-shrink:0}
+  details[open] summary::after{content:"–"}
+  details .a{padding:0 22px 20px;color:#3E382F;max-width:70ch}
+
+  /* sources */
+  ol.src{margin:14px 0 0 20px;font-size:14.5px}
+  ol.src li{margin-bottom:9px}
+
+  /* CTA + footer */
+  .cta{background:var(--dark);color:#F4EDE3;border-radius:18px;padding:38px 36px;margin:60px 0 20px;position:relative;overflow:hidden}
+  .cta::after{content:"";position:absolute;left:-80px;bottom:-100px;width:280px;height:280px;border-radius:50%;
+    background:radial-gradient(circle,rgba(198,90,51,.4),transparent 65%)}
+  .cta h2{margin:0 0 10px;color:#F4EDE3}
+  .cta p{color:#CBBFB0;max-width:54ch}
+  .cta a.btn{display:inline-block;margin-top:18px;background:var(--rust);color:#fff;text-decoration:none;
+    padding:12px 26px;border-radius:999px;font-weight:600;font-size:15px}
+  footer{padding:34px 0 50px;font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.heroimg{max-width:860px;margin:38px auto 0;padding:0 24px}.heroimg img{width:100%;height:auto;border-radius:16px;display:block;box-shadow:0 12px 36px rgba(20,18,16,.16)}
+</style>
+</head>
+
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="crumb"><a href="/">TurnkeyAI</a> / <a href="/blog/">Blog</a> / AI&nbsp;Models</p>
+    <h1>Claude <em>Fable&nbsp;5</em>: Anthropic just released its most powerful AI ever</h1>
+    <p class="standfirst">On June 9, 2026, Anthropic made its first “Mythos-class” model public. Here is what Fable&nbsp;5 actually changes — pricing, capabilities, API breaking changes — and whether your business should care.</p>
+    <div class="byline">
+      <span>By <b>TurnkeyAI</b></span>
+      <span>Published <b>June 10, 2026</b></span>
+      <span><b>7 min</b> read</span>
+      <span class="chip">claude-fable-5</span>
+    </div>
+
+    <div class="stat-strip" role="img" aria-label="Key specifications: 1 million token context window, 128K max output tokens, 10 dollars per million input tokens, 50 dollars per million output tokens">
+      <div><div class="v">1M</div><div class="k">Context window</div></div>
+      <div><div class="v">128K</div><div class="k">Max output tokens</div></div>
+      <div><div class="v">$10</div><div class="k">/ 1M input tokens</div></div>
+      <div><div class="v">$50</div><div class="k">/ 1M output tokens</div></div>
+    </div>
+  </div>
+</header>
+
+
+<figure class="heroimg">
+  <img src="/assets/blog/claude-fable-5.jpg" alt="Editorial illustration in terracotta, gold and ink of a phoenix-like mythical creature made of circuit constellations, representing Anthropic's Claude Fable 5 AI model" width="1200" height="670" fetchpriority="high">
+</figure>
+
+<main class="wrap">
+<article>
+
+  <!-- ============ TL;DR — answer-first (GEO) ============ -->
+  <div class="tldr">
+    <h2>TL;DR — The 30-second answer</h2>
+    <p><strong>Claude Fable 5</strong> is Anthropic's new flagship AI model, released <strong>June 9, 2026</strong>. It is the first publicly available <strong>“Mythos-class”</strong> model — a new tier <em>above</em> Claude Opus — and scores <strong>more than 10% higher than Claude Opus 4.8</strong> on some benchmarks, according to Anthropic.</p>
+    <p>It costs <strong>US$10 / US$50 per million input/output tokens</strong> (exactly 2× Opus 4.8), keeps the <strong>1M-token context window</strong>, and ships with new safety guardrails that block high-risk queries and fall back to Opus 4.8. API model ID: <code class="inline">claude-fable-5</code>.</p>
+  </div>
+
+  <!-- ============ What is it ============ -->
+  <h2 id="what-is-fable-5">What is Claude Fable 5?</h2>
+  <p>Claude Fable 5 is Anthropic's most capable generally available AI model. Announced alongside <a href="https://www.anthropic.com/news/claude-fable-5-mythos-5" rel="noopener">Claude Mythos 5</a> on June 9, 2026, it introduces a brand-new tier in the Claude line-up: where the family previously topped out at Opus, the ladder now reads <strong>Haiku → Sonnet → Opus → Fable</strong>.</p>
+  <p>The “Fable” name matters. According to Anthropic, Fable 5 is built on <strong>Mythos</strong> — the internal frontier model class whose capabilities, until now, exceeded what the company was willing to ship publicly. As <a href="https://techcrunch.com/2026/06/09/anthropic-released-claude-fable-5-its-most-powerful-model-publicly-days-after-warning-ai-is-getting-too-dangerous/" rel="noopener">TechCrunch reported</a>, the release came just days after Anthropic publicly warned about accelerating AI capabilities — the public version ships wrapped in a new safeguard system (more on that below).</p>
+  <p>Anthropic says Fable 5's capabilities <em>“exceed those of any model it has ever made generally available”</em>, with the largest gains in <strong>software engineering, knowledge work, vision, and scientific research</strong> (<a href="https://www.cnbc.com/2026/06/09/anthropic-mythos-claude-fable-5.html" rel="noopener">CNBC</a>).</p>
+
+  <!-- ============ Specs cards ============ -->
+  <h2 id="specs">Key specs at a glance</h2>
+  <div class="cards">
+    <div class="card"><div class="big">1M</div><div class="lbl">Token context</div><div class="sub">≈ 750,000 words in one prompt</div></div>
+    <div class="card"><div class="big">128K</div><div class="lbl">Max output</div><div class="sub">Long reports &amp; codebases in one pass</div></div>
+    <div class="card"><div class="big">+10%</div><div class="lbl">vs Opus 4.8</div><div class="sub">On some benchmarks, per Anthropic</div></div>
+    <div class="card"><div class="big">5</div><div class="lbl">Effort levels</div><div class="sub">low → max, adaptive thinking built in</div></div>
+  </div>
+
+  <!-- ============ Pricing ============ -->
+  <h2 id="pricing">Pricing: a new premium tier — exactly 2× Opus</h2>
+  <p>Fable 5 costs <strong>US$10 per million input tokens and US$50 per million output tokens</strong> — precisely double Claude Opus 4.8 ($5/$25). That makes the Claude pricing ladder remarkably clean: each tier roughly doubles-to-triples the one below it.</p>
+
+  <figure>
+    <div class="panel">
+      <svg viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bar chart comparing Claude model pricing per million tokens: Haiku 4.5 one and five dollars, Sonnet 4.6 three and fifteen dollars, Opus 4.8 five and twenty-five dollars, Fable 5 ten and fifty dollars" style="width:100%;height:auto;font-family:var(--mono)">
+        <!-- gridlines -->
+        <g stroke="#E5DDD0" stroke-width="1">
+          <line x1="150" y1="40"  x2="150" y2="290"/>
+          <line x1="270" y1="40"  x2="270" y2="290"/>
+          <line x1="390" y1="40"  x2="390" y2="290"/>
+          <line x1="510" y1="40"  x2="510" y2="290"/>
+          <line x1="630" y1="40"  x2="630" y2="290"/>
+          <line x1="750" y1="40"  x2="750" y2="290"/>
+        </g>
+        <g font-size="11" fill="#6B6257" text-anchor="middle">
+          <text x="150" y="310">$0</text><text x="270" y="310">$10</text><text x="390" y="310">$20</text>
+          <text x="510" y="310">$30</text><text x="630" y="310">$40</text><text x="750" y="310">$50</text>
+        </g>
+
+        <!-- Haiku -->
+        <text x="140" y="62" font-size="13" fill="#141210" text-anchor="end" font-weight="bold">Haiku 4.5</text>
+        <rect x="150" y="50" width="12"  height="14" fill="#141210" rx="2"/>
+        <rect x="150" y="68" width="60"  height="14" fill="#C9A227" rx="2"/>
+        <text x="222" y="80" font-size="11" fill="#6B6257">$1 / $5</text>
+
+        <!-- Sonnet -->
+        <text x="140" y="124" font-size="13" fill="#141210" text-anchor="end" font-weight="bold">Sonnet 4.6</text>
+        <rect x="150" y="112" width="36"  height="14" fill="#141210" rx="2"/>
+        <rect x="150" y="130" width="180" height="14" fill="#C9A227" rx="2"/>
+        <text x="342" y="142" font-size="11" fill="#6B6257">$3 / $15</text>
+
+        <!-- Opus -->
+        <text x="140" y="186" font-size="13" fill="#141210" text-anchor="end" font-weight="bold">Opus 4.8</text>
+        <rect x="150" y="174" width="60"  height="14" fill="#141210" rx="2"/>
+        <rect x="150" y="192" width="300" height="14" fill="#C9A227" rx="2"/>
+        <text x="462" y="204" font-size="11" fill="#6B6257">$5 / $25</text>
+
+        <!-- Fable -->
+        <text x="140" y="248" font-size="13" fill="#C65A33" text-anchor="end" font-weight="bold">Fable 5</text>
+        <rect x="150" y="236" width="120" height="14" fill="#C65A33" rx="2"/>
+        <rect x="150" y="254" width="600" height="14" fill="#E0935F" rx="2"/>
+        <text x="700" y="232" font-size="11" fill="#C65A33" font-weight="bold">$10 / $50</text>
+
+        <!-- legend -->
+        <rect x="150" y="14" width="11" height="11" fill="#141210" rx="2"/><text x="167" y="24" font-size="11" fill="#6B6257">Input $/1M tokens</text>
+        <rect x="300" y="14" width="11" height="11" fill="#C9A227" rx="2"/><text x="317" y="24" font-size="11" fill="#6B6257">Output $/1M tokens</text>
+      </svg>
+    </div>
+    <figcaption>Fig. 1 — Claude API pricing per million tokens, June 2026. Source: Anthropic.</figcaption>
+  </figure>
+
+  <div class="tbl-scroll">
+  <table class="tbl">
+    <thead>
+      <tr><th>Model</th><th>Model ID</th><th>Context</th><th>Max output</th><th>Input $/1M</th><th>Output $/1M</th></tr>
+    </thead>
+    <tbody>
+      <tr class="hl"><td>Claude Fable 5</td><td><code class="inline">claude-fable-5</code></td><td>1M</td><td>128K</td><td>$10.00</td><td>$50.00</td></tr>
+      <tr><td>Claude Opus 4.8</td><td><code class="inline">claude-opus-4-8</code></td><td>1M</td><td>128K</td><td>$5.00</td><td>$25.00</td></tr>
+      <tr><td>Claude Sonnet 4.6</td><td><code class="inline">claude-sonnet-4-6</code></td><td>1M</td><td>64K</td><td>$3.00</td><td>$15.00</td></tr>
+      <tr><td>Claude Haiku 4.5</td><td><code class="inline">claude-haiku-4-5</code></td><td>200K</td><td>64K</td><td>$1.00</td><td>$5.00</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <!-- ============ Mythos & safety ============ -->
+  <h2 id="mythos">“Mythos-class”: why this release is different</h2>
+  <p>Until this week, Anthropic kept its most capable models internal. Fable 5 changes that — and the reason it <em>could</em> change is safety engineering, not just raw capability.</p>
+  <p>The public release is gated by <strong>new real-time safeguards that block responses in specific high-risk areas, including cybersecurity and biology</strong>. When a user asks a high-risk question — <a href="https://www.nbcnews.com/tech/security/fable-5-anthropic-release-public-mythos-claude-model-rcna349104" rel="noopener">NBC News</a> cites “how to make ricin” as an example — Fable 5 blocks its own response and <strong>falls back to Claude Opus 4.8</strong> to deliver a safe answer instead.</p>
+  <div class="note"><b>In plain English:</b> you get frontier-level intelligence for legitimate work, and a less capable — but safe — answer the moment a request crosses into dangerous territory. For 99% of business use cases, you will never notice the guardrail.</div>
+
+  <!-- ============ Developers ============ -->
+  <h2 id="developers">For developers: what changes in the API</h2>
+  <p>Fable 5 is available on the <a href="https://platform.claude.com/docs/en/about-claude/models/overview" rel="noopener">Claude API</a> and on <a href="https://www.aboutamazon.com/news/aws/claude-fable-5-anthropic-available-amazon-bedrock" rel="noopener">Amazon Bedrock</a>. It keeps the same API surface as Opus 4.7/4.8 — with one new breaking change to know about:</p>
+
+  <ul class="flat">
+    <li><strong>Adaptive thinking only.</strong> <code class="inline">thinking: {type: "enabled", budget_tokens: N}</code> returns a 400 error. Use <code class="inline">{type: "adaptive"}</code>.</li>
+    <li><strong>New on Fable 5:</strong> an explicit <code class="inline">thinking: {type: "disabled"}</code> also returns a 400 (it was accepted on Opus 4.8). To run without thinking, <em>omit the parameter entirely</em>.</li>
+    <li><strong>No sampling parameters.</strong> <code class="inline">temperature</code>, <code class="inline">top_p</code> and <code class="inline">top_k</code> are removed — steer with prompting instead.</li>
+    <li><strong>Effort control:</strong> all 5 levels supported (<code class="inline">low</code> → <code class="inline">max</code>) via <code class="inline">output_config.effort</code>.</li>
+    <li><strong>No assistant prefills.</strong> Use structured outputs (<code class="inline">output_config.format</code>) to force JSON.</li>
+  </ul>
+
+  <pre><span class="c"># Minimal Fable 5 call (Python)</span>
+<span class="k">import</span> anthropic
+
+client = anthropic.Anthropic()
+
+response = client.messages.create(
+    model=<span class="s">"claude-fable-5"</span>,
+    max_tokens=<span class="s">16000</span>,
+    thinking={<span class="s">"type"</span>: <span class="s">"adaptive"</span>},          <span class="c"># the only valid "on" mode</span>
+    output_config={<span class="s">"effort"</span>: <span class="s">"high"</span>},        <span class="c"># low | medium | high | xhigh | max</span>
+    messages=[{<span class="s">"role"</span>: <span class="s">"user"</span>, <span class="s">"content"</span>: <span class="s">"..."</span>}],
+)</pre>
+
+  <!-- ============ Should you upgrade ============ -->
+  <h2 id="upgrade">Should your business upgrade to Fable 5?</h2>
+  <p>Our take after a day of testing: <strong>don't move everything — move the right workloads.</strong> At 2× the price of Opus 4.8, Fable 5 pays for itself only where extra intelligence converts into real outcomes:</p>
+  <ul class="flat">
+    <li><strong>Upgrade:</strong> complex software engineering, long-horizon <a href="/blog/posts/ai-assistant-vs-ai-agent.html">autonomous agents</a>, scientific/technical analysis, vision-heavy document work — the areas where Anthropic reports the biggest gains.</li>
+    <li><strong>Stay on Opus 4.8:</strong> general assistants, content pipelines and agent loops that already perform well — same 1M context, half the price.</li>
+    <li><strong>Stay on Sonnet/Haiku:</strong> classification, extraction, summarisation and high-volume workloads. Paying $50/M output tokens to tag support tickets is burning money.</li>
+  </ul>
+
+  <!-- ============ FAQ ============ -->
+  <h2 id="faq">Frequently asked questions</h2>
+
+  <details>
+    <summary>What is Claude Fable 5?</summary>
+    <div class="a"><p>Claude Fable 5 is Anthropic's most powerful publicly available AI model, released on June 9, 2026. It is the first public “Mythos-class” model — a new tier above the Claude Opus family — and scores more than 10% higher than Claude Opus 4.8 on some benchmarks, according to Anthropic.</p></div>
+  </details>
+  <details>
+    <summary>How much does Claude Fable 5 cost?</summary>
+    <div class="a"><p>US$10 per million input tokens and US$50 per million output tokens — exactly double Claude Opus 4.8 ($5/$25). It's available to enterprise customers and paid subscribers, including via Amazon Bedrock.</p></div>
+  </details>
+  <details>
+    <summary>How is Fable 5 different from Claude Opus 4.8?</summary>
+    <div class="a"><p>Fable 5 sits in a new tier above Opus. It outperforms Opus 4.8 by more than 10% on some benchmarks, with the biggest gains in software engineering, knowledge work, vision and scientific research. Both share a 1M-token context window and 128K max output; Fable 5 costs twice as much.</p></div>
+  </details>
+  <details>
+    <summary>What does “Mythos-class” mean?</summary>
+    <div class="a"><p>Mythos is Anthropic's internal frontier model class whose capabilities previously exceeded what the company was willing to release publicly. Fable 5 is the first Mythos-class model made generally available, enabled by new safeguards that block responses in high-risk areas such as cybersecurity and biology.</p></div>
+  </details>
+  <details>
+    <summary>What is the context window of Claude Fable 5?</summary>
+    <div class="a"><p>1 million tokens — roughly 750,000 words, or several large codebases at once — with up to 128,000 tokens of output in a single response.</p></div>
+  </details>
+  <details>
+    <summary>Can developers use Claude Fable 5 via the API?</summary>
+    <div class="a"><p>Yes. The model ID is <code class="inline">claude-fable-5</code> on the Claude API and Amazon Bedrock. It uses the same API surface as Opus 4.8 — adaptive thinking only, no temperature/top_p/top_k — with one new rule: explicitly sending <code class="inline">thinking: {type: "disabled"}</code> returns a 400 error; omit the parameter instead.</p></div>
+  </details>
+  <details>
+    <summary>Is Claude Fable 5 safe to use?</summary>
+    <div class="a"><p>Anthropic shipped Fable 5 with new real-time safeguards: queries in high-risk domains (such as bioweapons or offensive cyber capabilities) are blocked, and the system falls back to Claude Opus 4.8 to deliver a safe answer. This safeguard architecture is what made the public release possible.</p></div>
+  </details>
+
+  <!-- ============ CTA ============ -->
+  <div class="cta">
+    <h2>Not sure which Claude model fits your workflow?</h2>
+    <p>TurnkeyAI helps Australian businesses choose, integrate and optimise AI models — so you pay for frontier intelligence only where it earns its keep.</p>
+    <a class="btn" href="/#contact">Talk to us →</a>
+  </div>
+
+  <!-- ============ Sources ============ -->
+  <h2 id="sources">Sources</h2>
+  <ol class="src">
+    <li><a href="https://www.anthropic.com/news/claude-fable-5-mythos-5" rel="noopener">Anthropic — Claude Fable 5 and Claude Mythos 5</a> (official announcement, June 9, 2026)</li>
+    <li><a href="https://platform.claude.com/docs/en/about-claude/models/overview" rel="noopener">Anthropic — Models overview &amp; pricing documentation</a></li>
+    <li><a href="https://www.cnbc.com/2026/06/09/anthropic-mythos-claude-fable-5.html" rel="noopener">CNBC — Anthropic releases Mythos-like AI model to the public</a></li>
+    <li><a href="https://techcrunch.com/2026/06/09/anthropic-released-claude-fable-5-its-most-powerful-model-publicly-days-after-warning-ai-is-getting-too-dangerous/" rel="noopener">TechCrunch — Anthropic releases Claude Fable 5</a></li>
+    <li><a href="https://www.nbcnews.com/tech/security/fable-5-anthropic-release-public-mythos-claude-model-rcna349104" rel="noopener">NBC News — Fable 5: built on the tech that spooked the government</a></li>
+    <li><a href="https://www.aboutamazon.com/news/aws/claude-fable-5-anthropic-available-amazon-bedrock" rel="noopener">AWS — Claude Fable 5 now available on Amazon Bedrock</a></li>
+  </ol>
+
+</article>
+</main>
+
+<footer class="wrap">
+  © 2026 TurnkeyAI · turnkeyai.com.au · Last updated June 10, 2026
+</footer>
+
+</body>
+</html>

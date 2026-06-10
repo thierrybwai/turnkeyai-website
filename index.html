@@ -1431,9 +1431,9 @@ body {
       <li><a href="#how" class="tk-nav-link">How it works</a></li>
       <li><a href="/blog/" class="tk-nav-link">Blog</a></li>
       <li><a href="/support/" class="tk-nav-link">Support</a></li>
-      <li><a href="#booking" class="tk-nav-link">Get started</a></li>
+      <li><a href="#booking" class="tk-nav-link">Get my free plan</a></li>
     </ul>
-    <a href="#booking" class="tk-btn tk-btn--primary tk-btn--sm">Get started</a>
+    <a href="#booking" class="tk-btn tk-btn--primary tk-btn--sm">Get my free plan</a>
   </div>
 </nav>
 
@@ -1458,9 +1458,12 @@ body {
       A Mac Mini in your office, configured for your workflows, wired to your tools. We hand it over running on day seven. No code. No consultants. No subscriptions.
     </p>
     <div class="hero-cta-row tk-anim-rise" style="--i:11">
-      <a href="#packages" class="tk-btn tk-btn--primary tk-btn--lg">See packages <span class="arrow">→</span></a>
-      <a href="#roi" class="tk-btn tk-btn--ghost tk-btn--lg">See your weekly saving</a>
+      <a href="#booking" class="tk-btn tk-btn--primary tk-btn--lg">Get my free AI plan <span class="arrow">→</span></a>
+      <a href="#roi" class="tk-btn tk-btn--ghost tk-btn--lg">See what you're losing <span class="arrow">→</span></a>
     </div>
+    <p class="tk-anim-rise" style="--i:11; margin: 16px auto 0; max-width: 520px; font-size: 13px; color: var(--tk-fg-subtle); letter-spacing: -0.005em;">
+      Free 8-page plan, generated from your website in 30 seconds. No call required &middot; No subscription &middot; You own it.
+    </p>
     <p class="tk-anim-rise" style="--i:12; margin-top: 28px; font-size: 13px; color: var(--tk-fg-subtle); display: inline-flex; align-items: center; gap: 10px; letter-spacing: -0.005em;">
       <span style="display: inline-flex; gap: -8px; align-items: center;">
         <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--tk-success); box-shadow: 0 0 0 4px rgba(29,157,79,0.18); animation: pulse-glow 2s ease-in-out infinite;"></span>
@@ -1490,6 +1493,88 @@ body {
     <div><div class="tk-stat-num" data-count="3" data-suffix=" weeks">0 weeks</div><div class="tk-stat-label">Pays for itself</div></div>
     <div><div class="tk-stat-num" data-count="13" data-suffix="×">0×</div><div class="tk-stat-label">Average ROI (yr 1)</div></div>
     <div><div class="tk-stat-num" style="font-size: clamp(32px, 4vw, 52px); letter-spacing: -0.02em;">24/7</div><div class="tk-stat-label">AI works for you</div></div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────
+     ROI CALCULATOR (loss-framed, high in page)
+───────────────────────────────────────────────────── -->
+<style>
+  .tk-roi-loss { margin: 30px 0 6px; }
+  .tk-roi-loss-num { font-family: var(--tk-font-display); font-weight: 600; font-size: clamp(48px, 9vw, 88px); line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: var(--tk-fg); }
+  #roi .tk-roi-summary { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  #roi-waiting { line-height: 1.5; }
+  @media (max-width: 560px) { #roi .tk-roi-summary { grid-template-columns: 1fr; } }
+</style>
+<section id="roi" class="tk-section">
+  <div class="tk-wide">
+    <div class="tk-fade-up tk-center" style="margin-bottom: 48px;">
+      <p class="tk-eyebrow">Return on investment</p>
+      <h2 class="tk-h1" data-mask-reveal style="margin-bottom: 16px;">This isn't a tech purchase.<br>It's an HR decision.</h2>
+      <p class="tk-lede tk-muted" style="max-width: 640px; margin: 0 auto;">
+        Add your team below. We'll show you what you're spending every week on work AI already does.
+      </p>
+    </div>
+
+    <div class="tk-roi tk-fade-up">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+        <h3 class="tk-h3">Your team</h3>
+        <button onclick="addRow()" class="tk-btn tk-btn--primary tk-btn--sm">+ Add person</button>
+      </div>
+
+      <div class="tk-roi-row" style="margin-bottom: 12px;">
+        <span class="tk-label" style="margin: 0;">Role</span>
+        <span class="tk-label" style="margin: 0;">Annual cost (AUD)</span>
+        <span class="tk-label" style="margin: 0;">AI handles (%)</span>
+        <span></span>
+      </div>
+
+      <div id="roi-rows"></div>
+
+      <!-- LOSS-FRAMED HERO NUMBER -->
+      <div class="tk-roi-loss tk-center">
+        <p class="tk-label" style="margin-bottom: 10px;">What you're losing every week</p>
+        <div class="tk-roi-loss-num" id="total-weekly">$0</div>
+        <p class="tk-small tk-muted" style="margin-top: 10px;">on work AI already handles &mdash; gone every week, whether you act or not.</p>
+      </div>
+
+      <div class="tk-roi-summary">
+        <div class="tk-roi-stat">
+          <div class="tk-roi-stat-label">Your current labour bill</div>
+          <div class="tk-roi-stat-value" id="total-annual">$0</div>
+        </div>
+        <div class="tk-roi-stat">
+          <div class="tk-roi-stat-label">On the table this year</div>
+          <div class="tk-roi-stat-value" id="total-yearly">$0</div>
+        </div>
+      </div>
+
+      <p id="roi-waiting" class="tk-center" style="margin-top: 24px; font-size: 17px; color: var(--tk-fg);">
+        Every week you wait is <strong id="waiting-weekly">$0</strong> gone. A year of it is <strong id="waiting-yearly">$0</strong> you won't get back.
+      </p>
+
+      <!-- CTA at peak motivation -->
+      <div class="tk-center" style="margin-top: 28px;">
+        <a href="#booking" class="tk-btn tk-btn--primary tk-btn--lg">Get my free AI plan <span class="arrow">→</span></a>
+        <!-- GUARANTEE BADGE SLOT -->
+        <p class="tk-small tk-muted" style="margin-top: 12px;">See exactly which of these roles we'd automate first. Free, 30 seconds &middot; No call required.</p>
+      </div>
+
+      <div style="margin-top: 40px;">
+        <p class="tk-small tk-center" style="margin-bottom: 16px;">After this, it's pure profit:</p>
+        <div class="tk-roi-be">
+          <div class="tk-roi-be-card">
+            <div class="tk-label" style="margin-bottom: 6px;">Cloud · $2,999</div>
+            <div class="tk-h3" id="be-cloud" style="color: var(--tk-accent);">·</div>
+          </div>
+          <div class="tk-roi-be-card tk-roi-be-card--featured">
+            <div class="tk-label" style="margin-bottom: 6px;">Mac Mini · $5,999</div>
+            <div class="tk-h3" id="be-mac" style="color: var(--tk-accent);">·</div>
+          </div>
+        </div>
+        <p class="tk-small tk-muted tk-center" style="margin-top: 14px;">One-time. Cloud $2,999 &middot; Mac Mini $5,999. No subscription, ever.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1601,7 +1686,7 @@ body {
           <li>12 months of VPS hosting included</li>
           <li>Migrate to a Mac Mini at any time</li>
         </ul>
-        <a href="#booking" class="tk-btn tk-btn--ghost tk-btn--block tk-pkg-cta">Get started</a>
+        <a href="#booking" class="tk-btn tk-btn--ghost tk-btn--block tk-pkg-cta">Get my free plan</a>
       </div>
 
       <!-- MAC MINI -->
@@ -1628,67 +1713,7 @@ body {
           <li>2-hour staff onboarding session</li>
           <li><strong>2 weeks of dedicated support included</strong></li>
         </ul>
-        <a href="#booking" class="tk-btn tk-btn--primary tk-btn--block tk-pkg-cta">Get started <span class="arrow">→</span></a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────────────────────────────────────────
-     ROI CALCULATOR
-───────────────────────────────────────────────────── -->
-<section id="roi" class="tk-section">
-  <div class="tk-wide">
-    <div class="tk-fade-up tk-center" style="margin-bottom: 56px;">
-      <p class="tk-eyebrow">Return on investment</p>
-      <h2 class="tk-h1" data-mask-reveal style="margin-bottom: 16px;">This isn't a tech purchase.<br>It's an HR decision.</h2>
-      <p class="tk-lede tk-muted" style="max-width: 620px; margin: 0 auto;">
-        Add your current staff and contractors below. We'll show you exactly how fast AI pays for itself.
-      </p>
-    </div>
-
-    <div class="tk-roi tk-fade-up">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
-        <h3 class="tk-h3">Your team</h3>
-        <button onclick="addRow()" class="tk-btn tk-btn--primary tk-btn--sm">+ Add person</button>
-      </div>
-
-      <div class="tk-roi-row" style="margin-bottom: 12px;">
-        <span class="tk-label" style="margin: 0;">Role</span>
-        <span class="tk-label" style="margin: 0;">Annual cost (AUD)</span>
-        <span class="tk-label" style="margin: 0;">AI handles (%)</span>
-        <span></span>
-      </div>
-
-      <div id="roi-rows"></div>
-
-      <div class="tk-roi-summary">
-        <div class="tk-roi-stat">
-          <div class="tk-roi-stat-label">Annual labour cost</div>
-          <div class="tk-roi-stat-value" id="total-annual">$0</div>
-        </div>
-        <div class="tk-roi-stat">
-          <div class="tk-roi-stat-label">Weekly saving</div>
-          <div class="tk-roi-stat-value tk-roi-stat-value--green" id="total-weekly">$0</div>
-        </div>
-        <div class="tk-roi-stat">
-          <div class="tk-roi-stat-label">Annual saving</div>
-          <div class="tk-roi-stat-value" id="total-yearly">$0</div>
-        </div>
-      </div>
-
-      <div style="margin-top: 32px;">
-        <p class="tk-small tk-center" style="margin-bottom: 16px;">Break-even on your investment</p>
-        <div class="tk-roi-be">
-          <div class="tk-roi-be-card">
-            <div class="tk-label" style="margin-bottom: 6px;">Cloud · $2,999</div>
-            <div class="tk-h3" id="be-cloud" style="color: var(--tk-accent);">·</div>
-          </div>
-          <div class="tk-roi-be-card tk-roi-be-card--featured">
-            <div class="tk-label" style="margin-bottom: 6px;">Mac Mini · $5,999</div>
-            <div class="tk-h3" id="be-mac" style="color: var(--tk-accent);">·</div>
-          </div>
-        </div>
+        <a href="#booking" class="tk-btn tk-btn--primary tk-btn--block tk-pkg-cta">Get my free plan <span class="arrow">→</span></a>
       </div>
     </div>
   </div>
@@ -1856,7 +1881,7 @@ body {
 ───────────────────────────────────────────────────── -->
 <section id="booking" class="tk-section">
   <div class="tk-content tk-center" style="margin-bottom: 48px;">
-    <p class="tk-eyebrow">Get started</p>
+    <p class="tk-eyebrow">Your free AI plan</p>
     <h2 class="tk-h1" data-mask-reveal style="margin-bottom: 20px;">Tell us about your business. Get a personalized AI plan in 30 seconds.</h2>
     <p class="tk-lede tk-muted" style="max-width: 640px; margin: 0 auto 24px;">
       Our AI reads your website, drafts an 8-page deployment plan specific to your business, and emails it to you instantly. A real person follows up within 2 business hours.
@@ -2019,7 +2044,7 @@ body {
         <li><a href="#faq">FAQ</a></li>
         <li><a href="/blog/">Blog</a></li>
         <li><a href="/support/">Support</a></li>
-        <li><a href="#booking">Get started</a></li>
+        <li><a href="#booking">Get my free plan</a></li>
       </ul>
     </div>
     <div>
@@ -2277,6 +2302,9 @@ body {
     document.getElementById('total-annual').textContent = formatAUD(totalAnnual);
     document.getElementById('total-weekly').textContent = weeklyTotal > 0 ? '$' + Math.round(weeklyTotal).toLocaleString() : '$0';
     document.getElementById('total-yearly').textContent = formatAUD(totalSaving);
+    const _wk = weeklyTotal > 0 ? '$' + Math.round(weeklyTotal).toLocaleString() : '$0';
+    const _wkEl = document.getElementById('waiting-weekly'); if (_wkEl) _wkEl.textContent = _wk;
+    const _yrEl = document.getElementById('waiting-yearly'); if (_yrEl) _yrEl.textContent = formatAUD(totalSaving);
     document.getElementById('be-cloud').textContent = weeklyTotal > 0 ? formatWeeks(2999 / weeklyTotal) : '·';
     document.getElementById('be-mac').textContent   = weeklyTotal > 0 ? formatWeeks(5999 / weeklyTotal) : '·';
   }

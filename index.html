@@ -1582,10 +1582,23 @@ body {
      SOCIAL PROOF — real Google review + concrete deployments
 ───────────────────────────────────────────────────── -->
 <style>
-  .tk-proof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 8px; }
-  .tk-proof-card { padding: 28px; display: flex; flex-direction: column; gap: 14px; }
-  .tk-proof-mono { width: 46px; height: 46px; flex: none; border-radius: 13px; background: var(--tk-accent-soft); color: var(--tk-accent); font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; justify-content: center; letter-spacing: 0.02em; }
-  @media (max-width: 760px) { .tk-proof-grid { grid-template-columns: 1fr; } }
+  .tk-proof-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(216px, 1fr)); gap: 18px; margin-top: 8px; }
+  .tk-proof-card { padding: 26px; display: flex; flex-direction: column; gap: 13px; }
+  .tk-proof-mono { width: 46px; height: 46px; flex: none; border-radius: 13px; background: var(--tk-accent-soft); color: var(--tk-accent); font-weight: 700; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; letter-spacing: 0.02em; }
+  .tk-proof-more { margin-top: auto; align-self: flex-start; background: none; border: none; padding: 4px 0; color: var(--tk-accent); font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; }
+  .tk-proof-more:hover { text-decoration: underline; }
+  /* Proof detail modal */
+  .tk-modal { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 24px; }
+  .tk-modal[hidden] { display: none; }
+  .tk-modal-backdrop { position: absolute; inset: 0; background: rgba(20,20,22,0.5); backdrop-filter: saturate(120%) blur(5px); -webkit-backdrop-filter: saturate(120%) blur(5px); }
+  .tk-modal-card { position: relative; z-index: 1; background: var(--tk-bg-elev); border-radius: 22px; max-width: 540px; width: 100%; padding: 38px; box-shadow: 0 30px 90px rgba(0,0,0,0.28); max-height: 86vh; overflow-y: auto; animation: tkModalIn 260ms var(--tk-ease-out); }
+  @keyframes tkModalIn { from { opacity: 0; transform: translateY(14px) scale(0.985); } to { opacity: 1; transform: none; } }
+  .tk-modal-x { position: absolute; top: 16px; right: 16px; width: 34px; height: 34px; border-radius: 50%; border: none; background: var(--tk-bg-alt); color: var(--tk-fg-muted); font-size: 19px; line-height: 1; cursor: pointer; }
+  .tk-modal-x:hover { background: var(--tk-line); color: var(--tk-fg); }
+  .tk-modal-head { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; padding-right: 28px; }
+  .tk-modal-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .tk-modal-list li { position: relative; padding-left: 24px; font-size: 14.5px; line-height: 1.5; color: var(--tk-fg); }
+  .tk-modal-list li::before { content: "✓"; position: absolute; left: 0; top: 0; color: var(--tk-accent); font-weight: 700; }
 </style>
 <section class="tk-section tk-section--alt">
   <div class="tk-content">
@@ -1620,6 +1633,7 @@ body {
           </div>
         </div>
         <p class="tk-small" style="color: var(--tk-fg); line-height: 1.55;">Deployed <strong>&ldquo;Sophie&rdquo;</strong> &mdash; an AI agent that runs their inbox and customer enquiries.</p>
+        <button class="tk-proof-more" type="button" onclick="openProof('perth')">See more &rarr;</button>
       </div>
 
       <div class="tk-card tk-proof-card">
@@ -1631,6 +1645,7 @@ body {
           </div>
         </div>
         <p class="tk-small" style="color: var(--tk-fg); line-height: 1.55;">An on-site AI agent on a <strong>Mac Mini</strong>, for the clinic and its sister business.</p>
+        <button class="tk-proof-more" type="button" onclick="openProof('lighthouse')">See more &rarr;</button>
       </div>
 
       <div class="tk-card tk-proof-card">
@@ -1642,11 +1657,87 @@ body {
           </div>
         </div>
         <p class="tk-small" style="color: var(--tk-fg); line-height: 1.55;">A <strong>Mac Mini</strong> AI agent, set up to run their day-to-day operations.</p>
+        <button class="tk-proof-more" type="button" onclick="openProof('smoothflow')">See more &rarr;</button>
+      </div>
+
+      <div class="tk-card tk-proof-card">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span class="tk-proof-mono">S8</span>
+          <div>
+            <p style="font-weight: 600; line-height: 1.2;">Status 8020</p>
+            <p class="tk-small tk-muted">Health &amp; wellness</p>
+          </div>
+        </div>
+        <p class="tk-small" style="color: var(--tk-fg); line-height: 1.55;">An autonomous AI agent, set up to run enquiries and scheduling for their practice.</p>
+        <button class="tk-proof-more" type="button" onclick="openProof('status8020')">See more &rarr;</button>
       </div>
     </div>
     <p class="tk-small tk-muted tk-center" style="margin-top: 22px;">Real deployments, this year. <a href="#booking">Be the next one &rarr;</a></p>
   </div>
 </section>
+
+<!-- Proof detail modal -->
+<div class="tk-modal" id="tkModal" hidden>
+  <div class="tk-modal-backdrop" data-close></div>
+  <div class="tk-modal-card" role="dialog" aria-modal="true" aria-labelledby="tkModalName">
+    <button class="tk-modal-x" type="button" data-close aria-label="Close">&times;</button>
+    <div id="tkModalBody"></div>
+  </div>
+</div>
+<script>
+(function () {
+  var PROOF = {
+    perth: {
+      mono: 'PL', name: 'Perth Landscape Guys', tag: 'Trades &middot; WA',
+      intro: 'We built and deployed <strong>&ldquo;Sophie&rdquo;</strong>, an autonomous AI agent, for this Perth landscaping business &mdash; live in 7 business days.',
+      runsTitle: 'What Sophie runs',
+      runs: ['Triages the inbox and flags what needs a human', 'Drafts replies to customer enquiries', 'Keeps quotes and follow-ups moving so leads stay warm']
+    },
+    lighthouse: {
+      mono: 'LW', name: 'Lighthouse Whole Body Health', tag: 'Healthcare',
+      intro: 'An on-site AI agent on a <strong>Mac Mini</strong>, set up to run across the clinic and a sister business.',
+      runsTitle: 'What the agent runs',
+      runs: ['Answers and sorts incoming enquiries', 'Handles bookings and reminders', 'Keeps admin moving across both businesses']
+    },
+    smoothflow: {
+      mono: 'SF', name: 'Smooth Flow Group', tag: 'Berri &middot; SA',
+      intro: 'A <strong>Mac Mini</strong> installed on-site, running an autonomous agent for their day-to-day operations.',
+      runsTitle: 'What the agent runs',
+      runs: ['Triages the inbox every morning', 'Drafts replies and follow-ups', 'Logs the routine admin automatically']
+    },
+    status8020: {
+      mono: 'S8', name: 'Status 8020', tag: 'Health &amp; wellness',
+      intro: 'An autonomous AI agent, set up for this health &amp; wellness business.',
+      runsTitle: 'What the agent runs',
+      runs: ['Answers client enquiries', 'Handles scheduling and reminders', 'Keeps the day-to-day admin handled']
+    }
+  };
+  function render(d) {
+    var runs = d.runs.map(function (x) { return '<li>' + x + '</li>'; }).join('');
+    return '<div class="tk-modal-head"><span class="tk-proof-mono">' + d.mono + '</span>'
+      + '<div><p id="tkModalName" style="font-weight:600;line-height:1.2;">' + d.name + '</p>'
+      + '<p class="tk-small tk-muted">' + d.tag + '</p></div></div>'
+      + '<p class="tk-small" style="color:var(--tk-fg);line-height:1.6;">' + d.intro + '</p>'
+      + '<p class="tk-eyebrow" style="margin:22px 0 12px;">' + d.runsTitle + '</p>'
+      + '<ul class="tk-modal-list">' + runs + '</ul>'
+      + '<p class="tk-eyebrow" style="margin:22px 0 12px;">How they run it</p>'
+      + '<p class="tk-small tk-muted" style="line-height:1.6;">In plain English over Slack or Telegram &mdash; no code, no dashboards. Routine work runs on its own; sensitive actions wait for one-tap approval. Built on the OpenClaw agent runtime, powered by Claude.</p>'
+      + '<a href="#booking" class="tk-btn tk-btn--primary" style="margin-top:24px;" data-close>Get my free plan <span class="arrow">&rarr;</span></a>';
+  }
+  window.openProof = function (k) {
+    var d = PROOF[k]; if (!d) return;
+    document.getElementById('tkModalBody').innerHTML = render(d);
+    var m = document.getElementById('tkModal');
+    m.hidden = false; document.body.style.overflow = 'hidden';
+  };
+  function closeModal() {
+    var m = document.getElementById('tkModal');
+    if (m) { m.hidden = true; document.body.style.overflow = ''; }
+  }
+  document.addEventListener('click', function (e) { if (e.target.closest('[data-close]')) closeModal(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+})();
+</script>
 
 <!-- ─────────────────────────────────────────────────────
      EDITORIAL STATEMENT

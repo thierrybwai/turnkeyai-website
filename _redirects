@@ -1,3 +1,11 @@
+# Canonical domain: turnkeyai.com.au (consolidate tkai.com.au)
+https://tkai.com.au/*      https://turnkeyai.com.au/:splat  301!
+http://tkai.com.au/*       https://turnkeyai.com.au/:splat  301!
+https://www.tkai.com.au/*  https://turnkeyai.com.au/:splat  301!
+http://www.tkai.com.au/*   https://turnkeyai.com.au/:splat  301!
+https://www.turnkeyai.com.au/*  https://turnkeyai.com.au/:splat  301!
+http://www.turnkeyai.com.au/*   https://turnkeyai.com.au/:splat  301!
+
 # Friendly URL redirects
 /terms        /legal/terms.html      301
 /privacy      /legal/privacy.html    301

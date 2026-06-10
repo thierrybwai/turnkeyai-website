@@ -48,6 +48,7 @@ TurnkeyAI is operated by Mael Demets. Contact: start@tkai.com.au. Website: https
 ## Locations served
 
 - [Gold Coast](https://turnkeyai.com.au/gold-coast/) (home base, on-site setup included)
+- [AI automation on the Gold Coast: 2026 provider comparison](https://turnkeyai.com.au/blog/posts/ai-automation-gold-coast-compared.html): honest map of the local market
 - [Brisbane](https://turnkeyai.com.au/brisbane/) (on-site setup included)
 - [Sunshine Coast](https://turnkeyai.com.au/sunshine-coast/)
 - [Cairns](https://turnkeyai.com.au/cairns/)

@@ -1510,7 +1510,7 @@ body {
   <div class="tk-wide">
     <div class="tk-fade-up tk-center" style="margin-bottom: 48px;">
       <p class="tk-eyebrow">Return on investment</p>
-      <h2 class="tk-h1" data-mask-reveal style="margin-bottom: 16px;">This isn't a tech purchase.<br>It's an HR decision.</h2>
+      <h2 class="tk-h1" data-mask-reveal style="margin: 0 auto 16px; max-width: 760px; font-size: clamp(30px, 4vw, 50px);"><span style="display:block;">This isn't a tech purchase.</span><span style="display:block;">It's an HR decision.</span></h2>
       <p class="tk-lede tk-muted" style="max-width: 640px; margin: 0 auto;">
         Add your team below. We'll show you what you're spending every week on work AI already does.
       </p>
@@ -1579,37 +1579,72 @@ body {
 </section>
 
 <!-- ─────────────────────────────────────────────────────
-     SOCIAL PROOF — real Google review + named deployments
+     SOCIAL PROOF — real Google review + concrete deployments
 ───────────────────────────────────────────────────── -->
+<style>
+  .tk-proof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 8px; }
+  .tk-proof-card { padding: 28px; display: flex; flex-direction: column; gap: 14px; }
+  .tk-proof-mono { width: 46px; height: 46px; flex: none; border-radius: 13px; background: var(--tk-accent-soft); color: var(--tk-accent); font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; justify-content: center; letter-spacing: 0.02em; }
+  @media (max-width: 760px) { .tk-proof-grid { grid-template-columns: 1fr; } }
+</style>
 <section class="tk-section tk-section--alt">
   <div class="tk-content">
-    <div class="tk-fade-up tk-center" style="margin-bottom: 40px;">
+    <div class="tk-fade-up tk-center" style="margin-bottom: 44px;">
       <p class="tk-eyebrow">Proof</p>
-      <h2 class="tk-h2" style="margin-bottom: 12px;">Australian businesses already running on TurnkeyAI.</h2>
-      <p class="tk-lede tk-muted" style="max-width: 600px; margin: 0 auto;">
+      <h2 class="tk-h2" style="margin: 0 auto 12px; max-width: 720px;">Real Australian businesses, already on TurnkeyAI.</h2>
+      <p class="tk-lede tk-muted" style="max-width: 560px; margin: 0 auto;">
         <strong style="color: var(--tk-fg);">5.0 on Google</strong> &middot; 50+ SMEs deployed across the country.
       </p>
     </div>
 
     <!-- Featured real Google review (verbatim excerpt) -->
-    <div class="tk-card tk-fade-up" style="max-width: 680px; margin: 0 auto; padding: 40px 36px; text-align: center;">
-      <div style="color: #F5A623; font-size: 19px; letter-spacing: 4px; margin-bottom: 18px;" aria-label="5 out of 5 stars">★★★★★</div>
-      <p style="font-family: var(--tk-font-display); font-size: clamp(20px, 2.4vw, 25px); line-height: 1.45; color: var(--tk-fg); margin-bottom: 22px; letter-spacing: -0.01em;">
+    <figure class="tk-card tk-fade-up" style="max-width: 660px; margin: 0 auto 36px; padding: 42px 40px 32px; text-align: center;">
+      <div aria-label="Rated 5 out of 5 stars" style="color: #FBBC04; font-size: 18px; letter-spacing: 5px; margin-bottom: 18px;">★★★★★</div>
+      <blockquote style="margin: 0; font-family: var(--tk-font-display); font-size: clamp(20px, 2.3vw, 25px); line-height: 1.45; letter-spacing: -0.01em; color: var(--tk-fg);">
         &ldquo;Easy to use, easier to set up. If my AI bot couldn&rsquo;t answer my questions, then Mael certainly did!&rdquo;
-      </p>
-      <p class="tk-small tk-muted"><strong style="color: var(--tk-fg);">Mack Lawton</strong> &middot; Verified Google review</p>
-    </div>
+      </blockquote>
+      <figcaption style="margin-top: 24px; display: flex; align-items: center; justify-content: center; gap: 11px;">
+        <span style="width: 36px; height: 36px; border-radius: 50%; background: var(--tk-accent); color: #fff; font-weight: 600; font-size: 13px; display: inline-flex; align-items: center; justify-content: center;">ML</span>
+        <span class="tk-small"><strong style="color: var(--tk-fg);">Mack Lawton</strong> <span class="tk-muted">&middot; Verified Google review</span></span>
+      </figcaption>
+    </figure>
 
-    <!-- Named deployments (factual, no fabricated quotes — swapped for full quote cards once clients reply) -->
-    <div class="tk-fade-up tk-center" style="margin-top: 44px;">
-      <p class="tk-eyebrow" style="margin-bottom: 18px;">Recently deployed for</p>
-      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; max-width: 760px; margin: 0 auto;">
-        <span style="padding: 12px 20px; background: var(--tk-bg-elev); border: 1px solid var(--tk-line); border-radius: 999px; font-weight: 600; font-size: 15px;">Perth Landscape Guys <span style="color: var(--tk-fg-subtle); font-weight: 400;">· Trades, WA</span></span>
-        <span style="padding: 12px 20px; background: var(--tk-bg-elev); border: 1px solid var(--tk-line); border-radius: 999px; font-weight: 600; font-size: 15px;">Smooth Flow Group <span style="color: var(--tk-fg-subtle); font-weight: 400;">· Berri, SA</span></span>
-        <span style="padding: 12px 20px; background: var(--tk-bg-elev); border: 1px solid var(--tk-line); border-radius: 999px; font-weight: 600; font-size: 15px;">Lighthouse Whole Body Health <span style="color: var(--tk-fg-subtle); font-weight: 400;">· Healthcare</span></span>
+    <!-- Concrete deployments — factual, no fabricated quotes (swap for quote cards as clients reply) -->
+    <div class="tk-fade-up tk-proof-grid">
+      <div class="tk-card tk-proof-card">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span class="tk-proof-mono">PL</span>
+          <div>
+            <p style="font-weight: 600; line-height: 1.2;">Perth Landscape Guys</p>
+            <p class="tk-small tk-muted">Trades &middot; WA</p>
+          </div>
+        </div>
+        <p class="tk-small" style="color: var(--tk-fg); line-height: 1.55;">Deployed <strong>&ldquo;Sophie&rdquo;</strong> &mdash; an AI agent that runs their inbox and customer enquiries.</p>
       </div>
-      <!-- TESTIMONIAL SLOTS: replace the chips above with full quote cards once Erana, Kurt and Steven send their one-liners -->
+
+      <div class="tk-card tk-proof-card">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span class="tk-proof-mono">LW</span>
+          <div>
+            <p style="font-weight: 600; line-height: 1.2;">Lighthouse Whole Body Health</p>
+            <p class="tk-small tk-muted">Healthcare</p>
+          </div>
+        </div>
+        <p class="tk-small" style="color: var(--tk-fg); line-height: 1.55;">An on-site AI agent on a <strong>Mac Mini</strong>, for the clinic and its sister business.</p>
+      </div>
+
+      <div class="tk-card tk-proof-card">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span class="tk-proof-mono">SF</span>
+          <div>
+            <p style="font-weight: 600; line-height: 1.2;">Smooth Flow Group</p>
+            <p class="tk-small tk-muted">Berri &middot; SA</p>
+          </div>
+        </div>
+        <p class="tk-small" style="color: var(--tk-fg); line-height: 1.55;">A <strong>Mac Mini</strong> AI agent, set up to run their day-to-day operations.</p>
+      </div>
     </div>
+    <p class="tk-small tk-muted tk-center" style="margin-top: 22px;">Real deployments, this year. <a href="#booking">Be the next one &rarr;</a></p>
   </div>
 </section>
 
@@ -2035,76 +2070,87 @@ body {
 <!-- ─────────────────────────────────────────────────────
      FOOTER
 ───────────────────────────────────────────────────── -->
+<style>
+  .tk-footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; flex-wrap: wrap; padding-bottom: 44px; margin-bottom: 44px; border-bottom: 1px solid var(--tk-line); }
+  .tk-footer-cta { text-align: right; }
+  .tk-footer-rich .tk-footer-links a { font-size: 14px; }
+  @media (max-width: 600px) { .tk-footer-cta { text-align: left; width: 100%; } }
+</style>
 <footer class="tk-footer-rich">
-  <!-- Internal links: industries + locations (improves crawl depth + spreads link equity to vertical/geo pages) -->
-  <div class="tk-wide" style="display: grid; grid-template-columns: 2fr 1fr; gap: 40px; padding-bottom: 36px; margin-bottom: 36px; border-bottom: 1px solid var(--tk-line);">
-    <div>
-      <p class="tk-eyebrow" style="margin-bottom: 14px;">AI automation by industry</p>
-      <ul class="tk-footer-links" style="columns: 2; -webkit-columns: 2; -moz-columns: 2;">
-        <li><a href="/for-accountants/">Accountants &amp; bookkeepers</a></li>
-        <li><a href="/for-real-estate/">Real estate &amp; property</a></li>
-        <li><a href="/for-law-firms/">Law firms</a></li>
-        <li><a href="/for-medical-clinics/">Medical &amp; health clinics</a></li>
-        <li><a href="/for-trades/">Trades &amp; electrical</a></li>
-        <li><a href="/for-hospitality/">Hospitality &amp; hotels</a></li>
-        <li><a href="/for-recruitment/">Recruitment &amp; HR</a></li>
-        <li><a href="/for-marketing-agencies/">Marketing agencies</a></li>
-        <li><a href="/for-ecommerce/">E-commerce</a></li>
-        <li><a href="/for-consulting/">Consulting</a></li>
-      </ul>
+  <div class="tk-wide">
+
+    <!-- Brand + CTA band -->
+    <div class="tk-footer-top">
+      <div style="max-width: 400px;">
+        <a href="/" class="tk-brand">TurnkeyAI</a>
+        <p class="tk-small tk-muted" style="margin-top: 14px; max-width: 340px;">
+          Done-for-you AI automation for Australian SMEs. Live in 7 days, on a Mac Mini in your office.
+        </p>
+        <p class="tk-small" style="margin-top: 16px;"><strong style="color: var(--tk-fg);">★ 5.0 on Google</strong> <span class="tk-muted">&middot; 50+ SMEs deployed</span></p>
+      </div>
+      <div class="tk-footer-cta">
+        <a href="#booking" class="tk-btn tk-btn--primary">Get my free plan <span class="arrow">→</span></a>
+        <p class="tk-footer-pulse" style="margin-top: 14px; font-size: 13px;">
+          <span class="tk-pulse-dot"></span> Currently accepting new clients
+        </p>
+      </div>
     </div>
-    <div>
-      <p class="tk-eyebrow" style="margin-bottom: 14px;">Areas we serve</p>
-      <ul class="tk-footer-links">
-        <li><a href="/gold-coast/">Gold Coast</a></li>
-        <li><a href="/brisbane/">Brisbane</a></li>
-        <li><a href="/sunshine-coast/">Sunshine Coast</a></li>
-        <li><a href="/cairns/">Cairns</a></li>
-      </ul>
+
+    <!-- Link matrix -->
+    <div class="tk-footer-grid">
+      <div>
+        <p class="tk-eyebrow" style="margin-bottom: 16px;">AI automation by industry</p>
+        <ul class="tk-footer-links" style="display: grid; grid-template-columns: 1fr 1fr; gap: 11px 28px;">
+          <li><a href="/for-accountants/">Accountants &amp; bookkeepers</a></li>
+          <li><a href="/for-real-estate/">Real estate &amp; property</a></li>
+          <li><a href="/for-law-firms/">Law firms</a></li>
+          <li><a href="/for-medical-clinics/">Medical &amp; health clinics</a></li>
+          <li><a href="/for-trades/">Trades &amp; electrical</a></li>
+          <li><a href="/for-hospitality/">Hospitality &amp; hotels</a></li>
+          <li><a href="/for-recruitment/">Recruitment &amp; HR</a></li>
+          <li><a href="/for-marketing-agencies/">Marketing agencies</a></li>
+          <li><a href="/for-ecommerce/">E-commerce</a></li>
+          <li><a href="/for-consulting/">Consulting</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="tk-eyebrow" style="margin-bottom: 16px;">Areas we serve</p>
+        <ul class="tk-footer-links">
+          <li><a href="/gold-coast/">Gold Coast</a></li>
+          <li><a href="/brisbane/">Brisbane</a></li>
+          <li><a href="/sunshine-coast/">Sunshine Coast</a></li>
+          <li><a href="/cairns/">Cairns</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="tk-eyebrow" style="margin-bottom: 16px;">Explore</p>
+        <ul class="tk-footer-links">
+          <li><a href="#packages">Packages</a></li>
+          <li><a href="#roi">ROI calculator</a></li>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/support/">Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="tk-eyebrow" style="margin-bottom: 16px;">Company</p>
+        <ul class="tk-footer-links">
+          <li><a href="mailto:start@tkai.com.au">start@tkai.com.au</a></li>
+          <li><a href="https://www.linkedin.com/company/turnkeyai-gold-coast/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://www.instagram.com/turnkeyai_gc/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="/legal/terms.html">Terms</a></li>
+          <li><a href="/legal/privacy.html">Privacy</a></li>
+        </ul>
+      </div>
     </div>
-  </div>
-  <div class="tk-wide tk-footer-grid">
-    <div>
-      <a href="/" class="tk-brand" style="margin-bottom: 16px;">TurnkeyAI</a>
-      <p class="tk-small" style="margin-top: 12px; max-width: 280px;">
-        Done-for-you AI automation for Australian SMEs. Live in 7 days, on a Mac Mini in your office.
-      </p>
+
+    <!-- Bottom bar -->
+    <div class="tk-footer-bottom">
+      <span>© 2026 TurnkeyAI &middot; All prices AUD ex-GST</span>
+      <span class="tk-muted">Gold Coast, Australia</span>
     </div>
-    <div>
-      <p class="tk-eyebrow" style="margin-bottom: 14px;">Explore</p>
-      <ul class="tk-footer-links">
-        <li><a href="#packages">Packages</a></li>
-        <li><a href="#roi">ROI calculator</a></li>
-        <li><a href="#how">How it works</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="/blog/">Blog</a></li>
-        <li><a href="/support/">Support</a></li>
-        <li><a href="#booking">Get my free plan</a></li>
-      </ul>
-    </div>
-    <div>
-      <p class="tk-eyebrow" style="margin-bottom: 14px;">Legal</p>
-      <ul class="tk-footer-links">
-        <li><a href="/legal/terms.html">Terms</a></li>
-        <li><a href="/legal/privacy.html">Privacy</a></li>
-      </ul>
-    </div>
-    <div>
-      <p class="tk-eyebrow" style="margin-bottom: 14px;">Contact</p>
-      <ul class="tk-footer-links">
-        <li><a href="mailto:start@tkai.com.au">start@tkai.com.au</a></li>
-        <li>Gold Coast, Australia</li>
-        <li><a href="https://www.linkedin.com/company/turnkeyai-gold-coast/" target="_blank" rel="noopener">LinkedIn</a></li>
-        <li><a href="https://www.instagram.com/turnkeyai_gc/" target="_blank" rel="noopener">Instagram</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="tk-wide tk-footer-bottom">
-    <span>© 2026 TurnkeyAI · All prices AUD ex-GST</span>
-    <span class="tk-footer-pulse">
-      <span class="tk-pulse-dot"></span>
-      Currently accepting new clients
-    </span>
+
   </div>
 </footer>
 

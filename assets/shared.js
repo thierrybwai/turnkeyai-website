@@ -108,3 +108,41 @@
     autoTimer = setTimeout(hideToast, 12000);
   }, 3000);
 })();
+
+// --- Lead attribution (first-touch) -----------------------------------------
+// Captures where the visitor ORIGINALLY came from (utm > external referrer >
+// direct), persists it for the whole browsing lifetime, and fills the hidden
+// attribution fields of any form present on the page. This is what lets every
+// lead email / CRM entry say "came from openai / cpc / tkai-leads".
+(function () {
+  try {
+    var KEY = 'tk_attribution';
+    if (!localStorage.getItem(KEY)) {
+      var p = new URLSearchParams(location.search);
+      var ref = document.referrer || '';
+      var source = p.get('utm_source') || '';
+      var medium = p.get('utm_medium') || '';
+      if (!source && ref) {
+        try {
+          var h = new URL(ref).hostname;
+          if (h && h.indexOf('turnkeyai.com.au') === -1 && h.indexOf('tkai.com.au') === -1) {
+            source = h; medium = 'referral';
+          }
+        } catch (e) {}
+      }
+      localStorage.setItem(KEY, JSON.stringify({
+        source: source || 'direct',
+        medium: medium || 'none',
+        campaign: p.get('utm_campaign') || '',
+        referrer: ref,
+        landing: location.pathname + location.search
+      }));
+    }
+    var a = JSON.parse(localStorage.getItem(KEY) || '{}');
+    var map = { leadSource: a.source, leadMedium: a.medium, leadCampaign: a.campaign, leadReferrer: a.referrer, leadLandingPage: a.landing };
+    Object.keys(map).forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.value = map[id] || '';
+    });
+  } catch (e) { /* attribution must never break the page */ }
+})();

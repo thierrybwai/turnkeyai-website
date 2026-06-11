@@ -2056,6 +2056,12 @@ body {
   <div class="tk-card tk-content" style="padding: 48px;">
     <form id="bookingForm" name="ai-audit" method="POST" data-netlify="true" onsubmit="handleFormSubmit(event)">
       <input type="hidden" name="form-name" value="ai-audit">
+      <!-- First-touch attribution, auto-filled by shared.js -->
+      <input type="hidden" name="leadSource" id="leadSource" value="">
+      <input type="hidden" name="leadMedium" id="leadMedium" value="">
+      <input type="hidden" name="leadCampaign" id="leadCampaign" value="">
+      <input type="hidden" name="leadReferrer" id="leadReferrer" value="">
+      <input type="hidden" name="leadLandingPage" id="leadLandingPage" value="">
 
       <div class="tk-field-row">
         <div>
@@ -2558,7 +2564,12 @@ body {
         phone:     form.phone.value || '',
         businessName:    form.businessName.value,
         website:         (form.website?.value || '').trim(),
-        industry:        form.industry.value
+        industry:        form.industry.value,
+        leadSource:      form.leadSource ? form.leadSource.value : '',
+        leadMedium:      form.leadMedium ? form.leadMedium.value : '',
+        leadCampaign:    form.leadCampaign ? form.leadCampaign.value : '',
+        leadReferrer:    form.leadReferrer ? form.leadReferrer.value : '',
+        leadLandingPage: form.leadLandingPage ? form.leadLandingPage.value : ''
       });
       const r = await fetch('/', { method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: params.toString() });
       if (r.ok) {

@@ -122,6 +122,13 @@
       var ref = document.referrer || '';
       var source = p.get('utm_source') || '';
       var medium = p.get('utm_medium') || '';
+      // Ad-platform click IDs (auto-tagging sends no utm params)
+      if (!source && (p.get('gclid') || p.get('gbraid') || p.get('wbraid'))) {
+        source = 'google'; medium = 'cpc';
+      }
+      if (!source && p.get('msclkid')) {
+        source = 'bing'; medium = 'cpc';
+      }
       if (!source && ref) {
         try {
           var h = new URL(ref).hostname;

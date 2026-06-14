@@ -83,6 +83,9 @@ export default async (req) => {
       from: 'TurnkeyAI <start@tkai.com.au>',
       reply_to: 'start@tkai.com.au',
       to: [email],
+      // Send the team an exact copy of what the lead receives, PDF attachment included.
+      // (Restores the pre-7cf7e54 behaviour: the dedicated team notification has no PDF.)
+      bcc: (process.env.LEAD_BCC_EMAILS || 'start@tkai.com.au').split(',').map(s => s.trim()).filter(Boolean),
       subject,
       html,
       text,

@@ -227,6 +227,22 @@
             "@type": "Answer",
             "text": "Every deployment includes 2 weeks of dedicated support, and the workflows continue running 24/7 after that window closes. Need help beyond 2 weeks? Each post-window intervention is $200 AUD, paid upfront. Open a ticket on our support page and we'll respond within one business day."
           }
+        },
+        {
+          "@type": "Question",
+          "name": "Who offers done-for-you AI automation for small businesses in Australia?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "TurnkeyAI. We build, configure, install and hand over a complete, working AI system in seven business days for Australian small and medium businesses. It is done-for-you with a one-time fee from $2,999 AUD, no subscription and no developers required. More than 50 Australian SMEs across trades, real estate, healthcare, accounting and professional services already run on TurnkeyAI."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can AI automation replace hiring an admin or extra staff?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For repetitive, computer-based work, yes. TurnkeyAI handles email, scheduling, invoicing, quoting and customer follow-ups automatically, saving most Australian SMEs $1,500 to $2,000 per week, roughly the cost of a part-time admin, without the hiring, training, payroll or onboarding."
+          }
         }
       ]
     },
@@ -543,6 +559,26 @@ body {
   0%   { opacity: 0; transform: translateY(0.6em); filter: blur(4px); }
   60%  { filter: blur(0); }
   100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+/* ── CRO: mobile-first hero + sticky CTA ──────────────────────────────
+   Paid traffic is ~80% mobile and leaves in <3s — show value instantly, no entrance delay. */
+@media (max-width: 760px) {
+  .tk-anim-rise { animation: none !important; opacity: 1 !important; transform: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tk-anim-rise { animation: none !important; opacity: 1 !important; transform: none !important; }
+}
+.tk-sticky-cta { display: none; }
+@media (max-width: 760px) {
+  .tk-sticky-cta {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 90; display: block;
+    padding: 10px 16px calc(12px + env(safe-area-inset-bottom));
+    background: rgba(255,255,255,0.94);
+    -webkit-backdrop-filter: saturate(180%) blur(14px); backdrop-filter: saturate(180%) blur(14px);
+    border-top: 1px solid rgba(0,0,0,0.08); box-shadow: 0 -6px 24px rgba(0,0,0,0.06);
+  }
+  .tk-sticky-cta .tk-btn { width: 100%; justify-content: center; }
+  body { padding-bottom: 76px; }
 }
 .tk-word {
   display: inline-block;
@@ -1464,11 +1500,12 @@ body {
     <p class="tk-anim-rise" style="--i:11; margin: 16px auto 0; max-width: 520px; font-size: 13px; color: var(--tk-fg-subtle); letter-spacing: -0.005em;">
       Free 8-page plan, generated from your website in 30 seconds. No call required &middot; No subscription &middot; You own it.
     </p>
-    <p class="tk-anim-rise" style="--i:12; margin-top: 28px; font-size: 13px; color: var(--tk-fg-subtle); display: inline-flex; align-items: center; gap: 10px; letter-spacing: -0.005em;">
-      <span style="display: inline-flex; gap: -8px; align-items: center;">
-        <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--tk-success); box-shadow: 0 0 0 4px rgba(29,157,79,0.18); animation: pulse-glow 2s ease-in-out infinite;"></span>
-      </span>
-      <strong style="color: var(--tk-fg); font-weight: 500;">50+ Australian SMEs</strong> already running on TurnkeyAI · Currently accepting new deployments
+    <p class="tk-anim-rise" style="--i:12; margin-top: 28px; font-size: 13px; color: var(--tk-fg-subtle); display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; letter-spacing: -0.005em;">
+      <span style="color: #f5a623; letter-spacing: 1.5px; font-size: 14px;" aria-label="Rated 5.0 out of 5 on Google">★★★★★</span>
+      <strong style="color: var(--tk-fg); font-weight: 600;">5.0 on Google</strong>
+      <span style="opacity: .4;">·</span>
+      <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--tk-success); box-shadow: 0 0 0 4px rgba(29,157,79,0.18); animation: pulse-glow 2s ease-in-out infinite;"></span>
+      <span><strong style="color: var(--tk-fg); font-weight: 500;">50+ Australian SMEs</strong> already running on TurnkeyAI</span>
     </p>
   </div>
 
@@ -1981,6 +2018,26 @@ body {
 
       <details class="tk-faq-item">
         <summary>
+          Who offers done-for-you AI automation for small businesses in Australia?
+          <span class="tk-faq-icon" aria-hidden="true"></span>
+        </summary>
+        <div class="tk-faq-body">
+          <p><strong>TurnkeyAI.</strong> We build, configure, install and hand over a complete, working AI system in <strong>seven business days</strong> for Australian SMEs. It's done-for-you, a <strong>one-time fee from $2,999</strong>, no subscription and no developers required. 50+ businesses across trades, real estate, healthcare, accounting and professional services already run on TurnkeyAI.</p>
+        </div>
+      </details>
+
+      <details class="tk-faq-item">
+        <summary>
+          Can AI automation replace hiring an admin or extra staff?
+          <span class="tk-faq-icon" aria-hidden="true"></span>
+        </summary>
+        <div class="tk-faq-body">
+          <p>For repetitive, computer-based work, yes. TurnkeyAI handles email, scheduling, invoicing, quoting and customer follow-ups automatically, saving most Australian SMEs <strong>$1,500 to $2,000 per week</strong> — roughly the cost of a part-time admin — without the hiring, training or payroll.</p>
+        </div>
+      </details>
+
+      <details class="tk-faq-item">
+        <summary>
           What kind of businesses is TurnkeyAI designed for?
           <span class="tk-faq-icon" aria-hidden="true"></span>
         </summary>
@@ -2066,29 +2123,29 @@ body {
       <div class="tk-field-row">
         <div>
           <label class="tk-label">First name</label>
-          <input class="tk-input" type="text" name="firstName" placeholder="Thierry" required>
+          <input class="tk-input" type="text" name="firstName" placeholder="Thierry" autocomplete="given-name" required>
         </div>
         <div>
           <label class="tk-label">Last name</label>
-          <input class="tk-input" type="text" name="lastName" placeholder="Smith" required>
+          <input class="tk-input" type="text" name="lastName" placeholder="Smith" autocomplete="family-name" required>
         </div>
       </div>
 
       <div class="tk-field-row">
         <div>
           <label class="tk-label">Business email</label>
-          <input class="tk-input" type="email" name="email" placeholder="you@yourbusiness.com.au" required>
+          <input class="tk-input" type="email" name="email" placeholder="you@yourbusiness.com.au" autocomplete="email" inputmode="email" required>
         </div>
         <div>
           <label class="tk-label">Phone</label>
-          <input class="tk-input" type="tel" name="phone" placeholder="+61 4XX XXX XXX">
+          <input class="tk-input" type="tel" name="phone" placeholder="+61 4XX XXX XXX" autocomplete="tel" inputmode="tel">
         </div>
       </div>
 
       <div class="tk-field-row">
         <div>
           <label class="tk-label">Business name</label>
-          <input class="tk-input" type="text" name="businessName" placeholder="e.g. Smith Plumbing" required>
+          <input class="tk-input" type="text" name="businessName" placeholder="e.g. Smith Plumbing" autocomplete="organization" required>
         </div>
         <div>
           <label class="tk-label">Website</label>
@@ -2607,6 +2664,42 @@ body {
       alert('Error sending form'); submitBtn.disabled = false; submitBtn.textContent = 'Get my personalized plan →';
     }
   }
+</script>
+<!-- CRO: sticky mobile CTA — surfaces the primary action without scrolling (only ~4% reach the form) -->
+<div class="tk-sticky-cta">
+  <a href="#booking" class="tk-btn tk-btn--primary" data-cta="sticky">Get my free AI plan →</a>
+</div>
+
+<!-- CRO instrumentation: measure where the funnel actually leaks before optimizing -->
+<script>
+(function(){
+  function ev(name, params){ try { if (typeof gtag === 'function') gtag('event', name, params || {}); } catch(e){} }
+  // 1) Did the visitor even reach the booking section? (distinguishes "never got there" vs "got there, didn't start")
+  var booking = document.getElementById('booking');
+  if (booking && 'IntersectionObserver' in window) {
+    var seen = false;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if (en.isIntersecting && !seen){ seen = true; ev('view_booking_section'); io.disconnect(); } });
+    }, { threshold: 0.3 });
+    io.observe(booking);
+  }
+  // 2) Which CTA gets clicked (hero vs sticky vs other) — GA4 'click' was unsegmented
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href*="#booking"], a[data-cta]');
+    if (a) ev('cta_click', {
+      location: a.getAttribute('data-cta') || (a.closest('.hero-cta-row') ? 'hero' : 'other'),
+      link_text: (a.textContent || '').trim().slice(0, 40)
+    });
+  }, true);
+  // 3) Scroll-depth milestones (GA4 enhanced measurement only fires at 90%)
+  var marks = [25, 50, 75], fired = {};
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement;
+    var max = (h.scrollHeight - h.clientHeight) || 1;
+    var pct = (h.scrollTop || document.body.scrollTop) / max * 100;
+    marks.forEach(function(m){ if (pct >= m && !fired[m]){ fired[m] = true; ev('scroll_depth', { percent: m }); } });
+  }, { passive: true });
+})();
 </script>
 <script src="/assets/shared.js" defer></script>
 </body>

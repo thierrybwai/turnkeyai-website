@@ -164,13 +164,29 @@
     </div>
     <div class="ty-timeline-row">
       <div class="ty-step-num">3</div>
-      <div class="ty-step-text">Reply within 2 business hours: a Calendly link, or an honest "not yet."</div>
+      <div class="ty-step-text">We read your brief today and reply within 2 business hours — or just grab a time below right now.</div>
     </div>
     <div class="ty-timeline-row">
       <div class="ty-step-num">4</div>
       <div class="ty-step-text"><strong>Day 7:</strong> your Mac Mini is running in your office.</div>
     </div>
   </div>
+
+  <!-- CRO: let the lead book the call instantly instead of waiting on a manual email -->
+  <div class="ty-calendly" style="max-width: 720px; margin: 8px auto 44px;">
+    <h2 class="tk-h2" style="text-align: center; margin-bottom: 8px;">Or skip the wait — book your call now</h2>
+    <p class="tk-muted" style="text-align: center; margin: 0 auto 20px; max-width: 480px;">Pick a 30-minute slot that suits you. We'll have read your brief before we talk.</p>
+    <div class="calendly-inline-widget" data-url="https://calendly.com/start-tkai/30min" style="min-width: 320px; height: 680px;"></div>
+    <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+  </div>
+  <script>
+    window.addEventListener('message', function (e) {
+      if (e.data && e.data.event === 'calendly.event_scheduled') {
+        try { if (typeof gtag === 'function') gtag('event', 'calendar_booked', { method: 'calendly' }); } catch (_) {}
+        try { if (typeof clarity === 'function') clarity('event', 'calendar_booked'); } catch (_) {}
+      }
+    });
+  </script>
 
   <div class="ty-actions">
     <a href="/blog/" class="tk-btn tk-btn--primary">Read the blog while you wait <span class="arrow">→</span></a>

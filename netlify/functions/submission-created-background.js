@@ -76,7 +76,7 @@ export default async (req) => {
     const hasPdf = !!pdfBase64;
     const subject = hasPdf
       ? `${firstName}, your personalized AI deployment plan (PDF attached)`
-      : `We've started, ${firstName}. One quick task for you.`;
+      : `We've started, ${firstName}. Let's book your call.`;
     const { html, text } = buildEmail({ firstName, businessName, industry, packageInterest, hasPdf });
 
     const emailPayload = {
@@ -1314,7 +1314,7 @@ function buildPdfHtml({ firstName, lastName, businessName, industry, packageInte
     <div class="next-step-card">
       <p class="next-step-eyebrow">What happens next</p>
       <h2 class="next-step-headline">${escapeHtml(spin.next_step || `${firstName}, here's the one move that gets your AI running.`)}</h2>
-      <p class="next-step-body">We've already started on our end. Your brief is in our build queue. We'll be in touch within 2 business hours to schedule your setup call. In the meantime, check your inbox for the one quick task we need from you to keep day 7 on schedule.</p>
+      <p class="next-step-body">We've already started on our end. Your brief is in our build queue. We'll be in touch within 2 business hours to book your setup call. There's nothing technical for you to set up. We handle the build, the install, and the dedicated inbox your agent runs on.</p>
     </div>
 
     <p class="body" style="margin-bottom: 8mm;">If you'd rather reply directly: <strong>start@tkai.com.au</strong>. We read every message and respond personally.</p>
@@ -1355,33 +1355,17 @@ Book a 30-minute call with us to walk through your plan, answer your questions, 
 
 Prefer to wait? We'll reach out within 2 business hours either way.
 
-In the meantime, there's one task for you, and it takes 5 minutes:
+You don't set anything up. TurnkeyAI is done-for-you: we build it, configure it, and install it. No code, no new accounts, no IT project on your side. We even set up the dedicated inbox your agent runs on.
 
-Create a new email address for your AI agent.
-
-Why a separate address?
-Your agent will read its own inbox, send its own replies, and connect to your tools (CRM, calendar, accounting, support). Keeping it separate from your personal or main business email keeps audit trails clean and access easy to revoke later. We apply this to every deployment.
-
-What to do (5 minutes):
-
-1. Create a new mailbox at your business domain, for example: ai@yourbusiness.com.au. Or a fresh Google Workspace or Microsoft 365 account if that's faster.
-
-2. That's it. Just have the address and a temporary password ready for our call.
-
-${recap ? recap + '\n\n' : ''}On the call, we'll walk through the onboarding form together (it captures all the access details and workflow specifics), and you'll be set up by Day 7.
-
-A note on security: we never ask for passwords by email. All credentials shared on the call are stored encrypted, used only for the one-time setup, and either rotated or fully revoked at your discretion once your agent is operational.
-
-What happens next:
-- You create the email address (today, 5 minutes).
-- We contact you within 2 business hours to schedule the call.
-- On the call, we complete the onboarding form together and capture credentials securely.
-- Day 7: your Mac Mini is in your office, your AI agent is running.
+${recap ? recap + '\n\n' : ''}What happens next:
+- You book a 30-minute call (or we reach out within 2 business hours).
+- We build your agent on a Mac Mini in your office or a cloud server we manage.
+- Day 7: your AI agent is running, controlled in plain English over Slack or Telegram.
 
 Talk soon,
 TurnkeyAI
 
-P.S. ${hasPdf ? 'The attached plan is built for ' + (businessName || 'your business') + ' specifically. Read it, then book your call: https://calendly.com/start-tkai/30min' : 'The faster you create the address, the smoother the call. Book a slot when you\'re ready: https://calendly.com/start-tkai/30min'}
+P.S. ${hasPdf ? 'The attached plan is built for ' + (businessName || 'your business') + ' specifically. Read it, then book your call: https://calendly.com/start-tkai/30min' : 'Book a slot whenever you\'re ready: https://calendly.com/start-tkai/30min'}
 `;
 
   const html = `<!doctype html>
@@ -1438,7 +1422,7 @@ P.S. ${hasPdf ? 'The attached plan is built for ' + (businessName || 'your busin
                 Attached is a <strong style="font-weight:600;">personalized deployment plan</strong> for ${escapeHtml(businessName || 'your business')}. It walks through what we'd build, what it would save you in year one, and the package we'd recommend. Worth 5 minutes before our call.
               </p>` : ''}
               <p style="margin:0;font-size:17px;line-height:1.55;color:#1d1d1f;">
-                Book a 30-minute call below to walk through it together &mdash; or we'll reach out within 2 business hours either way. Then there's <strong style="font-weight:600;">one quick task</strong> for you that takes 5 minutes.
+                Book a 30-minute call below to walk through it together &mdash; or we'll reach out within 2 business hours either way. That's the only next step. We handle the rest.
               </p>
             </td>
           </tr>
@@ -1491,12 +1475,12 @@ P.S. ${hasPdf ? 'The attached plan is built for ' + (businessName || 'your busin
           <!-- ACTION REQUIRED -->
           <tr>
             <td style="background:#ffffff;padding:48px 40px 16px;" align="left">
-              <p style="margin:0 0 14px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#86868b;font-weight:600;">Your one task</p>
+              <p style="margin:0 0 14px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#86868b;font-weight:600;">What you do next</p>
               <h2 style="margin:0 0 18px;font-size:28px;line-height:1.15;letter-spacing:-0.02em;font-weight:600;color:#1d1d1f;">
-                Create a new email address<br>for your AI agent.
+                Nothing technical.<br>That's the whole point.
               </h2>
               <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#424245;">
-                Your agent will read its own inbox, send its own replies, and connect to your tools (CRM, calendar, accounting, support). Keeping it separate from your personal or main business email keeps audit trails clean and access easy to revoke later.
+                TurnkeyAI is done-for-you. We build it, configure it, and install it. No code, no new accounts, no IT project on your side. You book one call, and we take it from there.
               </p>
             </td>
           </tr>
@@ -1508,8 +1492,8 @@ P.S. ${hasPdf ? 'The attached plan is built for ' + (businessName || 'your busin
                 <tr>
                   <td width="56" valign="top" style="font-size:48px;line-height:1;font-weight:600;letter-spacing:-0.04em;color:#0071e3;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,Helvetica,Arial,sans-serif;padding-right:16px;">01</td>
                   <td valign="top">
-                    <h3 style="margin:0 0 10px;font-size:18px;line-height:1.35;letter-spacing:-0.01em;font-weight:600;color:#1d1d1f;">Create a new mailbox</h3>
-                    <p style="margin:0;font-size:15px;line-height:1.6;color:#424245;">At your business domain, e.g. <span style="font-family:ui-monospace,'SF Mono',Menlo,monospace;background:#f5f5f7;padding:1px 6px;border-radius:4px;">ai@yourbusiness.com.au</span>. Or a fresh Google Workspace / Microsoft 365 account.</p>
+                    <h3 style="margin:0 0 10px;font-size:18px;line-height:1.35;letter-spacing:-0.01em;font-weight:600;color:#1d1d1f;">You book a 30-minute call</h3>
+                    <p style="margin:0;font-size:15px;line-height:1.6;color:#424245;">We walk through your plan and your exact workflows. Prefer we reach out? We'll be in touch within 2 business hours.</p>
                   </td>
                 </tr>
               </table>
@@ -1518,27 +1502,28 @@ P.S. ${hasPdf ? 'The attached plan is built for ' + (businessName || 'your busin
 
           <!-- STEP 2 -->
           <tr>
-            <td style="background:#ffffff;padding:32px 40px 48px;" align="left">
+            <td style="background:#ffffff;padding:32px 40px 0;" align="left">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td width="56" valign="top" style="font-size:48px;line-height:1;font-weight:600;letter-spacing:-0.04em;color:#0071e3;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,Helvetica,Arial,sans-serif;padding-right:16px;">02</td>
                   <td valign="top">
-                    <h3 style="margin:0 0 10px;font-size:18px;line-height:1.35;letter-spacing:-0.01em;font-weight:600;color:#1d1d1f;">Have it ready for our call</h3>
-                    <p style="margin:0;font-size:15px;line-height:1.6;color:#424245;">Just have the email address and a temporary password ready when we call. We'll walk through onboarding and capture everything securely on the call.</p>
+                    <h3 style="margin:0 0 10px;font-size:18px;line-height:1.35;letter-spacing:-0.01em;font-weight:600;color:#1d1d1f;">We build your agent</h3>
+                    <p style="margin:0;font-size:15px;line-height:1.6;color:#424245;">On a Mac Mini in your office or a cloud server we manage. We handle every technical step, including the dedicated inbox your agent runs on.</p>
                   </td>
                 </tr>
               </table>
             </td>
           </tr>
 
-          <!-- SECURITY CALLOUT -->
+          <!-- STEP 3 -->
           <tr>
-            <td style="background:#ffffff;padding:0 40px 48px;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f5f5f7;border-radius:16px;">
+            <td style="background:#ffffff;padding:32px 40px 48px;" align="left">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <td style="padding:24px 28px;font-size:14px;line-height:1.55;color:#424245;">
-                    <span style="display:inline-block;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#86868b;font-weight:600;margin-bottom:8px;">On security</span><br>
-                    We never ask for passwords by email. All credentials shared on the call are stored encrypted, used only for the one-time setup, and either rotated or fully revoked at your discretion once your agent is operational.
+                  <td width="56" valign="top" style="font-size:48px;line-height:1;font-weight:600;letter-spacing:-0.04em;color:#0071e3;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,Helvetica,Arial,sans-serif;padding-right:16px;">03</td>
+                  <td valign="top">
+                    <h3 style="margin:0 0 10px;font-size:18px;line-height:1.35;letter-spacing:-0.01em;font-weight:600;color:#1d1d1f;">Day 7: it's live</h3>
+                    <p style="margin:0;font-size:15px;line-height:1.6;color:#424245;">Your AI agent is running your routine work. You control it in plain English over Slack or Telegram. No dashboards to learn.</p>
                   </td>
                 </tr>
               </table>
@@ -1550,7 +1535,7 @@ P.S. ${hasPdf ? 'The attached plan is built for ' + (businessName || 'your busin
             <td style="background:#0a0a0a;border-radius:0 0 20px 20px;padding:40px;" align="left">
               <p style="margin:0 0 8px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#86868b;font-weight:600;">P.S.</p>
               <p style="margin:0 0 20px;font-size:17px;line-height:1.5;color:#f5f5f7;letter-spacing:-0.01em;">
-                ${hasPdf ? `The attached plan is built for ${escapeHtml(businessName || 'your business')} specifically. Read it, then book your call.` : 'The faster you create the address, the smoother the call.'}
+                ${hasPdf ? `The attached plan is built for ${escapeHtml(businessName || 'your business')} specifically. Read it, then book your call.` : 'Pick a time and we\'ll take it from there.'}
               </p>
               <a href="https://calendly.com/start-tkai/30min" style="display:inline-block;background:#ffffff;color:#1d1d1f;font-weight:500;font-size:14px;padding:11px 20px;border-radius:100px;text-decoration:none;letter-spacing:-0.005em;margin-bottom:28px;">
                 Book your 30-min call &rarr;

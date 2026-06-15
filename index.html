@@ -2633,6 +2633,13 @@ body {
         // GA4 conversion event (used for Google Ads + GA4 conversions reporting)
         try {
           if (typeof gtag === 'function') {
+            // Enhanced Conversions: provide first-party identifiers (hashed client-side by the
+            // Google tag when user-provided data collection is enabled) so Google can match
+            // this lead to its ad click even when the cookie/pixel is blocked.
+            gtag('set', 'user_data', {
+              email: (form.email.value || '').trim().toLowerCase(),
+              phone_number: (form.phone.value || '').replace(/[^\d+]/g, '') || undefined
+            });
             gtag('event', 'generate_lead', {
               event_category: 'engagement',
               event_label: form.industry.value || 'unknown',

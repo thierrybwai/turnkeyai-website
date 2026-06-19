@@ -53,9 +53,9 @@
       <li><a href="/#roi" class="tk-nav-link">ROI</a></li>
       <li><a href="/#how" class="tk-nav-link">How it works</a></li>
       <li><a href="/blog/" class="tk-nav-link">Blog</a></li>
-      <li><a href="/#booking" class="tk-nav-link">Get started</a></li>
+      <li><a href="#booking" class="tk-nav-link">Get started</a></li>
     </ul>
-    <a href="/#booking" class="tk-btn tk-btn--primary tk-btn--sm">Get started</a>
+    <a href="#booking" class="tk-btn tk-btn--primary tk-btn--sm">Get started</a>
   </div>
 </nav>
 
@@ -67,7 +67,7 @@
       From Noosa to Caloundra, the Sunshine Coast is full of operators who chose lifestyle over Brisbane. Lean teams, growing demand. AI keeps the workload sustainable. TurnkeyAI builds, configures, and installs a complete AI system on a Mac Mini in your office, no subscription, no developers, no waiting six months for a SaaS rollout.
     </p>
     <div style="display: inline-flex; gap: 12px; flex-wrap: wrap; margin-top: 28px;">
-      <a href="/#booking" class="tk-btn tk-btn--primary tk-btn--lg">Get my AI running in 7 days <span class="arrow">→</span></a>
+      <a href="#booking" class="tk-btn tk-btn--primary tk-btn--lg">Get my AI running in 7 days <span class="arrow">→</span></a>
       <a href="/#roi" class="tk-btn tk-btn--ghost">Calculate my saving</a>
     </div>
   </div>
@@ -179,7 +179,71 @@
   <div class="tk-cta-banner tk-fade-up">
     <h2 class="tk-h2" style="font-size: 36px;">Ready to run your Sunshine Coast business on AI?</h2>
     <p>Submit your brief. Reply within 2 business hours. Day 7, your Mac Mini is in your office.</p>
-    <a href="/#booking" class="tk-btn tk-btn--primary tk-btn--lg">Get my AI running in 7 days <span class="arrow">→</span></a>
+    <a href="#booking" class="tk-btn tk-btn--primary tk-btn--lg">Get my AI running in 7 days <span class="arrow">→</span></a>
+  </div>
+</section>
+
+
+<!-- Inline lead form — same Netlify "ai-audit" pipeline + co-branded plan as the home page -->
+<section id="booking" class="tk-section tk-section--alt">
+  <div class="tk-content tk-center" style="margin-bottom: 40px;">
+    <p class="tk-eyebrow">Your free AI plan</p>
+    <h2 class="tk-h2" style="margin-bottom: 16px;">Get your personalized AI plan in 30 seconds.</h2>
+    <p class="tk-lede tk-muted" style="max-width: 600px; margin: 0 auto;">
+      Our AI reads your website, drafts an 8-page deployment plan specific to your business, and emails it to you instantly. A real person follows up within 2 business hours.
+    </p>
+  </div>
+  <div class="tk-card tk-content" style="padding: 40px;">
+    <form name="ai-audit" method="POST" data-netlify="true" data-tk-form="ai-audit">
+      <input type="hidden" name="form-name" value="ai-audit">
+      <input type="hidden" name="leadSource" id="leadSource" value="">
+      <input type="hidden" name="leadMedium" id="leadMedium" value="">
+      <input type="hidden" name="leadCampaign" id="leadCampaign" value="">
+      <input type="hidden" name="leadReferrer" id="leadReferrer" value="">
+      <input type="hidden" name="leadLandingPage" id="leadLandingPage" value="">
+      <div class="tk-field-row">
+        <div><label class="tk-label">First name</label><input class="tk-input" type="text" name="firstName" placeholder="Thierry" autocomplete="given-name" required></div>
+        <div><label class="tk-label">Last name</label><input class="tk-input" type="text" name="lastName" placeholder="Smith" autocomplete="family-name" required></div>
+      </div>
+      <div class="tk-field-row">
+        <div><label class="tk-label">Business email</label><input class="tk-input" type="email" name="email" placeholder="you@yourbusiness.com.au" autocomplete="email" inputmode="email" required></div>
+        <div><label class="tk-label">Phone</label><input class="tk-input" type="tel" name="phone" placeholder="+61 4XX XXX XXX" autocomplete="tel" inputmode="tel"></div>
+      </div>
+      <div class="tk-field-row">
+        <div><label class="tk-label">Business name</label><input class="tk-input" type="text" name="businessName" placeholder="e.g. Smith Plumbing" autocomplete="organization" required></div>
+        <div><label class="tk-label">Website</label><input class="tk-input" type="text" name="website" placeholder="yourbusiness.com.au" autocomplete="url" inputmode="url"></div>
+      </div>
+      <div class="tk-field">
+        <label class="tk-label">Your industry</label>
+        <select class="tk-select" name="industry" required>
+          <option value="">Select your industry…</option>
+          <option value="accounting">Accounting/Bookkeeping</option>
+          <option value="real_estate">Real Estate/Property Management</option>
+          <option value="ecommerce">E-Commerce/Retail</option>
+          <option value="healthcare">Healthcare/Medical Clinics</option>
+          <option value="legal">Legal Services/Law Firms</option>
+          <option value="marketing">Marketing Agencies</option>
+          <option value="cleaning">Cleaning Services</option>
+          <option value="trades">Plumbing/Trades</option>
+          <option value="consulting">Consulting Firms</option>
+          <option value="dental">Dental Practices</option>
+          <option value="beauty">Hair/Beauty Services</option>
+          <option value="restaurant">Restaurant/Cafe</option>
+          <option value="fitness">Fitness/Gym</option>
+          <option value="education">Educational Services/Training</option>
+          <option value="insurance">Insurance</option>
+          <option value="recruitment">Recruitment/HR</option>
+          <option value="it_services">IT Services/Support</option>
+          <option value="hospitality">Hospitality/Hotels</option>
+          <option value="manufacturing">Manufacturing</option>
+          <option value="financial">Financial Services/Investment</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <button type="submit" class="tk-btn tk-btn--primary tk-btn--lg tk-btn--block" style="margin-top: 12px;">Get my personalized plan →</button>
+      <div class="tk-center" style="margin-top: 16px;"><span class="tk-guarantee"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l7 3v6c0 4.4-3 8.3-7 9.5C8 19.3 5 15.4 5 11V5l7-3z" fill="rgba(29,157,79,0.14)" stroke="#1d9d4f" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 11.5l2 2 4-4.5" stroke="#1d9d4f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><strong>Live in 7 business days, guaranteed.</strong> <span class="tk-g-sub">One-time price &middot; No subscription &middot; You own it.</span></span></span></div>
+      <p class="tk-small tk-center" style="margin-top: 14px;">Personalized 8-page PDF in your inbox in 30 seconds. Human follow-up within 2 business hours. No spam.</p>
+    </form>
   </div>
 </section>
 

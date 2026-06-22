@@ -29,3 +29,6 @@ http://www.turnkeyai.com.au/*   https://turnkeyai.com.au/:splat  301!
 /blog/ai-agents-for-business        /blog/posts/ai-agent-security.html                         301
 /blog/hire-or-automate              /blog/                                                     301
 /blog/posts/hire-or-automate.html   /blog/                                                     301
+
+# Depublished off-topic article (leaked system prompt), 2026-06-22 -> blog index
+/blog/posts/claude-fable-5.html     /blog/                                                     301

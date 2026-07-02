@@ -18,8 +18,14 @@ export default async (req) => {
     if (formName === 'support-ticket') {
       return await handleSupportTicket({ data });
     }
-    if (formName !== 'ai-audit') {
+    if (formName !== 'ai-audit' && formName !== 'ai-recommendations') {
       return new Response('Ignored: not a handled form', { status: 200 });
+    }
+
+    // The ads landing form ('ai-recommendations') uses shorter field names — map them
+    // onto the ai-audit shape so the same CRM + plan + email pipeline runs for both.
+    if (formName === 'ai-recommendations') {
+      data.firstName = data.firstName || data.first || '';
     }
 
     const firstName = (data.firstName || 'there').trim();
@@ -39,7 +45,7 @@ export default async (req) => {
 
     // 0. Push the lead into the Base44 SalesFlow CRM (TKAI pipeline) FIRST, so the lead is
     //    captured even if Claude / PDFShift / Resend later fail. Non-blocking, never throws.
-    await pushToBase44CRM(leadCtx);
+    await pushToBase44CRM({ ...leadCtx, formName, timeEater: (data.time_eater || '').trim(), keyword: (data.keyword || '').trim() });
 
     // 1a. Fetch the lead's website (graceful skip if missing/fails)
     let siteContent = null;
@@ -202,7 +208,7 @@ async function sendTeamLeadNotification(lead, hasPdf) {
 // Calls the receiveTurnkeyLead cloud function. Dedups by email on Base44's side.
 // Never throws: a CRM failure must not block the lead's audit email.
 // ─────────────────────────────────────────────────────
-async function pushToBase44CRM({ firstName, lastName, email, phone, businessName, website, industry, packageInterest }) {
+async function pushToBase44CRM({ firstName, lastName, email, phone, businessName, website, industry, packageInterest, formName, timeEater, keyword }) {
   const url = (process.env.BASE44_RECEIVE_LEAD_URL || '').trim();
   const secret = (process.env.TURNKEY_WEBSITE_SECRET || '').trim();
   if (!url || !secret) {
@@ -214,11 +220,13 @@ async function pushToBase44CRM({ firstName, lastName, email, phone, businessName
   const body = JSON.stringify({
     firstName, lastName, email, phone, businessName, website,
     industry: prettyIndustry(industry) || industry || '',
-    source: 'website-audit-form',
+    source: formName === 'ai-recommendations' ? 'website-ads-form' : 'website-audit-form',
     value: 0,
     metadata: {
       packageInterest: packageInterest || '',
-      submittedVia: 'turnkeyai.com.au ai-audit form',
+      submittedVia: `turnkeyai.com.au ${formName || 'ai-audit'} form`,
+      timeEater: timeEater || '',
+      keyword: keyword || '',
     },
   });
 

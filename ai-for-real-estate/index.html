@@ -6,6 +6,7 @@
 <title>AI for real estate agencies, set up for you | Turn Key AI</title>
 <meta name="description" content="AI for real estate agencies, set up and run for you in 7 days. Capture and follow up every lead. One fixed price from A$2,999. No subscription. Gold Coast, 5.0 on Google.">
 <link rel="canonical" href="https://turnkeyai.com.au/ai-for-real-estate/">
+<meta name="robots" content="noindex, follow">
 <!-- Google Analytics 4 (same property as the main site) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DHZ47DHP0B"></script>
 <script>
@@ -127,7 +128,11 @@
 
   .faq{margin-top:26px;border-top:1px solid var(--line)}
   .qa{border-bottom:1px solid var(--line);padding:20px 0}
-  .qa h3{font-size:17px;margin-bottom:8px}
+  details.qa summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;font-size:17px;font-weight:680;letter-spacing:-.02em;line-height:1.3}
+  details.qa summary::-webkit-details-marker{display:none}
+  details.qa summary::after{content:"+";color:var(--muted);font-weight:600;font-size:20px;flex:none;line-height:1}
+  details.qa[open] summary::after{content:"–"}
+  details.qa p{margin-top:10px}
   .qa p{color:var(--ink-soft);font-size:15.5px;max-width:70ch}
 
   .finalcta{text-align:center;background:var(--accent-soft);border:1px solid #d9e3ff;border-radius:22px;padding:48px 22px}
@@ -158,7 +163,7 @@
 
 <header>
   <div class="wrap nav">
-    <div class="brand">Turn Key <span>AI</span></div>
+    <a class="brand" href="https://turnkeyai.com.au/" style="text-decoration:none">Turn Key <span>AI</span></a>
     <a class="btn btn-primary" href="#start" data-scroll>Get my recommendations →</a>
   </div>
 </header>
@@ -168,10 +173,10 @@
   <div class="wrap hero-grid">
     <div>
       <div class="eyebrow">For Australian businesses · Live in 7 days · 5.0 on Google</div>
-      <h1>AI for <span class="kw">real estate</span>, set up and run for you.</h1>
+      <h1>AI for <span class="kw">real estate</span>, set up and running for you in 7 days.</h1>
       <p class="lede">You know AI matters, you just do not have time to set it up. We build AI that captures and follows up every lead, books appraisals, and clears the admin, then run it for you. One fixed price. No subscription.</p>
       <div class="trust">
-        <span class="pill"><span class="star">★★★★★</span> 5.0 on Google</span>
+        <a class="pill" href="https://www.google.com/maps/search/?api=1&amp;query=Turn+Key+AI+Gold+Coast" target="_blank" rel="noopener" style="text-decoration:none"><span class="star">★★★★★</span> 5.0 on Google</a>
         <span class="pill"><span class="dot"></span> Live in 7 business days</span>
         <span class="pill"><span class="dot"></span> One-time, no subscription</span>
       </div>
@@ -190,6 +195,7 @@
       <input type="hidden" name="leadMedium" id="f_med">
       <input type="hidden" name="leadCampaign" id="f_camp">
       <input type="hidden" name="leadLandingPage" id="f_lp">
+      <input type="hidden" name="gclid" id="f_gclid">
 
       <div class="steps-dots"><i class="on" id="d1"></i><i id="d2"></i></div>
 
@@ -197,10 +203,10 @@
         <h3>See what we'd automate for you</h3>
         <p class="sub">Takes 20 seconds. We'll email you specific ideas for your business. No call needed.</p>
         <p style="font-size:14px;font-weight:600;color:var(--ink-soft);margin-bottom:11px">What eats most of your time right now?</p>
-        <button type="button" class="opt" data-pick="Answering calls &amp; enquiries">Answering calls &amp; customer enquiries</button>
-        <button type="button" class="opt" data-pick="Following up leads">Following up leads &amp; quotes</button>
-        <button type="button" class="opt" data-pick="Admin &amp; data entry">Repetitive admin &amp; data entry</button>
-        <button type="button" class="opt" data-pick="Scheduling &amp; bookings">Scheduling &amp; bookings</button>
+        <button type="button" class="opt" data-pick="Answering property enquiries">Answering property enquiries</button>
+        <button type="button" class="opt" data-pick="Following up buyer &amp; seller leads">Following up buyer &amp; seller leads</button>
+        <button type="button" class="opt" data-pick="Appraisal &amp; inspection follow-ups">Appraisal &amp; inspection follow-ups</button>
+        <button type="button" class="opt" data-pick="Listings admin &amp; paperwork">Listings admin &amp; paperwork</button>
         <button type="button" class="opt" data-pick="Not sure yet">Honestly, not sure where to start</button>
       </div>
 
@@ -208,12 +214,14 @@
         <h3>Where do we send your recommendations?</h3>
         <p class="sub">We'll look at your business and email you 3 specific things we'd automate, with the fixed price. Within 2 business hours. No call.</p>
         <div class="field"><label>First name</label><input name="first" required placeholder="Alex"></div>
-        <div class="field"><label>Business email</label><input name="email" type="email" required placeholder="alex@yourbusiness.com.au"></div>
-        <div class="field"><label>Your website <span class="muted" style="font-weight:500">(or your Facebook / Instagram, so we can tailor it)</span></label><input name="website" required placeholder="yourbusiness.com.au"></div>
+        <div class="field"><label>Email</label><input name="email" type="email" required placeholder="your@email.com"></div>
+        <div class="field"><label>Your website or Facebook page <span class="muted" style="font-weight:500">(optional — with it, your recommendations get 2× more specific)</span></label><input name="website" placeholder="yourbusiness.com.au"></div>
         <div class="field"><label>Phone <span class="muted" style="font-weight:500">(optional, for a faster reply)</span></label><input name="phone" type="tel" placeholder="04…"></div>
+        <p id="formerr" style="display:none;color:#c0392b;font-size:13px;margin:0 0 10px;text-align:center">Something went wrong sending this. Please try again, or email <a href="mailto:start@tkai.com.au">start@tkai.com.au</a> directly.</p>
         <button class="btn btn-primary" type="submit" id="submitBtn">Send me my recommendations →</button>
         <button type="button" class="back" onclick="goStep(1)">← Back</button>
-        <p class="reassure">No spam. A real person looks at your business and replies within 2 business hours.</p>
+        <p class="reassure">No spam. Mael, our founder, personally reads every form and replies within 2 business hours.</p>
+        <p class="reassure" style="margin-top:6px">Prefer to talk it through? <a class="bookcall" href="https://calendly.com/start-tkai/30min" target="_blank" rel="noopener" style="color:var(--accent-ink);font-weight:600">Book a quick call with Mael →</a></p>
       </div>
 
       <div id="done" class="thanks" style="display:none">
@@ -222,7 +230,7 @@
         <p class="sub" style="margin-top:8px">You'll get 3 specific recommendations for your business, plus the fixed price, within 2 business hours. No call, no obligation.</p>
       </div>
     </form>
-    <p class="formproof"><span class="star">★★★★★</span> 5.0 on Google — real reviews you can check.</p>
+    <p class="formproof"><span class="star">★★★★★</span> <a href="https://www.google.com/maps/search/?api=1&amp;query=Turn+Key+AI+Gold+Coast" target="_blank" rel="noopener" style="color:inherit">5.0 on Google — read the review yourself</a></p>
     </div>
   </div>
 </section>
@@ -235,12 +243,27 @@
       <h2>If any of these is you, you're exactly who we built this for.</h2>
     </div>
     <div class="mirror">
-      <div class="card"><b>"I know AI matters, I just have no idea where to start."</b></div>
-      <div class="card"><b>"I don't want another login, another subscription, another tool nobody uses."</b></div>
-      <div class="card"><b>"I don't have an IT person. I can't be the one who learns and maintains this."</b></div>
-      <div class="card"><b>"Half of it feels like hype to sell courses. I just want someone to set it up and show me it works."</b></div>
+      <div class="card" role="button" tabindex="0" data-scroll style="cursor:pointer"><b>"Enquiries land at 9pm and sit there until someone gets to them in the morning."</b></div>
+      <div class="card" role="button" tabindex="0" data-scroll style="cursor:pointer"><b>"Follow-up depends on whoever is least busy, so half the leads go cold."</b></div>
+      <div class="card" role="button" tabindex="0" data-scroll style="cursor:pointer"><b>"I don't have an IT person. I can't be the one who learns and maintains this."</b></div>
+      <div class="card" role="button" tabindex="0" data-scroll style="cursor:pointer"><b>"Half of it feels like hype. I just want someone to set it up and show me it works."</b></div>
     </div>
     <p class="muted" style="margin-top:22px;max-width:64ch;font-size:16px">Everyone's selling AI. Almost nobody will just do it for you, tell you the price up front, and let you check the proof. That's the only thing we do.</p>
+  </div>
+</section>
+
+<!-- EXAMPLE -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">What it looks like</div>
+      <h2>One example: an enquiry lands at 9pm.</h2>
+    </div>
+    <div class="steps">
+      <div class="step card"><div class="num">1</div><div class="day">9:02pm</div><h3>The enquiry gets answered</h3><p>A buyer asks about a listing. Your AI replies in minutes with the details, and asks the same qualifying questions you would.</p></div>
+      <div class="step card"><div class="num">2</div><div class="day">Next morning</div><h3>The follow-up is already done</h3><p>No reply yet? It follows up politely and keeps the thread warm, so no lead depends on who is least busy that day.</p></div>
+      <div class="step card"><div class="num">3</div><div class="day">Same week</div><h3>The appraisal lands in your calendar</h3><p>When the vendor is ready, the time goes straight into your calendar with everything you need to walk in prepared.</p></div>
+    </div>
   </div>
 </section>
 
@@ -270,6 +293,16 @@
         <h3>You get a system that works</h3>
         <p>We install it, walk your team through it in plain English, and switch it on. It runs from day one. And you own it.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATIONS -->
+<section style="padding:6px 0 0">
+  <div class="wrap" style="text-align:center">
+    <p class="eyebrow" style="margin-bottom:14px">Connects to the tools you already use</p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center">
+      <span class="pill">Gmail</span><span class="pill">Outlook &amp; Microsoft 365</span><span class="pill">Google Calendar</span><span class="pill">Xero</span><span class="pill">WhatsApp</span><span class="pill">Slack</span>
     </div>
   </div>
 </section>
@@ -319,10 +352,11 @@
   <div class="wrap">
     <div class="proof">
       <div class="stars star">★★★★★</div>
-      <h2 style="margin-top:14px">Real Australian businesses. A real 5.0 on Google.</h2>
+      <h2 style="margin-top:14px">A real client. A real, public 5.0 on Google.</h2>
       <p class="quote">"Easy to use, easier to set up. If my AI bot couldn't answer my questions, then Mael certainly did!"</p>
       <p class="by">— Mack Lawton · Verified Google review</p>
-      <a class="rev" href="https://www.google.com/search?q=Turn+Key+AI+Gold+Coast+reviews" target="_blank" rel="noopener">Read every review on Google →</a>
+      <p class="by" style="margin-top:10px">Every system is built by Mael, our founder. When you write to us, he is the one who answers.</p>
+      <a class="rev" href="https://www.google.com/maps/search/?api=1&amp;query=Turn+Key+AI+Gold+Coast" target="_blank" rel="noopener">Read the review on Google →</a>
     </div>
   </div>
 </section>
@@ -335,26 +369,30 @@
       <h2>The questions everyone actually asks.</h2>
     </div>
     <div class="faq">
-      <div class="qa">
-        <h3>Honestly, is this just AI hype to sell me something?</h3>
-        <p>Fair question. The difference: we don't sell you a course or a tool to figure out. We build the system, install it, and switch it on, for a price you can see right now. The proof is our public 5.0 Google reviews from real Australian businesses. Click them and check.</p>
-      </div>
-      <div class="qa">
-        <h3>Will I have to learn it or babysit it?</h3>
+      <details class="qa">
+        <summary>Honestly, is this just AI hype to sell me something?</summary>
+        <p>Fair question. The difference: we don't sell you a course or a tool to figure out. We build the system, install it, and switch it on, for a price you can see right now. The proof is public: our 5.0 Google rating you can check yourself, and the full price printed on this page instead of a quote maze.</p>
+      </details>
+      <details class="qa">
+        <summary>Will I have to learn it or babysit it?</summary>
         <p>No. That's the whole point of done-for-you. We set it up and connect it, and on day 7 we walk your team through it in plain English. It runs on its own from there. You're the owner, not the IT department.</p>
-      </div>
-      <div class="qa">
-        <h3>Is my business data safe?</h3>
+      </details>
+      <details class="qa">
+        <summary>Is my business data safe?</summary>
         <p>Yes. With the Mac Mini option your system lives on a machine in your office that you own, so your data stays with you. With Cloud it runs on a dedicated server we manage, and we only connect the tools you tell us to. We're an Australian team you can call.</p>
-      </div>
-      <div class="qa">
-        <h3>What if I'm not technical at all?</h3>
+      </details>
+      <details class="qa">
+        <summary>What if I'm not technical at all?</summary>
         <p>Perfect. That's exactly who this is for. The only thing you do is tell us what eats your time. If you can describe your business in a 20-minute form, you can do this.</p>
-      </div>
-      <div class="qa">
-        <h3>What happens after the 7 days?</h3>
+      </details>
+      <details class="qa">
+        <summary>What happens after the 7 days?</summary>
         <p>It's yours and it's running. You get 2 weeks of dedicated support after launch, and nothing renews unless you ask. Any change later is a flat A$200, never a subscription.</p>
-      </div>
+      </details>
+      <details class="qa">
+        <summary>Does it work with the systems my agency already uses?</summary>
+        <p>We connect to the tools you already run, and we confirm the fit with you before you pay anything. If your setup can't do what you need, we tell you straight.</p>
+      </details>
     </div>
   </div>
 </section>
@@ -366,6 +404,7 @@
       <h2>Stop reading about AI. Have it set up for you by next week.</h2>
       <p>One fixed price. Seven days. We do all of it. You just tell us where it hurts.</p>
       <a class="btn btn-primary" href="#start" data-scroll style="padding:16px 26px;font-size:17px">Get my free recommendations →</a>
+      <p style="margin-top:14px"><a class="bookcall" href="https://calendly.com/start-tkai/30min" target="_blank" rel="noopener" style="color:var(--accent-ink);font-weight:600;font-size:15px">Prefer to talk it through first? Book a quick call →</a></p>
       <p class="micro">Live in 7 days · From A$2,999 one-time · No subscription · 5.0 on Google</p>
     </div>
   </div>
@@ -389,7 +428,7 @@
     var p = new URLSearchParams(location.search);
     var raw = p.get('keyword') || p.get('kw') || '';
     var kw = raw.replace(/[<>]/g,'').slice(0,50).toLowerCase().trim()
-                .replace(/^ai\s+for\s+/,'').replace(/^ai\s+/,'').trim();
+                .replace(/^ai\s+for\s+/,'').replace(/^ai\s+/,'').replace(/\s+in\s+australia$/,'').replace(/\s+australia$/,'').trim();
     var kf = document.getElementById('f_keyword'); if (kf) kf.value = raw.slice(0,80);
     if(kw){
       document.querySelectorAll('.kw').forEach(function(el){ el.textContent = kw; });
@@ -406,7 +445,20 @@
     }
     var set = function(id,v){ var el=document.getElementById(id); if(el) el.value=v; };
     set('f_src', src); set('f_med', med); set('f_camp', camp);
-    set('f_lp', location.pathname);
+    set('f_lp', location.pathname); set('f_gclid', g('gclid'));
+  })();
+
+  // 2b) Funnel events: form seen / started / step 2 reached / book-a-call
+  (function(){
+    var PAGE = (document.querySelector('input[name=page]')||{}).value || location.pathname;
+    var sent = {};
+    window.__ffOnce = function(name){ if(sent[name]) return; sent[name]=1; try{ if(typeof gtag==='function') gtag('event', name, { page: PAGE }); }catch(e){} };
+    var f = document.getElementById('start');
+    if ('IntersectionObserver' in window && f) {
+      var io = new IntersectionObserver(function(es){ es.forEach(function(en){ if(en.isIntersecting){ window.__ffOnce('form_view'); io.disconnect(); } }); }, {threshold:.15});
+      io.observe(f);
+    }
+    document.querySelectorAll('.bookcall').forEach(function(a){ a.addEventListener('click', function(){ try{ if(typeof gtag==='function') gtag('event','book_call_click',{ page: PAGE }); }catch(e){} }); });
   })();
 
   // 3) Multi-step form
@@ -420,6 +472,7 @@
     b.addEventListener('click', function(){
       var t = document.getElementById('f_time'); if (t) t.value = b.getAttribute('data-pick');
       goStep(2);
+      if (window.__ffOnce) { window.__ffOnce('form_view'); window.__ffOnce('form_start'); window.__ffOnce('form_step2_view'); }
       var first = document.querySelector('#step2 input[name=first]'); if(first) first.focus();
     });
   });
@@ -431,9 +484,20 @@
     var btn = document.getElementById('submitBtn');
     btn.disabled = true; var label = btn.textContent; btn.textContent = 'Sending…';
     var data = new URLSearchParams(new FormData(form));
-    try {
-      await fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:data.toString() });
-    } catch(err) { /* local preview has no POST endpoint; tracking + UI still proceed */ }
+    var isLocal = /^(localhost|127\.)/.test(location.hostname);
+    var posted = false;
+    for (var attempt = 0; attempt < 2 && !posted; attempt++) {
+      try {
+        var resp = await fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:data.toString() });
+        posted = !!(resp && resp.ok);
+      } catch(err) { posted = false; }
+    }
+    if (!posted && !isLocal) {
+      btn.disabled = false; btn.textContent = label;
+      var errEl = document.getElementById('formerr'); if (errEl) errEl.style.display = 'block';
+      return false;
+    }
+    var errOk = document.getElementById('formerr'); if (errOk) errOk.style.display = 'none';
     try {
       if (typeof gtag === 'function') {
         gtag('set', 'user_data', {

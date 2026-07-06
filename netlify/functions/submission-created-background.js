@@ -272,7 +272,6 @@ Hard facts you can use (do not invent others):
 - Average client savings: $1,500-$2,000 per week per Mac Mini.
 - Average break-even: 3 weeks.
 - Average Year-1 ROI: 13x.
-- 50+ Australian SMEs deployed.
 - Industries we've done: accounting/bookkeeping, real estate/property management, law firms, medical/allied health clinics, trades (plumbing/electrical), hospitality/hotels/STR, recruitment, marketing agencies, e-commerce, consulting.
 - Australian FTE cost reference: $65,000-$85,000/year base salary, before super/leave/turnover.
 

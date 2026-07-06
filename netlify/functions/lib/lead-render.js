@@ -318,7 +318,7 @@ export function buildPdfHtml({ businessName, industry, spin, brand }) {
         <p>${esc(s.next_step || `We confirm the details, lock the workflows we build first for ${biz}, and answer anything open. No pressure, no obligation.`)}</p>
         <a class="btn" href="https://calendly.com/start-tkai/30min">Book your 30-minute call →</a>
       </div>
-      <p class="disc">Figures in this plan are estimates based on typical workloads for your industry and your public information, shown as ranges on purpose. They are a starting point we confirm together, not a contractual promise. Live in 7 business days, or you don't pay.${logo ? ` The ${esc(biz)} logo is shown to indicate this plan was prepared for you; TurnkeyAI Pty Ltd is the author.` : ''} start@tkai.com.au · turnkeyai.com.au</p>
+      <p class="disc">Figures in this plan are estimates based on typical workloads for your industry and your public information, shown as ranges on purpose. They are a starting point we confirm together, not a contractual promise. Live in 7 business days, guaranteed.${logo ? ` The ${esc(biz)} logo is shown to indicate this plan was prepared for you; TurnkeyAI Pty Ltd is the author.` : ''} start@tkai.com.au · turnkeyai.com.au</p>
     </div>
     ${foot(5)}
   </section>
@@ -337,7 +337,7 @@ export function buildEmail({ firstName, businessName, industry, packageInterest,
 
 Got your brief. Your AI agent is on our build queue and we've started on our end.${hasPdf ? `\n\nAttached: a personalized deployment plan for ${biz}. It walks through what we'd build, the hours it could save you, and the package we'd recommend.` : ''}
 
-Live in 7 business days, or you don't pay. 50+ Australian SMEs deployed, rated 5.0 on Google.
+Live in 7 business days, guaranteed. Australian-built and run, rated 5.0 on Google.
 
 When you're ready, grab a 30 minute call and we'll walk through it together. No rush. We'll also reach out within 2 business hours either way:
 https://calendly.com/start-tkai/30min
@@ -366,7 +366,7 @@ You're receiving this because you submitted a brief on turnkeyai.com.au. Reply S
         <p style="margin:0;font-size:17px;">When you're ready, grab a 30 minute call below and we'll walk through it together. No rush. We'll also reach out within 2 business hours either way.</p>
       </td></tr>
       <tr><td style="background:#fff;padding:0 40px 26px;"><table role="presentation" width="100%" style="background:${ACCENT_SOFT};border:1px solid ${tint(ACCENT,0.5)};border-radius:14px;"><tr><td style="padding:18px 22px;font-size:14.5px;line-height:1.6;">
-        <span style="color:#1d9d4f;font-weight:600;">✓ Live in 7 business days, or you don't pay.</span><br>50+ Australian SMEs deployed, rated 5.0 on Google.
+        <span style="color:#1d9d4f;font-weight:600;">✓ Live in 7 business days, guaranteed.</span><br>Australian-built and run, rated 5.0 on Google.
       </td></tr></table></td></tr>
       <tr><td style="background:#fff;padding:0 40px 32px;"><table role="presentation" width="100%" style="background:#0a0a0a;border-radius:18px;"><tr><td style="padding:32px 36px;">
         <p style="margin:0 0 10px;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:${tint(ACCENT,0.35)};font-weight:600;">Whenever it suits you</p>

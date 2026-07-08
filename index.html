@@ -2176,6 +2176,12 @@ src="https://www.facebook.com/tr?id=1359053766154887&ev=PageView&noscript=1"
       <input type="hidden" name="leadCampaign" id="leadCampaign" value="">
       <input type="hidden" name="leadReferrer" id="leadReferrer" value="">
       <input type="hidden" name="leadLandingPage" id="leadLandingPage" value="">
+      <!-- Campaign attribution (UTMs) filled on load; utm_content carries the ad name -->
+      <input type="hidden" name="utm_source" id="utm_source" value="">
+      <input type="hidden" name="utm_medium" id="utm_medium" value="">
+      <input type="hidden" name="utm_campaign" id="utm_campaign" value="">
+      <input type="hidden" name="utm_content" id="utm_content" value="">
+      <input type="hidden" name="utm_term" id="utm_term" value="">
 
       <div class="tk-field-row">
         <div>
@@ -2691,7 +2697,12 @@ src="https://www.facebook.com/tr?id=1359053766154887&ev=PageView&noscript=1"
         leadMedium:      form.leadMedium ? form.leadMedium.value : '',
         leadCampaign:    form.leadCampaign ? form.leadCampaign.value : '',
         leadReferrer:    form.leadReferrer ? form.leadReferrer.value : '',
-        leadLandingPage: form.leadLandingPage ? form.leadLandingPage.value : ''
+        leadLandingPage: form.leadLandingPage ? form.leadLandingPage.value : '',
+        utm_source:   form.utm_source   ? form.utm_source.value   : '',
+        utm_medium:   form.utm_medium   ? form.utm_medium.value   : '',
+        utm_campaign: form.utm_campaign ? form.utm_campaign.value : '',
+        utm_content:  form.utm_content  ? form.utm_content.value  : '',
+        utm_term:     form.utm_term     ? form.utm_term.value     : ''
       });
       const r = await fetch('/', { method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: params.toString() });
       if (r.ok) {
@@ -2716,6 +2727,8 @@ src="https://www.facebook.com/tr?id=1359053766154887&ev=PageView&noscript=1"
             });
           }
         } catch (e) { /* analytics never blocks the redirect */ }
+        // Meta (Facebook/Instagram) Pixel Lead event, fires only on a successful submit
+        try { if (typeof fbq === 'function') fbq('track', 'Lead'); } catch (e) { /* analytics never blocks the redirect */ }
         // OpenAI Ads conversion event (fires once, only on a successful submit)
         try {
           if (typeof oaiq === 'function') {
@@ -2736,6 +2749,20 @@ src="https://www.facebook.com/tr?id=1359053766154887&ev=PageView&noscript=1"
       alert('Error sending form'); submitBtn.disabled = false; submitBtn.textContent = 'Get my personalized plan →';
     }
   }
+</script>
+<script>
+(function () {
+  function fillUTM() {
+    var form = document.getElementById('bookingForm');
+    if (!form) return;
+    var p = new URLSearchParams(window.location.search);
+    ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(function (k) {
+      var el = form.querySelector('[name="' + k + '"]');
+      if (el) el.value = p.get(k) || '';
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fillUTM); else fillUTM();
+})();
 </script>
 <!-- CRO: sticky mobile CTA — surfaces the primary action without scrolling (only ~4% reach the form) -->
 <div class="tk-sticky-cta">

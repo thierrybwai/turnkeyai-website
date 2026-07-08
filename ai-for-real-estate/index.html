@@ -213,6 +213,11 @@ src="https://www.facebook.com/tr?id=1359053766154887&ev=PageView&noscript=1"
       <input type="hidden" name="leadCampaign" id="f_camp">
       <input type="hidden" name="leadLandingPage" id="f_lp">
       <input type="hidden" name="gclid" id="f_gclid">
+      <input type="hidden" name="utm_source" id="f_utm_source">
+      <input type="hidden" name="utm_medium" id="f_utm_medium">
+      <input type="hidden" name="utm_campaign" id="f_utm_campaign">
+      <input type="hidden" name="utm_content" id="f_utm_content">
+      <input type="hidden" name="utm_term" id="f_utm_term">
 
       <div class="steps-dots"><i class="on" id="d1"></i><i id="d2"></i></div>
 
@@ -463,6 +468,7 @@ src="https://www.facebook.com/tr?id=1359053766154887&ev=PageView&noscript=1"
     var set = function(id,v){ var el=document.getElementById(id); if(el) el.value=v; };
     set('f_src', src); set('f_med', med); set('f_camp', camp);
     set('f_lp', location.pathname); set('f_gclid', g('gclid'));
+    set('f_utm_source', g('utm_source')); set('f_utm_medium', g('utm_medium')); set('f_utm_campaign', g('utm_campaign')); set('f_utm_content', g('utm_content')); set('f_utm_term', g('utm_term'));
   })();
 
   // 2b) Funnel events: form seen / started / step 2 reached / book-a-call
@@ -525,6 +531,7 @@ src="https://www.facebook.com/tr?id=1359053766154887&ev=PageView&noscript=1"
         gtag('event', 'form_submission', { form_name:'ai-recommendations', page:'ai-for-real-estate' });
       }
     } catch(err){}
+    try { if (typeof fbq === 'function') fbq('track', 'Lead'); } catch(err){}
     try { if (typeof clarity === 'function') clarity('event','form_submission'); } catch(err){}
     document.getElementById('step1').style.display='none';
     document.getElementById('step2').style.display='none';

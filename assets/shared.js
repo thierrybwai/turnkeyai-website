@@ -141,12 +141,15 @@
         source: source || 'direct',
         medium: medium || 'none',
         campaign: p.get('utm_campaign') || '',
+        content: p.get('utm_content') || '',
+        term: p.get('utm_term') || '',
+        placement: p.get('utm_placement') || '',
         referrer: ref,
         landing: location.pathname + location.search
       }));
     }
     var a = JSON.parse(localStorage.getItem(KEY) || '{}');
-    var map = { leadSource: a.source, leadMedium: a.medium, leadCampaign: a.campaign, leadReferrer: a.referrer, leadLandingPage: a.landing };
+    var map = { leadSource: a.source, leadMedium: a.medium, leadCampaign: a.campaign, leadContent: a.content, leadTerm: a.term, leadPlacement: a.placement, leadReferrer: a.referrer, leadLandingPage: a.landing };
     Object.keys(map).forEach(function (id) {
       var el = document.getElementById(id);
       if (el) el.value = map[id] || '';
@@ -183,6 +186,9 @@
           leadSource: val('leadSource'),
           leadMedium: val('leadMedium'),
           leadCampaign: val('leadCampaign'),
+          leadContent: val('leadContent'),
+          leadTerm: val('leadTerm'),
+          leadPlacement: val('leadPlacement'),
           leadReferrer: val('leadReferrer'),
           leadLandingPage: val('leadLandingPage')
         });

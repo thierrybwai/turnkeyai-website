@@ -45,7 +45,21 @@ export default async (req) => {
 
     // 0. Push the lead into the Base44 SalesFlow CRM (TKAI pipeline) FIRST, so the lead is
     //    captured even if Claude / PDFShift / Resend later fail. Non-blocking, never throws.
-    await pushToBase44CRM({ ...leadCtx, formName, timeEater: (data.time_eater || '').trim(), keyword: (data.keyword || '').trim() });
+    await pushToBase44CRM({
+      ...leadCtx, formName,
+      timeEater: (data.time_eater || '').trim(),
+      keyword: (data.keyword || '').trim(),
+      utm: {
+        source: (data.leadSource || '').trim(),
+        medium: (data.leadMedium || '').trim(),
+        campaign: (data.leadCampaign || '').trim(),
+        content: (data.leadContent || '').trim(),
+        term: (data.leadTerm || '').trim(),
+        placement: (data.leadPlacement || '').trim(),
+        referrer: (data.leadReferrer || '').trim(),
+        landingPage: (data.leadLandingPage || '').trim(),
+      },
+    });
 
     // 1a. Fetch the lead's website (graceful skip if missing/fails)
     let siteContent = null;
@@ -208,7 +222,7 @@ async function sendTeamLeadNotification(lead, hasPdf) {
 // Calls the receiveTurnkeyLead cloud function. Dedups by email on Base44's side.
 // Never throws: a CRM failure must not block the lead's audit email.
 // ─────────────────────────────────────────────────────
-async function pushToBase44CRM({ firstName, lastName, email, phone, businessName, website, industry, packageInterest, formName, timeEater, keyword }) {
+async function pushToBase44CRM({ firstName, lastName, email, phone, businessName, website, industry, packageInterest, formName, timeEater, keyword, utm = {} }) {
   const url = (process.env.BASE44_RECEIVE_LEAD_URL || '').trim();
   const secret = (process.env.TURNKEY_WEBSITE_SECRET || '').trim();
   if (!url || !secret) {
@@ -222,6 +236,16 @@ async function pushToBase44CRM({ firstName, lastName, email, phone, businessName
     industry: prettyIndustry(industry) || industry || '',
     source: formName === 'ai-recommendations' ? 'website-ads-form' : 'website-audit-form',
     value: 0,
+    utm: {
+      source: utm.source || '',
+      medium: utm.medium || '',
+      campaign: utm.campaign || '',
+      content: utm.content || '',
+      term: utm.term || '',
+      placement: utm.placement || '',
+      referrer: utm.referrer || '',
+      landingPage: utm.landingPage || '',
+    },
     metadata: {
       packageInterest: packageInterest || '',
       submittedVia: `turnkeyai.com.au ${formName || 'ai-audit'} form`,

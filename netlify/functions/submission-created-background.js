@@ -36,28 +36,32 @@ export default async (req) => {
     const website = (data.website || '').trim();
     const industry = (data.industry || '').trim();
     const packageInterest = (data.packageInterest || '').trim();
+    const timeEater = (data.time_eater || '').trim();
 
     if (!email) {
       return new Response('No email on submission', { status: 200 });
     }
 
-    const leadCtx = { firstName, lastName, email, phone, businessName, website, industry, packageInterest };
+    const leadCtx = { firstName, lastName, email, phone, businessName, website, industry, packageInterest, timeEater };
 
     // 0. Push the lead into the Base44 SalesFlow CRM (TKAI pipeline) FIRST, so the lead is
     //    captured even if Claude / PDFShift / Resend later fail. Non-blocking, never throws.
     await pushToBase44CRM({
       ...leadCtx, formName,
-      timeEater: (data.time_eater || '').trim(),
+      timeEater,
       keyword: (data.keyword || '').trim(),
       utm: {
-        source: (data.leadSource || '').trim(),
-        medium: (data.leadMedium || '').trim(),
-        campaign: (data.leadCampaign || '').trim(),
-        content: (data.leadContent || '').trim(),
-        term: (data.leadTerm || '').trim(),
-        placement: (data.leadPlacement || '').trim(),
-        referrer: (data.leadReferrer || '').trim(),
-        landingPage: (data.leadLandingPage || '').trim(),
+        source: (data.leadSource || data.utm_source || '').trim(),
+        medium: (data.leadMedium || data.utm_medium || '').trim(),
+        campaign: (data.leadCampaign || data.utm_campaign || '').trim(),
+        content: (data.leadContent || data.utm_content || '').trim(),
+        term: (data.leadTerm || data.utm_term || '').trim(),
+        placement: (data.leadPlacement || data.utm_placement || '').trim(),
+        referrer: (data.leadReferrer || data.referrer || '').trim(),
+        landingPage: (data.leadLandingPage || data.page || '').trim(),
+        gclid: (data.gclid || '').trim(),
+        gbraid: (data.gbraid || '').trim(),
+        wbraid: (data.wbraid || '').trim(),
       },
     });
 
@@ -245,6 +249,9 @@ async function pushToBase44CRM({ firstName, lastName, email, phone, businessName
       placement: utm.placement || '',
       referrer: utm.referrer || '',
       landingPage: utm.landingPage || '',
+      gclid: utm.gclid || '',
+      gbraid: utm.gbraid || '',
+      wbraid: utm.wbraid || '',
     },
     metadata: {
       packageInterest: packageInterest || '',
@@ -279,7 +286,7 @@ async function pushToBase44CRM({ firstName, lastName, email, phone, businessName
 // ─────────────────────────────────────────────────────
 // CLAUDE — SPIN content generation
 // ─────────────────────────────────────────────────────
-async function generateSpinContent({ firstName, businessName, website, industry, packageInterest, siteContent }) {
+async function generateSpinContent({ firstName, businessName, website, industry, packageInterest, timeEater, siteContent }) {
   const industryLabel = prettyIndustry(industry) || 'their business';
   const businessLabel = businessName || 'their business';
   const packageLabel = prettyPackage(packageInterest);
@@ -292,7 +299,7 @@ async function generateSpinContent({ firstName, businessName, website, industry,
 TurnkeyAI's offer in one line: we deploy a complete AI system (powered by Claude) on a Mac Mini installed in the client's office, live in 7 business days, with hardware they own forever. Workflows are operated via Slack or Telegram in plain English.
 
 Hard facts you can use (do not invent others):
-- Packages: Cloud OpenClaw $2,999 AUD (hosted on a dedicated VPS we manage, 3 workflows, remote setup, 30-day support, 12 months hosting included) and Mac Mini $5,999 AUD (1 Apple Mac Mini M4 yours to keep, 5 workflows, on-site setup in Gold Coast or Brisbane, 30-day support). Pick the right one based on whether the client wants on-premise hardware or a cloud-managed setup.
+- Packages: Cloud OpenClaw $2,999 AUD (hosted on a dedicated VPS we manage, 3 workflows, remote setup) and Mac Mini $5,999 AUD (1 Apple Mac Mini M4 yours to keep, 5 workflows, on-site setup in Gold Coast or Brisbane). We keep either system running for as long as the client uses it, with no monthly maintenance subscription. New workflows later are $200 AUD each. Pick the right package based on whether the client wants on-premise hardware or a cloud-managed setup.
 - Average client savings: $1,500-$2,000 per week per Mac Mini.
 - Average break-even: 3 weeks.
 - Average Year-1 ROI: 13x.
@@ -313,7 +320,8 @@ Your task: generate a personalized SPIN-selling deployment plan for a specific l
 - First name: ${firstName}
 - Business: ${businessLabel}
 - Website: ${website || 'not provided'}
-- Industry: ${industryLabel}${packageLabel ? `\n- Package they mentioned: ${packageLabel}` : ''}${siteBlock}
+- Industry: ${industryLabel}
+- Biggest time drain: ${timeEater || 'not provided'}${packageLabel ? `\n- Package they mentioned: ${packageLabel}` : ''}${siteBlock}
 
 Generate JSON in this exact shape:
 
@@ -520,6 +528,7 @@ function prettyIndustry(slug) {
   const map = {
     accounting: 'Accounting / Bookkeeping',
     real_estate: 'Real Estate',
+    small_business: 'Small Business',
     ecommerce: 'E-Commerce',
     healthcare: 'Healthcare',
     legal: 'Legal Services',

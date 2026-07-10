@@ -7,6 +7,21 @@
 <meta name="description" content="AI for your small business, set up and run for you in 7 days. One fixed price from A$2,999. No subscription, no jargon, no tech team. Gold Coast, 5.0 on Google.">
 <link rel="canonical" href="https://turnkeyai.com.au/ai-for-small-business/">
 <meta name="robots" content="noindex, follow">
+<script>
+  // Google Ads sends {keyword}; GA4 treats "keyword" as an internal-site search.
+  // Preserve the value for attribution, but rename it before GA4 loads.
+  (function(){
+    try {
+      var u = new URL(window.location.href);
+      var keyword = u.searchParams.get('keyword');
+      if (keyword) {
+        if (!u.searchParams.get('kw')) u.searchParams.set('kw', keyword);
+        u.searchParams.delete('keyword');
+        history.replaceState(null, '', u.pathname + u.search + u.hash);
+      }
+    } catch(e){}
+  })();
+</script>
 <!-- Google Analytics 4 (same property as the main site) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DHZ47DHP0B"></script>
 <script>
@@ -62,7 +77,7 @@
   .hero{padding:54px 0 28px}
   .hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:48px; align-items:start}
   .hero h1{font-size:clamp(34px,4.6vw,52px); margin:16px 0 18px}
-  .hero h1 .kw{color:var(--accent-ink); text-transform:lowercase}
+  .hero h1 .kw{color:var(--accent-ink)}
   .lede{font-size:clamp(17px,1.5vw,19px); color:var(--ink-soft); max-width:33ch}
   .trust{display:flex; flex-wrap:wrap; gap:10px; margin:22px 0 18px}
   .priceline{font-size:15px; color:var(--ink-soft); margin-top:6px}
@@ -79,8 +94,8 @@
   .opt:hover{border-color:var(--accent); background:var(--accent-soft)}
   .field{margin-bottom:11px}
   .field label{display:block; font-size:12.5px; font-weight:600; color:var(--ink-soft); margin-bottom:5px}
-  .field input{width:100%; font-size:15px; padding:12px 13px; border:1px solid var(--line); border-radius:11px; font-family:inherit; color:var(--ink); background:#fff}
-  .field input:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
+  .field input,.field select{width:100%; font-size:15px; padding:12px 13px; border:1px solid var(--line); border-radius:11px; font-family:inherit; color:var(--ink); background:#fff}
+  .field input:focus,.field select:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
   .formcard .btn-primary{width:100%; justify-content:center; padding:14px; font-size:16px}
   .reassure{font-size:12px; color:var(--muted); text-align:center; margin-top:10px}
   .back{background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;margin-top:8px;font-weight:550}
@@ -88,6 +103,16 @@
   .thanks .check{width:46px;height:46px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:24px}
   .formproof{text-align:center; font-size:13px; color:var(--ink-soft); margin-top:12px; font-weight:550}
   .formproof .star{letter-spacing:1px}
+  .form-kicker{font-size:12px;font-weight:700;color:var(--accent-ink);letter-spacing:.03em;text-transform:uppercase;margin-bottom:7px}
+  .offer-list{list-style:none;display:grid;gap:7px;margin:14px 0 16px}
+  .offer-list li{font-size:13.5px;color:var(--ink-soft);padding-left:22px;position:relative}
+  .offer-list li::before{content:"✓";position:absolute;left:0;color:var(--ok);font-weight:750}
+  .optional-details{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 0;margin:4px 0 13px}
+  .optional-details summary{cursor:pointer;font-size:13px;font-weight:650;color:var(--accent-ink);list-style:none}
+  .optional-details summary::-webkit-details-marker{display:none}
+  .optional-details summary::after{content:"+";float:right;color:var(--muted)}
+  .optional-details[open] summary::after{content:"−"}
+  .optional-details .optional-fields{padding-top:12px}
 
   section{padding:54px 0}
   .sec-head{max-width:60ch}
@@ -156,6 +181,7 @@
     .stickybar{display:flex}
     body{padding-bottom:70px}
     .lede{max-width:none}
+    body.form-visible .stickybar{display:none}
   }
 </style>
 <!-- Meta Pixel Code -->
@@ -171,17 +197,17 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 fbq('init', '1359053766154887');
 fbq('track', 'PageView');
 </script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1359053766154887&ev=PageView&noscript=1"
-/></noscript>
 <!-- End Meta Pixel Code -->
 </head>
 <body>
+<noscript><img height="1" width="1" style="display:none" alt=""
+src="https://www.facebook.com/tr?id=1359053766154887&amp;ev=PageView&amp;noscript=1"
+/></noscript>
 
 <header>
   <div class="wrap nav">
     <a class="brand" href="https://turnkeyai.com.au/" style="text-decoration:none">Turn Key <span>AI</span></a>
-    <a class="btn btn-primary" href="#start" data-scroll>Get my recommendations →</a>
+    <a class="btn btn-primary" href="#start" data-scroll>Get my free plan →</a>
   </div>
 </header>
 
@@ -189,15 +215,15 @@ src="https://www.facebook.com/tr?id=1359053766154887&ev=PageView&noscript=1"
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow">For Australian businesses · Live in 7 days · 5.0 on Google</div>
-      <h1>AI for your <span class="kw">small business</span>, set up and running for you in 7 days.</h1>
-      <p class="lede">You know AI matters. You just don't have time to figure out where to start. We build it, install it, and hand you a system that already works. One fixed price. No subscription. No jargon.</p>
+      <div class="eyebrow">Done-for-you AI for Australian small business owners</div>
+      <h1>Get the busywork off your plate. <span class="kw">AI for small business</span>, built and run for you.</h1>
+      <p class="lede">We build the automations around your business, connect them to the tools you already use, and keep them running. Live in 7 business days. No tech team needed.</p>
       <div class="trust">
         <a class="pill" href="https://www.google.com/maps/search/?api=1&amp;query=Turn+Key+AI+Gold+Coast" target="_blank" rel="noopener" style="text-decoration:none"><span class="star">★★★★★</span> 5.0 on Google</a>
-        <span class="pill"><span class="dot"></span> Live in 7 business days</span>
+        <span class="pill"><span class="dot"></span> Built and run by us</span>
         <span class="pill"><span class="dot"></span> One-time, no subscription</span>
       </div>
-      <p class="priceline">From <b>A$2,999 one-time</b>. Cloud A$2,999 · Mac Mini in your office A$5,999. Pay once. You own it.</p>
+      <p class="priceline">From <b>A$2,999 one-time</b>. Cloud A$2,999 · Mac Mini in your office A$5,999. Pay once. You own it. We keep it running.</p>
     </div>
 
     <!-- FORM (Netlify Forms) -->
@@ -205,54 +231,58 @@ src="https://www.facebook.com/tr?id=1359053766154887&ev=PageView&noscript=1"
     <form class="card formcard" id="start" name="ai-recommendations" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="return submitForm(event)">
       <input type="hidden" name="form-name" value="ai-recommendations">
       <p hidden><label>Leave blank: <input name="bot-field"></label></p>
-      <input type="hidden" name="time_eater" id="f_time">
       <input type="hidden" name="page" value="ai-for-small-business">
+      <input type="hidden" name="industry" value="small_business">
       <input type="hidden" name="keyword" id="f_keyword">
       <input type="hidden" name="leadSource" id="f_src">
       <input type="hidden" name="leadMedium" id="f_med">
       <input type="hidden" name="leadCampaign" id="f_camp">
       <input type="hidden" name="leadLandingPage" id="f_lp">
       <input type="hidden" name="gclid" id="f_gclid">
+      <input type="hidden" name="gbraid" id="f_gbraid">
+      <input type="hidden" name="wbraid" id="f_wbraid">
+      <input type="hidden" name="leadContent" id="f_content">
+      <input type="hidden" name="leadTerm" id="f_term">
+      <input type="hidden" name="leadPlacement" id="f_placement">
+      <input type="hidden" name="leadReferrer" id="f_referrer">
       <input type="hidden" name="utm_source" id="f_utm_source">
       <input type="hidden" name="utm_medium" id="f_utm_medium">
       <input type="hidden" name="utm_campaign" id="f_utm_campaign">
       <input type="hidden" name="utm_content" id="f_utm_content">
       <input type="hidden" name="utm_term" id="f_utm_term">
 
-      <div class="steps-dots"><i class="on" id="d1"></i><i id="d2"></i></div>
-
-      <div id="step1">
-        <h3>See what we'd automate for you</h3>
-        <p class="sub">Takes 20 seconds. We'll email you specific ideas for your business. No call needed.</p>
-        <p style="font-size:14px;font-weight:600;color:var(--ink-soft);margin-bottom:11px">What eats most of your time right now?</p>
-        <button type="button" class="opt" data-pick="Replying to enquiries &amp; emails">Replying to enquiries &amp; emails</button>
-        <button type="button" class="opt" data-pick="Following up leads">Following up leads &amp; quotes</button>
-        <button type="button" class="opt" data-pick="Admin &amp; data entry">Repetitive admin &amp; data entry</button>
-        <button type="button" class="opt" data-pick="Scheduling &amp; bookings">Scheduling &amp; bookings</button>
-        <button type="button" class="opt" data-pick="Not sure yet">Honestly, not sure where to start</button>
+      <div id="leadform" aria-labelledby="form-title">
+        <div class="form-kicker">Free, no-call plan</div>
+        <h3 id="form-title">Get your free 3-workflow plan</h3>
+        <p class="sub">See what we would automate, how it would work, and the fixed setup price for your business.</p>
+        <ul class="offer-list">
+          <li>3 workflows chosen for your business</li>
+          <li>A plain-English setup plan</li>
+          <li>The exact one-time price</li>
+        </ul>
+        <div class="field"><label for="first">First name</label><input id="first" name="first" autocomplete="given-name" required placeholder="Alex"></div>
+        <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required placeholder="your@email.com"></div>
+        <details class="optional-details">
+          <summary>Add context for a sharper plan (optional)</summary>
+          <div class="optional-fields">
+            <div class="field"><label for="website">Website or Facebook page</label><input id="website" name="website" autocomplete="url" placeholder="yourbusiness.com.au"></div>
+            <div class="field"><label for="time_eater">Biggest time drain</label><select id="time_eater" name="time_eater"><option value="">Choose one if useful</option><option>Replying to enquiries and emails</option><option>Following up leads and quotes</option><option>Repetitive admin and data entry</option><option>Scheduling and bookings</option><option>Not sure where to start</option></select></div>
+            <div class="field"><label for="phone">Phone <span class="muted" style="font-weight:500">(only if you want a faster reply)</span></label><input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="04..."></div>
+          </div>
+        </details>
+        <p id="formerr" role="alert" style="display:none;color:#c0392b;font-size:13px;margin:0 0 10px;text-align:center">Something went wrong sending this. Please try again, or email <a href="mailto:start@tkai.com.au">start@tkai.com.au</a> directly.</p>
+        <button class="btn btn-primary" type="submit" id="submitBtn">Email my free workflow plan →</button>
+        <p class="reassure">Free. No spam. No call required. Mael, our founder, reads every request.</p>
+        <p class="reassure" style="margin-top:6px">Rather talk first? <a class="bookcall" href="https://calendly.com/start-tkai/30min" target="_blank" rel="noopener" style="color:var(--accent-ink);font-weight:600">Book a 30-minute call with Mael →</a></p>
       </div>
 
-      <div id="step2" style="display:none">
-        <h3>Where do we send your recommendations?</h3>
-        <p class="sub">We'll look at your business and email you 3 specific things we'd automate, with the fixed price. Within 2 business hours. No call.</p>
-        <div class="field"><label>First name</label><input name="first" required placeholder="Alex"></div>
-        <div class="field"><label>Email</label><input name="email" type="email" required placeholder="your@email.com"></div>
-        <div class="field"><label>Your website or Facebook page <span class="muted" style="font-weight:500">(optional — with it, your recommendations get 2× more specific)</span></label><input name="website" placeholder="yourbusiness.com.au"></div>
-        <div class="field"><label>Phone <span class="muted" style="font-weight:500">(optional, for a faster reply)</span></label><input name="phone" type="tel" placeholder="04…"></div>
-        <p id="formerr" style="display:none;color:#c0392b;font-size:13px;margin:0 0 10px;text-align:center">Something went wrong sending this. Please try again, or email <a href="mailto:start@tkai.com.au">start@tkai.com.au</a> directly.</p>
-        <button class="btn btn-primary" type="submit" id="submitBtn">Send me my recommendations →</button>
-        <button type="button" class="back" onclick="goStep(1)">← Back</button>
-        <p class="reassure">No spam. Mael, our founder, personally reads every form and replies within 2 business hours.</p>
-        <p class="reassure" style="margin-top:6px">Prefer to talk it through? <a class="bookcall" href="https://calendly.com/start-tkai/30min" target="_blank" rel="noopener" style="color:var(--accent-ink);font-weight:600">Book a quick call with Mael →</a></p>
-      </div>
-
-      <div id="done" class="thanks" style="display:none">
+      <div id="done" class="thanks" role="status" aria-live="polite" tabindex="-1" style="display:none">
         <div class="check">✓</div>
         <h3>Got it. We're looking at your business now.</h3>
-        <p class="sub" style="margin-top:8px">You'll get 3 specific recommendations for your business, plus the fixed price, within 2 business hours. No call, no obligation.</p>
+        <p class="sub" style="margin-top:8px">Your 3-workflow plan and fixed price are being prepared and will arrive by email. No call, no obligation.</p>
       </div>
     </form>
-    <p class="formproof"><span class="star">★★★★★</span> <a href="https://www.google.com/maps/search/?api=1&amp;query=Turn+Key+AI+Gold+Coast" target="_blank" rel="noopener" style="color:inherit">5.0 on Google — read the review yourself</a></p>
+    <p class="formproof"><span class="star">★★★★★</span> <a href="https://www.google.com/maps/search/?api=1&amp;query=Turn+Key+AI+Gold+Coast" target="_blank" rel="noopener" style="color:inherit">5.0 on Google · Read the public review</a></p>
     </div>
   </div>
 </section>
@@ -330,8 +360,8 @@ src="https://www.facebook.com/tr?id=1359053766154887&ev=PageView&noscript=1"
           <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#1f5eff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> 3 custom workflows built around your business</li>
           <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#1f5eff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Hosted on a dedicated server we manage</li>
           <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#1f5eff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Connected to the tools you already use</li>
-          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#1f5eff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> 12 months hosting included</li>
-          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#1f5eff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> 2 weeks dedicated support after launch</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#1f5eff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Ongoing hosting and operation included</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#1f5eff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> We keep it running after launch</li>
         </ul>
         <a class="btn btn-ghost" href="#start" data-scroll style="width:100%;justify-content:center">Start with Cloud</a>
       </div>
@@ -345,7 +375,7 @@ src="https://www.facebook.com/tr?id=1359053766154887&ev=PageView&noscript=1"
           <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#1f5eff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> 5 custom workflows built around your business</li>
           <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#1f5eff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> The hardware is yours to keep</li>
           <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#1f5eff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> On-site setup and team training</li>
-          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#1f5eff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> 2 weeks dedicated support after launch</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#1f5eff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> We keep it running after launch</li>
         </ul>
         <a class="btn btn-primary" href="#start" data-scroll style="width:100%;justify-content:center">Start with Mac Mini</a>
       </div>
@@ -361,7 +391,7 @@ src="https://www.facebook.com/tr?id=1359053766154887&ev=PageView&noscript=1"
       <div class="stars star">★★★★★</div>
       <h2 style="margin-top:14px">A real client. A real, public 5.0 on Google.</h2>
       <p class="quote">"Easy to use, easier to set up. If my AI bot couldn't answer my questions, then Mael certainly did!"</p>
-      <p class="by">— Mack Lawton · Verified Google review</p>
+      <p class="by">Mack Lawton · Verified Google review</p>
       <p class="by" style="margin-top:10px">Every system is built by Mael, our founder. When you write to us, he is the one who answers.</p>
       <a class="rev" href="https://www.google.com/maps/search/?api=1&amp;query=Turn+Key+AI+Gold+Coast" target="_blank" rel="noopener">Read the review on Google →</a>
     </div>
@@ -394,7 +424,7 @@ src="https://www.facebook.com/tr?id=1359053766154887&ev=PageView&noscript=1"
       </details>
       <details class="qa">
         <summary>What happens after the 7 days?</summary>
-        <p>It's yours and it's running. You get 2 weeks of dedicated support after launch, and nothing renews unless you ask. Any change later is a flat A$200, never a subscription.</p>
+        <p>It is yours and stays running. We continue to operate and maintain the system for as long as you use it. There is no monthly maintenance fee. New workflows later are a flat A$200 each.</p>
       </details>
     </div>
   </div>
@@ -406,7 +436,7 @@ src="https://www.facebook.com/tr?id=1359053766154887&ev=PageView&noscript=1"
     <div class="finalcta">
       <h2>Stop reading about AI. Have it set up for you by next week.</h2>
       <p>One fixed price. Seven days. We do all of it. You just tell us where it hurts.</p>
-      <a class="btn btn-primary" href="#start" data-scroll style="padding:16px 26px;font-size:17px">Get my free recommendations →</a>
+      <a class="btn btn-primary" href="#start" data-scroll style="padding:16px 26px;font-size:17px">Get my free workflow plan →</a>
       <p style="margin-top:14px"><a class="bookcall" href="https://calendly.com/start-tkai/30min" target="_blank" rel="noopener" style="color:var(--accent-ink);font-weight:600;font-size:15px">Prefer to talk it through first? Book a quick call →</a></p>
       <p class="micro">Live in 7 days · From A$2,999 one-time · No subscription · 5.0 on Google</p>
     </div>
@@ -420,28 +450,20 @@ src="https://www.facebook.com/tr?id=1359053766154887&ev=PageView&noscript=1"
 <!-- STICKY MOBILE CTA -->
 <div class="stickybar">
   <div class="p">From A$2,999 one-time<small>Live in 7 days · 5.0 on Google</small></div>
-  <a class="btn btn-primary" href="#start" data-scroll>Get my ideas →</a>
+  <a class="btn btn-primary" href="#start" data-scroll>Get my free plan →</a>
 </div>
 
 <script>
-  // 1) Dynamic keyword (message match): swap the H1 keyword from the ad URL, with a safe fallback.
-  //    This page serves the small-business cluster: strip a leading "ai for" / "ai" so
-  //    "ai for small business" -> "small business" reads cleanly in "AI for your ___".
+  // 1) Preserve the ad keyword for attribution without changing the fixed, grammatical headline.
   (function(){
     var p = new URLSearchParams(location.search);
-    var raw = p.get('keyword') || p.get('kw') || '';
-    var kw = raw.replace(/[<>]/g,'').slice(0,50).toLowerCase().trim()
-                .replace(/^ai\s+for\s+/,'').replace(/^ai\s+/,'').replace(/\s+in\s+australia$/,'').replace(/\s+australia$/,'').trim();
+    var raw = p.get('kw') || '';
     var kf = document.getElementById('f_keyword'); if (kf) kf.value = raw.slice(0,80);
-    if(kw){
-      document.querySelectorAll('.kw').forEach(function(el){ el.textContent = kw; });
-      
-    }
 
     // 2) Attribution capture (so the lead notification shows where it came from)
     function g(k){ return p.get(k) || ''; }
     var src = g('utm_source'), med = g('utm_medium'), camp = g('utm_campaign');
-    if (p.get('gclid')) { src = src || 'google'; med = med || 'cpc'; }
+    if (p.get('gclid') || p.get('gbraid') || p.get('wbraid')) { src = src || 'google'; med = med || 'cpc'; }
     if (!src) {
       if (document.referrer) { try { src = new URL(document.referrer).hostname; med = med || 'referral'; } catch(e){} }
       else { src = 'direct'; med = med || 'none'; }
@@ -449,83 +471,88 @@ src="https://www.facebook.com/tr?id=1359053766154887&ev=PageView&noscript=1"
     var set = function(id,v){ var el=document.getElementById(id); if(el) el.value=v; };
     set('f_src', src); set('f_med', med); set('f_camp', camp);
     set('f_lp', location.pathname); set('f_gclid', g('gclid'));
+    set('f_gbraid', g('gbraid')); set('f_wbraid', g('wbraid'));
+    set('f_content', g('utm_content')); set('f_term', g('utm_term'));
+    set('f_placement', g('utm_placement') || g('placement')); set('f_referrer', document.referrer || '');
     set('f_utm_source', g('utm_source')); set('f_utm_medium', g('utm_medium')); set('f_utm_campaign', g('utm_campaign')); set('f_utm_content', g('utm_content')); set('f_utm_term', g('utm_term'));
   })();
 
-  // 2b) Funnel events: form seen / started / step 2 reached / book-a-call
+  // 2b) Funnel events: meaningful form exposure, first interaction and outcomes.
   (function(){
     var PAGE = (document.querySelector('input[name=page]')||{}).value || location.pathname;
+    var IS_LOCAL = /^(localhost|127\.)/.test(location.hostname);
     var sent = {};
-    window.__ffOnce = function(name){ if(sent[name]) return; sent[name]=1; try{ if(typeof gtag==='function') gtag('event', name, { page: PAGE }); }catch(e){} };
+    window.__ffOnce = function(name){ if(IS_LOCAL || sent[name]) return; sent[name]=1; try{ if(typeof gtag==='function') gtag('event', name, { page: PAGE }); }catch(e){} };
     var f = document.getElementById('start');
     if ('IntersectionObserver' in window && f) {
-      var io = new IntersectionObserver(function(es){ es.forEach(function(en){ if(en.isIntersecting){ window.__ffOnce('form_view'); io.disconnect(); } }); }, {threshold:.15});
+      var io = new IntersectionObserver(function(es){ es.forEach(function(en){
+        document.body.classList.toggle('form-visible', en.isIntersecting);
+        if(en.isIntersecting && en.intersectionRatio >= .5) window.__ffOnce('form_view');
+      }); }, {threshold:[0,.5,1]});
       io.observe(f);
     }
-    document.querySelectorAll('.bookcall').forEach(function(a){ a.addEventListener('click', function(){ try{ if(typeof gtag==='function') gtag('event','book_call_click',{ page: PAGE }); }catch(e){} }); });
+    f.addEventListener('focusin', function(e){
+      if (e.target.matches('input:not([type=hidden]), select, textarea')) window.__ffOnce('form_start');
+    });
+    f.addEventListener('invalid', function(){ window.__ffOnce('form_validation_error'); }, true);
+    document.querySelectorAll('.bookcall').forEach(function(a){ a.addEventListener('click', function(){ window.__ffOnce('book_call_click'); }); });
   })();
 
-  // 3) Multi-step form
-  function goStep(n){
-    document.getElementById('step1').style.display = n===1?'block':'none';
-    document.getElementById('step2').style.display = n===2?'block':'none';
-    document.getElementById('d1').className = 'on';
-    document.getElementById('d2').className = n===2?'on':'';
-  }
-  document.querySelectorAll('.opt').forEach(function(b){
-    b.addEventListener('click', function(){
-      var t = document.getElementById('f_time'); if (t) t.value = b.getAttribute('data-pick');
-      goStep(2);
-      if (window.__ffOnce) { window.__ffOnce('form_view'); window.__ffOnce('form_start'); window.__ffOnce('form_step2_view'); }
-      var first = document.querySelector('#step2 input[name=first]'); if(first) first.focus();
-    });
-  });
-
-  // 4) Submit -> Netlify Forms + GA4 conversion (generate_lead) + Enhanced Conversions + Clarity
+  // 3) Submit once to Netlify, then record the confirmed conversion.
   async function submitForm(e){
     e.preventDefault();
     var form = e.target;
+    if (window.__ffOnce) window.__ffOnce('form_submit_attempt');
     var btn = document.getElementById('submitBtn');
     btn.disabled = true; var label = btn.textContent; btn.textContent = 'Sending…';
     var data = new URLSearchParams(new FormData(form));
     var isLocal = /^(localhost|127\.)/.test(location.hostname);
     var posted = false;
-    for (var attempt = 0; attempt < 2 && !posted; attempt++) {
-      try {
-        var resp = await fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:data.toString() });
-        posted = !!(resp && resp.ok);
-      } catch(err) { posted = false; }
-    }
-    if (!posted && !isLocal) {
+    var controller = new AbortController();
+    var timer = setTimeout(function(){ controller.abort(); }, 15000);
+    try {
+      var resp = await fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:data.toString(), signal:controller.signal });
+      posted = !!(resp && resp.ok);
+    } catch(err) { posted = false; }
+    finally { clearTimeout(timer); }
+    if (!posted) {
       btn.disabled = false; btn.textContent = label;
       var errEl = document.getElementById('formerr'); if (errEl) errEl.style.display = 'block';
+      if (window.__ffOnce) window.__ffOnce('form_submit_error');
       return false;
     }
     var errOk = document.getElementById('formerr'); if (errOk) errOk.style.display = 'none';
-    try {
-      if (typeof gtag === 'function') {
+    var email = (form.email.value||'').trim().toLowerCase();
+    var isTestLead = email.indexOf('test') !== -1 || email === 'start@tkai.com.au';
+    if (!isLocal && !isTestLead) {
+      try { if (typeof gtag === 'function') {
         gtag('set', 'user_data', {
-          email: (form.email.value||'').trim().toLowerCase(),
+          email: email,
           phone_number: (form.phone.value||'').replace(/[^\d+]/g,'') || undefined
         });
         gtag('event', 'generate_lead', { event_category:'engagement', event_label:'ai-for-small-business', value:1 });
         gtag('event', 'form_submission', { form_name:'ai-recommendations', page:'ai-for-small-business' });
-      }
-    } catch(err){}
-    try { if (typeof fbq === 'function') fbq('track', 'Lead'); } catch(err){}
-    try { if (typeof clarity === 'function') clarity('event','form_submission'); } catch(err){}
-    document.getElementById('step1').style.display='none';
-    document.getElementById('step2').style.display='none';
-    document.getElementById('done').style.display='block';
-    document.getElementById('d2').className='on';
+      }} catch(err){}
+      try { if (typeof fbq === 'function') fbq('track', 'Lead'); } catch(err){}
+      try { if (typeof clarity === 'function') clarity('event','form_submission'); } catch(err){}
+      if (window.__ffOnce) window.__ffOnce('form_submit_success');
+    }
+    document.getElementById('leadform').style.display='none';
+    var done = document.getElementById('done');
+    done.style.display='block';
+    done.focus();
     return false;
   }
 
-  // 5) Smooth scroll to form
+  // 4) Smooth scroll to form
   document.querySelectorAll('[data-scroll]').forEach(function(a){
-    a.addEventListener('click', function(e){
+    var toForm = function(e){
       e.preventDefault();
       document.getElementById('start').scrollIntoView({behavior:'smooth',block:'center'});
+    };
+    a.addEventListener('click', toForm);
+    if (!a.matches('a,button')) a.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ') toForm(e);
     });
   });
 </script>

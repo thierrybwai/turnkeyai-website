@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Brief bien reçu. On s'en occupe. | TurnkeyAI</title>
+<meta name="description" content="Nous avons bien reçu votre brief. Quelqu'un lit chaque brief personnellement et vous aurez une réponse sous 2 heures ouvrées.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="/assets/brand.css">
+<style>
+  /* Confetti accent gradient ring behind the check */
+  .ty-hero {
+    padding: 80px 22px 48px;
+    text-align: center;
+    position: relative;
+  }
+  .ty-check {
+    width: 96px; height: 96px;
+    margin: 0 auto 32px;
+    border-radius: 50%;
+    background: var(--tk-accent);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow:
+      0 0 0 8px rgba(0,113,227,0.10),
+      0 24px 48px -16px rgba(0,113,227,0.45);
+    animation: ty-pop 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .ty-check svg {
+    width: 44px; height: 44px;
+    stroke: #fff; stroke-width: 3; fill: none;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 60;
+    stroke-dashoffset: 60;
+    animation: ty-draw 600ms 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes ty-pop {
+    0%   { opacity: 0; transform: scale(0.6); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  @keyframes ty-draw {
+    to { stroke-dashoffset: 0; }
+  }
+  .ty-eyebrow {
+    color: var(--tk-accent);
+    font-size: 13px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  /* Timeline */
+  .ty-timeline {
+    max-width: 540px;
+    margin: 0 auto;
+    padding: 32px;
+    background: var(--tk-bg-elev);
+    border-radius: 22px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.03), 0 12px 32px -16px hsl(var(--tk-shadow-color) / 0.18);
+    text-align: left;
+  }
+  .ty-timeline-row {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 16px;
+    align-items: start;
+    padding: 14px 0;
+  }
+  .ty-timeline-row + .ty-timeline-row { border-top: 1px solid var(--tk-line); }
+  .ty-step-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--tk-accent);
+    color: #fff;
+    font-size: 13px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 1px;
+  }
+  .ty-step-text { font-size: 15px; color: var(--tk-fg); line-height: 1.5; }
+  .ty-step-text strong { font-weight: 600; }
+
+  .ty-actions {
+    display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+    margin-top: 36px;
+  }
+
+  /* P.S. block */
+  .ty-ps {
+    max-width: 540px;
+    margin: 56px auto 0;
+    padding: 24px 28px;
+    background: var(--tk-bg-deep);
+    color: rgba(255,255,255,0.85);
+    border-radius: 18px;
+    text-align: left;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .ty-ps-label {
+    color: var(--tk-fg-subtle);
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: block; margin-bottom: 6px;
+  }
+</style>
+<meta property="og:image" content="https://turnkeyai.com.au/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://turnkeyai.com.au/og-image.png">
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "wikl0ltns0");
+</script>
+<!-- Google Analytics (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DHZ47DHP0B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DHZ47DHP0B');
+</script>
+  <!-- OpenAI Ads Pixel -->
+  <script>!function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");oaiq("init",{pixelId:"JtpXLZ6eqeZhpmC4GTipjd",debug:true});</script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1359053766154887');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1359053766154887&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+<nav class="tk-nav">
+  <div class="tk-nav-inner">
+    <a href="/fr/" class="tk-brand">TurnkeyAI</a>
+    <ul class="tk-nav-links">
+      <li><a href="/fr/#packages" class="tk-nav-link">Offres</a></li>
+      <li><a href="/fr/#roi" class="tk-nav-link">ROI</a></li>
+      <li><a href="/fr/#how" class="tk-nav-link">Comment ça marche</a></li>
+      <li><a href="/blog/" class="tk-nav-link">Blog</a></li>
+      <li><a href="/fr/#booking" class="tk-nav-link">Commencer</a></li>
+    </ul>
+    <a href="/fr/" class="tk-btn tk-btn--primary tk-btn--sm">Retour à l'accueil</a>
+  </div>
+</nav>
+
+<section class="ty-hero">
+  <div class="ty-check" aria-hidden="true">
+    <svg viewBox="0 0 24 24"><polyline points="5 12.5 10 17.5 19 7.5"></polyline></svg>
+  </div>
+
+  <p class="ty-eyebrow">Brief bien reçu</p>
+  <h1 class="tk-h1" style="margin-bottom: 16px;">C'est noté. Maintenant, regardez votre boîte mail.</h1>
+  <p class="tk-lede tk-muted" style="max-width: 560px; margin: 0 auto 40px;">
+    Un email de confirmation est déjà en route, avec une courte lecture qui vaut le détour pendant que vous patientez. Quelqu'un lit chaque brief personnellement et vous aurez une réponse <strong style="color: var(--tk-fg);">sous 2 heures ouvrées</strong>.
+  </p>
+
+  <div class="ty-timeline">
+    <div class="ty-timeline-row">
+      <div class="ty-step-num">1</div>
+      <div class="ty-step-text">L'email de confirmation arrive dans votre boîte mail à l'instant.</div>
+    </div>
+    <div class="ty-timeline-row">
+      <div class="ty-step-num">2</div>
+      <div class="ty-step-text">Votre brief est lu aujourd'hui.</div>
+    </div>
+    <div class="ty-timeline-row">
+      <div class="ty-step-num">3</div>
+      <div class="ty-step-text">On lit votre brief aujourd'hui et on répond sous 2 heures ouvrées. Ou réservez directement un créneau ci-dessous.</div>
+    </div>
+    <div class="ty-timeline-row">
+      <div class="ty-step-num">4</div>
+      <div class="ty-step-text"><strong>Jour 7 :</strong> votre Mac Mini tourne dans vos bureaux.</div>
+    </div>
+  </div>
+
+  <!-- CRO: let the lead book the call instantly instead of waiting on a manual email -->
+  <div class="ty-calendly" style="max-width: 720px; margin: 8px auto 44px;">
+    <h2 class="tk-h2" style="text-align: center; margin-bottom: 8px;">Ou n'attendez pas : réservez votre appel maintenant</h2>
+    <p class="tk-muted" style="text-align: center; margin: 0 auto 20px; max-width: 480px;">Choisissez un créneau de 30 minutes qui vous convient. On aura lu votre brief avant de se parler.</p>
+    <div class="calendly-inline-widget" data-url="https://calendly.com/start-tkai/30min" style="min-width: 320px; height: 680px;"></div>
+    <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+  </div>
+  <script>
+    window.addEventListener('message', function (e) {
+      if (e.data && e.data.event === 'calendly.event_scheduled') {
+        try { if (typeof gtag === 'function') gtag('event', 'calendar_booked', { method: 'calendly' }); } catch (_) {}
+        try { if (typeof clarity === 'function') clarity('event', 'calendar_booked'); } catch (_) {}
+      }
+    });
+  </script>
+
+  <div class="ty-actions">
+    <a href="/blog/" class="tk-btn tk-btn--primary">Lire le blog en attendant <span class="arrow">→</span></a>
+    <a href="/fr/" class="tk-btn tk-btn--ghost">Retour à l'accueil</a>
+  </div>
+
+  <div class="ty-ps">
+    <span class="ty-ps-label">P.S.</span>
+    Chaque jour sans votre IA en marche est un jour où vous payez des gens pour un travail qu'elle pourrait déjà faire.
+  </div>
+</section>
+
+<footer class="tk-footer-rich">
+  <div class="tk-footer-grid">
+    <div>
+      <a href="/fr/" class="tk-brand" style="margin-bottom: 16px;">TurnkeyAI</a>
+      <p class="tk-small" style="margin-top: 12px; max-width: 280px;">
+        Automatisation IA clé en main pour les PME. Opérationnel en 7 jours, sur un Mac Mini dans vos bureaux.
+      </p>
+    </div>
+    <div>
+      <p class="tk-eyebrow" style="margin-bottom: 14px;">Explorer</p>
+      <ul class="tk-footer-links">
+        <li><a href="/fr/#packages">Offres</a></li>
+        <li><a href="/fr/#roi">Calculateur ROI</a></li>
+        <li><a href="/fr/#how">Comment ça marche</a></li>
+        <li><a href="/fr/#faq">FAQ</a></li>
+        <li><a href="/blog/">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="tk-eyebrow" style="margin-bottom: 14px;">Légal</p>
+      <ul class="tk-footer-links">
+        <li><a href="/legal/terms.html">Conditions</a></li>
+        <li><a href="/legal/privacy.html">Confidentialité</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="tk-eyebrow" style="margin-bottom: 14px;">Contact</p>
+      <ul class="tk-footer-links">
+        <li><a href="mailto:start@tkai.com.au">start@tkai.com.au</a></li>
+        <li>Gold Coast, Australie</li>
+      </ul>
+    </div>
+  </div>
+  <div class="tk-footer-bottom">
+    <span>&copy; 2026 TurnkeyAI. Prix en AUD hors taxes.</span>
+    <span class="tk-footer-pulse">
+      <span class="tk-pulse-dot"></span>
+      Nous acceptons de nouveaux clients
+    </span>
+  </div>
+</footer>
+
+<script src="/assets/shared.js" defer></script>
+</body>
+</html>

@@ -25,12 +25,11 @@
 
   const isFR = /^\/fr(\/|$)/.test(path);
   const STORAGE_KEY = 'tk-toast-dismissed';
-  // const COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
-  // TEMP: cooldown disabled for visual QA — restore the block below before going to steady state
-  // try {
-  //   const stored = parseInt(localStorage.getItem(STORAGE_KEY), 10);
-  //   if (stored && Date.now() - stored < COOLDOWN_MS) return;
-  // } catch (e) { /* localStorage unavailable; continue */ }
+  const COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
+  try {
+    const stored = parseInt(localStorage.getItem(STORAGE_KEY), 10);
+    if (stored && Date.now() - stored < COOLDOWN_MS) return;
+  } catch (e) { /* localStorage unavailable; continue */ }
 
   function scrolledDeep() {
     const total = document.documentElement.scrollHeight;
@@ -85,7 +84,7 @@
       targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
       hideToast();
     } else {
-      window.location.href = '/#booking';
+      window.location.href = (isFR ? '/fr/' : '/') + '#booking';
     }
   });
 
@@ -121,9 +120,19 @@
 // page with a /fr/ twin for now). One click settles the choice for good.
 (function () {
   try {
+    var LS = window.localStorage;
+    function setPref(v) { try { LS.setItem('tk_lang_pref', v); } catch (e) {} }
+
+    // Any explicit language switch settles the preference for good — the EN/FR
+    // nav links carry an hreflang attribute on both versions of the page.
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[hreflang]');
+      if (!a) return;
+      setPref(/^fr/i.test(a.getAttribute('hreflang') || '') ? 'fr' : 'en');
+    });
+
     var path = location.pathname.replace(/\/index\.html$/, '/');
     if (path !== '/') return;                          // English home only
-    var LS = window.localStorage;
     if (LS.getItem('tk_lang_pref')) return;            // already chose EN or FR
 
     // France + all French overseas territories (incl. New Caledonia = NC)
@@ -134,15 +143,28 @@
       return ls.some(function (l) { return /^fr\b/i.test(l); });
     }
 
-    function setPref(v) { try { LS.setItem('tk_lang_pref', v); } catch (e) {} }
+    // Distance from the viewport bottom that keeps the banner clear of the
+    // sticky mobile CTA — never cover the primary conversion button
+    // (~80% of paid traffic is mobile). Recomputed on resize/rotation.
+    function bottomOffset() {
+      var sticky = document.querySelector('.tk-sticky-cta');
+      if (sticky) {
+        var sr = sticky.getBoundingClientRect();
+        if (sr.height > 0 && getComputedStyle(sticky).display !== 'none') {
+          return Math.max(22, Math.round(window.innerHeight - sr.top) + 12);
+        }
+      }
+      return 22;
+    }
 
     function show() {
       if (document.getElementById('tk-lang-banner')) return;
+      var offset = bottomOffset();
       var bar = document.createElement('div');
       bar.id = 'tk-lang-banner';
       bar.setAttribute('role', 'region');
       bar.setAttribute('aria-label', 'Language / langue');
-      bar.style.cssText = 'position:fixed;left:50%;bottom:22px;z-index:1200;display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:center;max-width:calc(100vw - 32px);padding:12px 14px 12px 18px;background:#1d1d1f;color:#f5f5f7;border-radius:16px;font:500 14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;box-shadow:0 18px 50px rgba(0,0,0,.32);transform:translate(-50%,140%);transition:transform .55s cubic-bezier(.2,.75,.2,1);';
+      bar.style.cssText = 'position:fixed;left:50%;bottom:' + offset + 'px;z-index:1200;display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:center;max-width:calc(100vw - 32px);padding:12px 14px 12px 18px;background:#1d1d1f;color:#f5f5f7;border-radius:16px;font:500 14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;box-shadow:0 18px 50px rgba(0,0,0,.32);transform:translate(-50%,140%);transition:transform .55s cubic-bezier(.2,.75,.2,1);';
       bar.innerHTML =
         '<span style="white-space:nowrap;">🇫🇷 Ce site est disponible en français.</span>' +
         '<a href="/fr/" id="tk-lang-go" style="display:inline-flex;align-items:center;gap:6px;background:#0071e3;color:#fff;text-decoration:none;padding:8px 16px;border-radius:100px;font-weight:600;white-space:nowrap;">Voir en français →</a>' +
@@ -156,6 +178,9 @@
         setPref('en');                                 // respect the choice; never nag again
         bar.style.transform = 'translate(-50%,140%)';
         setTimeout(function () { if (bar.parentNode) bar.parentNode.removeChild(bar); }, 550);
+      });
+      window.addEventListener('resize', function () {
+        if (bar.parentNode) bar.style.bottom = bottomOffset() + 'px';
       });
     }
 

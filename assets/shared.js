@@ -23,6 +23,7 @@
   const path = window.location.pathname;
   if (SKIP_PATHS.some((rx) => rx.test(path))) return;
 
+  const isFR = /^\/fr(\/|$)/.test(path);
   const STORAGE_KEY = 'tk-toast-dismissed';
   // const COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
   // TEMP: cooldown disabled for visual QA — restore the block below before going to steady state
@@ -51,9 +52,12 @@
     '<span class="tk-toast-dot" aria-hidden="true"></span>',
     '<span class="tk-toast-text">',
       '<strong>TurnkeyAI</strong>',
-      '<span class="tk-toast-msg">Question about AI? Real humans, answer in 2 hours <span class="tk-toast-arrow" aria-hidden="true">&rarr;</span></span>',
+      '<span class="tk-toast-msg">' + (isFR
+        ? 'Une question sur l\'IA ? De vraies personnes, réponse sous 2 h'
+        : 'Question about AI? Real humans, answer in 2 hours')
+        + ' <span class="tk-toast-arrow" aria-hidden="true">&rarr;</span></span>',
     '</span>',
-    '<button class="tk-toast-close" type="button" aria-label="Dismiss notification">&times;</button>'
+    '<button class="tk-toast-close" type="button" aria-label="' + (isFR ? 'Fermer la notification' : 'Dismiss notification') + '">&times;</button>'
   ].join('');
 
   let autoTimer;
@@ -107,6 +111,62 @@
     document.addEventListener('keydown', escHandler);
     autoTimer = setTimeout(hideToast, 12000);
   }, 3000);
+})();
+
+// --- Language suggestion banner (geo + browser language) --------------------
+// Offers the French version (/fr/) to French-preferring visitors and to visitors
+// in French territories (New Caledonia, France, French Pacific, etc.). It never
+// hard-redirects — Google recommends a banner, not IP redirection, so both the
+// English and French URLs stay crawlable and indexable. Home page only (the only
+// page with a /fr/ twin for now). One click settles the choice for good.
+(function () {
+  try {
+    var path = location.pathname.replace(/\/index\.html$/, '/');
+    if (path !== '/') return;                          // English home only
+    var LS = window.localStorage;
+    if (LS.getItem('tk_lang_pref')) return;            // already chose EN or FR
+
+    // France + all French overseas territories (incl. New Caledonia = NC)
+    var FR_COUNTRIES = ['FR','NC','PF','WF','MC','GP','MQ','GF','RE','YT','BL','MF','PM','TF'];
+
+    function browserPrefersFrench() {
+      var ls = navigator.languages || [navigator.language || ''];
+      return ls.some(function (l) { return /^fr\b/i.test(l); });
+    }
+
+    function setPref(v) { try { LS.setItem('tk_lang_pref', v); } catch (e) {} }
+
+    function show() {
+      if (document.getElementById('tk-lang-banner')) return;
+      var bar = document.createElement('div');
+      bar.id = 'tk-lang-banner';
+      bar.setAttribute('role', 'region');
+      bar.setAttribute('aria-label', 'Language / langue');
+      bar.style.cssText = 'position:fixed;left:50%;bottom:22px;z-index:1200;display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:center;max-width:calc(100vw - 32px);padding:12px 14px 12px 18px;background:#1d1d1f;color:#f5f5f7;border-radius:16px;font:500 14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;box-shadow:0 18px 50px rgba(0,0,0,.32);transform:translate(-50%,140%);transition:transform .55s cubic-bezier(.2,.75,.2,1);';
+      bar.innerHTML =
+        '<span style="white-space:nowrap;">🇫🇷 Ce site est disponible en français.</span>' +
+        '<a href="/fr/" id="tk-lang-go" style="display:inline-flex;align-items:center;gap:6px;background:#0071e3;color:#fff;text-decoration:none;padding:8px 16px;border-radius:100px;font-weight:600;white-space:nowrap;">Voir en français →</a>' +
+        '<button id="tk-lang-x" type="button" aria-label="Rester en anglais" style="background:none;border:none;color:rgba(245,245,247,.55);font-size:22px;line-height:1;cursor:pointer;padding:2px 8px;">×</button>';
+      document.body.appendChild(bar);
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { bar.style.transform = 'translate(-50%,0)'; });
+      });
+      document.getElementById('tk-lang-go').addEventListener('click', function () { setPref('fr'); });
+      document.getElementById('tk-lang-x').addEventListener('click', function () {
+        setPref('en');                                 // respect the choice; never nag again
+        bar.style.transform = 'translate(-50%,140%)';
+        setTimeout(function () { if (bar.parentNode) bar.parentNode.removeChild(bar); }, 550);
+      });
+    }
+
+    if (browserPrefersFrench()) { show(); return; }    // no network needed
+    // Browser isn't French: ask the edge for the country (catches e.g. an English
+    // device physically in New Caledonia). Best-effort; failure just shows nothing.
+    fetch('/tk-geo', { headers: { accept: 'application/json' } })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) { if (d && d.country && FR_COUNTRIES.indexOf(d.country) !== -1) show(); })
+      .catch(function () {});
+  } catch (e) { /* a language banner must never break the page */ }
 })();
 
 // --- Lead attribution (first-touch) -----------------------------------------

@@ -47,7 +47,7 @@ a { color: inherit; }
 .nav-links a { color: #454a54; font-size: 14px; font-weight: 600; text-decoration: none; }
 .nav-links .nav-cta { background: var(--blue); border-radius: 12px; color: white; padding: 11px 17px; box-shadow: 0 8px 20px rgba(31,94,255,.24); }
 
-.hero { display: grid; gap: 60px; grid-template-columns: 1.02fr .98fr; padding-block: 82px 76px; align-items: center; }
+.hero { display: grid; gap: 54px; grid-template-columns: 1.04fr .96fr; padding-block: 70px 54px; align-items: center; }
 .eyebrow, .micro { color: var(--blue-dark); font-size: 13px; font-weight: 760; letter-spacing: .02em; margin: 0 0 16px; }
 .micro { font-size: 11px; letter-spacing: .12em; }
 h1, h2, h3, p { margin-top: 0; }
@@ -65,7 +65,12 @@ h1 span { color: var(--blue); }
 .proof-pills span { align-items: center; background: white; border: 1px solid var(--line); border-radius: 999px; color: #464b55; display: inline-flex; font-size: 12px; font-weight: 680; gap: 7px; padding: 8px 12px; }
 .proof-pills i, .verified i { background: var(--green); border-radius: 50%; height: 7px; width: 7px; }
 
-.calculator { background: linear-gradient(145deg, #07090e, #111c35); border: 1px solid rgba(255,255,255,.12); border-radius: 28px; box-shadow: 0 30px 80px rgba(10,15,30,.25); color: white; padding: 32px; position: relative; overflow: hidden; }
+.hero-form-card { background: white; border: 1px solid var(--line); border-radius: 28px; box-shadow: 0 26px 70px rgba(22, 28, 45, .13); padding: 30px; }
+.hero-form-heading h2 { font-size: 30px; letter-spacing: -.04em; line-height: 1.08; margin-bottom: 12px; }
+.hero-form-heading > p:last-child { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+.hero-form-card form { padding: 20px; }
+.calculator-section { padding-block: 28px 76px; }
+.calculator { background: linear-gradient(145deg, #07090e, #111c35); border: 1px solid rgba(255,255,255,.12); border-radius: 28px; box-shadow: 0 30px 80px rgba(10,15,30,.25); color: white; margin-inline: auto; max-width: 860px; padding: 32px; position: relative; overflow: hidden; }
 .calculator::before { background: rgba(31,94,255,.25); border-radius: 50%; content: ""; filter: blur(60px); height: 220px; position: absolute; right: -80px; top: -100px; width: 220px; }
 .calculator-heading { position: relative; }
 .calculator .micro { color: #7fa1ff; }
@@ -169,6 +174,14 @@ form p { color: var(--muted); font-size: 11px; margin: 0; text-align: center; }
 .form-success span { align-items: center; background: var(--green); border-radius: 50%; color: white; display: flex; font-size: 24px; height: 48px; justify-content: center; width: 48px; }
 .form-success h3 { font-size: 27px; margin: 20px 0 8px; }
 .form-success p { font-size: 14px; text-align: left; }
+.optional-fields { border-top: 1px solid #ddd8d0; padding-top: 11px; }
+.optional-fields summary { color: #4b515c; cursor: pointer; font-size: 12px; font-weight: 700; }
+.optional-fields summary span { color: var(--muted); font-weight: 500; }
+.optional-fields > div { display: grid; gap: 15px; padding-top: 15px; }
+.plan-reminder { background: var(--blue-pale); border: 1px solid #cbd9ff; border-radius: 20px; padding: 28px; }
+.plan-reminder strong { font-size: 21px; }
+.plan-reminder p { color: var(--muted); margin: 8px 0 14px; }
+.plan-reminder a { color: var(--blue-dark); font-weight: 720; text-underline-offset: 4px; }
 .honeypot { left: -9999px; position: absolute; }
 .success { background: var(--blue-pale); border: 1px solid #cbd9ff; border-radius: 20px; padding: 32px; }
 .success > span { align-items: center; background: var(--green); border-radius: 50%; color: white; display: flex; font-size: 24px; height: 48px; justify-content: center; width: 48px; }
@@ -183,6 +196,7 @@ form p { color: var(--muted); font-size: 11px; margin: 0; text-align: center; }
 
 @media (max-width: 900px) {
   .hero { gap: 42px; grid-template-columns: 1fr; padding-top: 60px; }
+  .hero-form-card { max-width: 680px; }
   .calculator { max-width: 680px; }
   .trust-strip { grid-template-columns: 1fr 1fr; row-gap: 22px; }
   .trust-strip div:nth-child(3) { border-left: 0; }
@@ -203,6 +217,10 @@ form p { color: var(--muted); font-size: 11px; margin: 0; text-align: center; }
   .text-link { text-align: center; }
   .proof-pills { display: grid; }
   .proof-pills span { width: max-content; }
+  .hero-form-card { border-radius: 22px; margin-inline: -4px; padding: 18px; }
+  .hero-form-heading h2 { font-size: 27px; }
+  .hero-form-card form { padding: 18px; }
+  .calculator-section { padding-block: 8px 58px; }
   .calculator { border-radius: 22px; margin-inline: -4px; padding: 23px; }
   .calculator h2 { font-size: 25px; }
   .input-grid, .result-card { grid-template-columns: 1fr; }

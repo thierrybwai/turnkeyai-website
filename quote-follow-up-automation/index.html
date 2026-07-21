@@ -70,8 +70,8 @@
         <h1>Recover the money sitting in your <span>quotes.</span></h1>
         <p class="hero-lede">We install and run the quote follow-up, invoicing and admin workflows around the tools you already use. No new app to learn.</p>
         <div class="hero-actions">
-          <a class="button primary" href="#calculator">See my payback</a>
-          <a class="text-link" href="#workflow">Watch the workflow <span>↓</span></a>
+          <a class="button primary" href="#leadForm">Email my free workflow plan</a>
+          <a class="text-link" href="#calculator">See my payback <span>↓</span></a>
         </div>
         <div class="proof-pills" aria-label="Offer proof points">
           <span>★★★★★ 5.0 on Google</span>
@@ -80,10 +80,60 @@
         </div>
       </div>
 
+      <div class="hero-form-card">
+        <div class="hero-form-heading">
+          <p class="micro">FREE, NO-CALL PLAN</p>
+          <h2>See the three workflows we'd build first.</h2>
+          <p>Get a plain-English plan and the exact one-time package price by email.</p>
+        </div>
+        <form id="leadForm" name="ai-recommendations" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="ai-recommendations">
+          <p hidden><label>Leave blank<input name="bot-field"></label></p>
+          <input type="hidden" name="page" value="quote-follow-up-automation">
+          <input type="hidden" name="industry" value="trades">
+          <input type="hidden" name="keyword" id="f_keyword">
+          <input type="hidden" name="leadSource" id="f_src">
+          <input type="hidden" name="leadMedium" id="f_med">
+          <input type="hidden" name="leadCampaign" id="f_camp">
+          <input type="hidden" name="leadLandingPage" id="f_lp">
+          <input type="hidden" name="gclid" id="f_gclid">
+          <input type="hidden" name="gbraid" id="f_gbraid">
+          <input type="hidden" name="wbraid" id="f_wbraid">
+          <input type="hidden" name="leadContent" id="f_content">
+          <input type="hidden" name="leadTerm" id="f_term">
+          <input type="hidden" name="leadPlacement" id="f_placement">
+          <input type="hidden" name="leadReferrer" id="f_referrer">
+          <input type="hidden" name="utm_source" id="f_utm_source">
+          <input type="hidden" name="utm_medium" id="f_utm_medium">
+          <input type="hidden" name="utm_campaign" id="f_utm_campaign">
+          <input type="hidden" name="utm_content" id="f_utm_content">
+          <input type="hidden" name="utm_term" id="f_utm_term">
+          <div id="formFields">
+            <label>First name<input name="first" autocomplete="given-name" placeholder="Alex" required></label>
+            <label>Business email<input name="email" type="email" autocomplete="email" placeholder="alex@yourbusiness.com.au" required></label>
+            <details class="optional-fields">
+              <summary>Add phone or website <span>optional</span></summary>
+              <div>
+                <label>Phone <span>optional</span><input name="phone" type="tel" autocomplete="tel" placeholder="04..."></label>
+                <label>Website <span>optional</span><input name="website" autocomplete="url" placeholder="yourbusiness.com.au"></label>
+              </div>
+            </details>
+            <p class="form-error" id="formError" role="alert" hidden>Something went wrong. Please try again or email start@tkai.com.au.</p>
+            <button class="button primary" id="submitButton" type="submit">Email my free workflow plan</button>
+            <p>Free. No spam. No call required. Mael, our founder, reads every request.</p>
+          </div>
+          <div class="form-success" id="formSuccess" role="status" tabindex="-1" hidden>
+            <span>✓</span><h3>Got it. We're looking at your business now.</h3><p>Your three-workflow plan and fixed price are being prepared and will arrive by email.</p>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="calculator-section shell" aria-labelledby="calculator-title">
       <div class="calculator" id="calculator">
         <div class="calculator-heading">
           <p class="micro">YOUR NUMBERS, NOT OUR PROMISES</p>
-          <h2>See the payback before giving us your details.</h2>
+          <h2 id="calculator-title">See the payback using your numbers.</h2>
         </div>
         <div class="input-grid">
           <label>Average job value
@@ -98,7 +148,7 @@
           <div><span>If one extra job closes each month</span><strong><b id="annualValue">A$24,000</b><small>/yr</small></strong></div>
         </div>
         <p class="scenario-note">Scenario based on your inputs and the A$2,999 Cloud price. This is not a revenue guarantee. You currently have <span id="quoteCount">12 open quotes</span> to work with.</p>
-        <a class="button light" href="#plan">Show me what you'd automate</a>
+        <a class="button light" href="#leadForm">Email my free workflow plan</a>
       </div>
     </section>
 
@@ -181,42 +231,9 @@
           <h2>See the three workflows we'd build first.</h2>
           <p>We'll map the likely quote, follow-up and admin workflows around your current tools, with the fixed setup price.</p>
           <ul><li>3 workflows chosen for your trade business</li><li>A plain-English implementation plan</li><li>The exact one-time package price</li></ul>
+          <a class="button primary" href="#leadForm">Email my free workflow plan</a>
         </div>
-        <form id="leadForm" name="ai-recommendations" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-          <input type="hidden" name="form-name" value="ai-recommendations">
-          <p hidden><label>Leave blank<input name="bot-field"></label></p>
-          <input type="hidden" name="page" value="quote-follow-up-automation">
-          <input type="hidden" name="industry" value="trades">
-          <input type="hidden" name="keyword" id="f_keyword">
-          <input type="hidden" name="leadSource" id="f_src">
-          <input type="hidden" name="leadMedium" id="f_med">
-          <input type="hidden" name="leadCampaign" id="f_camp">
-          <input type="hidden" name="leadLandingPage" id="f_lp">
-          <input type="hidden" name="gclid" id="f_gclid">
-          <input type="hidden" name="gbraid" id="f_gbraid">
-          <input type="hidden" name="wbraid" id="f_wbraid">
-          <input type="hidden" name="leadContent" id="f_content">
-          <input type="hidden" name="leadTerm" id="f_term">
-          <input type="hidden" name="leadPlacement" id="f_placement">
-          <input type="hidden" name="leadReferrer" id="f_referrer">
-          <input type="hidden" name="utm_source" id="f_utm_source">
-          <input type="hidden" name="utm_medium" id="f_utm_medium">
-          <input type="hidden" name="utm_campaign" id="f_utm_campaign">
-          <input type="hidden" name="utm_content" id="f_utm_content">
-          <input type="hidden" name="utm_term" id="f_utm_term">
-          <div id="formFields">
-            <label>First name<input name="first" autocomplete="given-name" placeholder="Alex" required></label>
-            <label>Business email<input name="email" type="email" autocomplete="email" placeholder="alex@yourbusiness.com.au" required></label>
-            <label>Phone <span>optional</span><input name="phone" type="tel" autocomplete="tel" placeholder="04..."></label>
-            <label>Website <span>optional</span><input name="website" autocomplete="url" placeholder="yourbusiness.com.au"></label>
-            <p class="form-error" id="formError" role="alert" hidden>Something went wrong. Please try again or email start@tkai.com.au.</p>
-            <button class="button primary" id="submitButton" type="submit">Email my free workflow plan</button>
-            <p>Free. No spam. No call required. Mael, our founder, reads every request.</p>
-          </div>
-          <div class="form-success" id="formSuccess" role="status" tabindex="-1" hidden>
-            <span>✓</span><h3>Got it. We're looking at your business now.</h3><p>Your three-workflow plan and fixed price are being prepared and will arrive by email.</p>
-          </div>
-        </form>
+        <div class="plan-reminder"><strong>Already decided?</strong><p>The short form is at the top of this page. Only your first name and business email are required.</p><a href="#leadForm">Go to the free plan form ↑</a></div>
       </div>
     </section>
   </main>

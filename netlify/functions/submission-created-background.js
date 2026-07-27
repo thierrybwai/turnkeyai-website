@@ -381,7 +381,7 @@ Reply with the JSON object only. No backticks, no markdown fences.`;
       'content-type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'claude-sonnet-4-5',
+      model: 'claude-opus-5',
       max_tokens: 2500,
       system: systemPrompt,
       messages: [{ role: 'user', content: userPrompt }],

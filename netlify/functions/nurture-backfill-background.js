@@ -10,7 +10,10 @@ import { fetchBrandAssets, buildEmail, buildPdfHtml } from './lib/lead-render.js
 import {
   generateSpinContent, fetchSiteContent, renderPdf, slugify,
 } from './submission-created-background.js';
-import { enqueueNurture, leadIdFor, unsubUrlFor, hmacToken, safeEqual, HMAC_READY } from './lib/nurture.js';
+import {
+  enqueueNurture, leadIdFor, unsubUrlFor, hmacToken, safeEqual, HMAC_READY,
+  nurtureStore, leadKeyFor, DEDUPE_MS,
+} from './lib/nurture.js';
 import { smsTextFor } from './lib/nurture-copy.js';
 
 export default async (req) => {
@@ -27,6 +30,7 @@ export default async (req) => {
   const leads = Array.isArray(body.leads) ? body.leads.slice(0, 60) : [];
   if (!leads.length) return json({ error: 'no leads' }, 400);
 
+  const store = nurtureStore();
   const report = [];
   for (const lead of leads) {
     const email = String(lead.email || '').trim();
@@ -38,6 +42,17 @@ export default async (req) => {
     const row = { email: mask(email), firstName, biz: businessName, sms: !!lead.sms, steps: [] };
 
     if (!email) { row.steps.push('skipped: no email'); report.push(row); continue; }
+
+    // Idempotence: a lead already enrolled must never get a second plan email.
+    // This run may be a retry after a timeout, so check BEFORE any send.
+    try {
+      const existing = await store.get(leadKeyFor(email), { type: 'json' });
+      if (existing && Date.now() - existing.createdAt < DEDUPE_MS) {
+        row.steps.push('skipped: already enrolled');
+        report.push(row);
+        continue;
+      }
+    } catch { /* on a read failure, fall through to the enqueue dedupe */ }
 
     if (dry) {
       row.steps.push('DRY: would rebuild plan, re-send t=0 email, enrol' + (lead.sms ? ' with SMS' : ' email-only'));
@@ -123,7 +138,28 @@ export default async (req) => {
     report.push(row);
   }
 
-  return json({ dry, count: report.length, report });
+  // Background function: the caller already got a 202, so the report goes to the
+  // ops journal and to the team inbox instead of the HTTP response.
+  const done = report.filter(r => r.steps.some(s => s.includes('t=0 email sent'))).length;
+  const skipped = report.filter(r => r.steps.some(s => s.includes('already enrolled'))).length;
+  const failed = report.filter(r => r.steps.some(s => s.includes('FAILED'))).length;
+  const summary = `Backfill finished. ${done} plans sent, ${skipped} already enrolled (skipped), ${failed} failed, ${report.length} processed.`;
+  console.log(summary, JSON.stringify(report));
+  if (!dry) {
+    try {
+      await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          from: 'TurnkeyAI Nurture <start@tkai.com.au>',
+          to: [(process.env.NURTURE_DIGEST_EMAILS || 'help@bwpg.com.au').split(',')[0].trim()],
+          subject: summary.slice(0, 90),
+          text: summary + '\n\n' + report.map(r => `${r.email} sms=${r.sms} :: ${r.steps.join(' | ')}`).join('\n'),
+        }),
+      });
+    } catch (e) { console.error('Backfill report email failed:', e.message); }
+  }
+  return json({ dry, count: report.length, done, skipped, failed, report });
 };
 
 function mask(e) {

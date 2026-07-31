@@ -124,9 +124,11 @@ export default async () => {
       if (!rec.accel && !inWindow(now)) break; // outside window: everything waits
 
       // Send-time spacing: after any send to this lead in this tick, push the next
-      // step at least STEP_GAP away and let a later tick re-evaluate all guards.
-      if (lastSentAt && now - lastSentAt < STEP_GAP) {
-        step.due = lastSentAt + STEP_GAP;
+      // step away and let a later tick re-evaluate all guards. Accelerated test
+      // sequences get a proportionally shorter gap so the run stays observable.
+      const gap = rec.accel ? Math.max(60e3, STEP_GAP / rec.accel) : STEP_GAP;
+      if (lastSentAt && now - lastSentAt < gap) {
+        step.due = lastSentAt + gap;
         changed = true;
         break;
       }

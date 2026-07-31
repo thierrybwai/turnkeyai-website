@@ -7,7 +7,7 @@
 
 import { handleSupportTicket } from './lib/support-handler.js';
 import { fetchBrandAssets, buildEmail, buildPdfHtml } from './lib/lead-render.js';
-import { enqueueNurture, leadIdFor, unsubUrlFor } from './lib/nurture.js';
+import { enqueueNurture, leadIdFor, unsubUrlFor, safeName } from './lib/nurture.js';
 import { smsTextFor } from './lib/nurture-copy.js';
 
 export default async (req) => {
@@ -44,6 +44,15 @@ export default async (req) => {
     const industry = (data.industry || '').trim();
     const packageInterest = (data.packageInterest || '').trim();
     const timeEater = (data.time_eater || '').trim();
+    // What the lead typed goes to the CRM and the team notification untouched; what we
+    // print back at them is sanitised. Backfill 31/07 shipped subjects like
+    // "jilliancoff123@gmail.com, your AI plan" and "Isaac.  I  cabecabevalu" because the
+    // raw field was interpolated straight into the t=0 email.
+    // Past two words the field stopped being a first name, so we keep the first token only.
+    const firstTokens = firstName.split(/\s+/).filter(Boolean);
+    const displayFirst = (firstTokens.length <= 2
+      ? safeName(firstName)
+      : safeName(firstTokens[0].replace(/[.,;:]+$/, ''))) || 'there';
 
     if (!email) {
       return new Response('No email on submission', { status: 200 });
@@ -96,7 +105,7 @@ export default async (req) => {
     // 1b. Generate SPIN content via Claude (graceful fallback if it fails)
     let spin = null;
     try {
-      spin = await generateSpinContent({ ...leadCtx, siteContent });
+      spin = await generateSpinContent({ ...leadCtx, firstName: displayFirst, siteContent });
       console.log('Claude SPIN content generated successfully');
     } catch (err) {
       console.error('Claude generation failed:', err.message);
@@ -117,9 +126,9 @@ export default async (req) => {
     // 3. Build & send email (with or without PDF attachment)
     const hasPdf = !!pdfBase64;
     const subject = hasPdf
-      ? `${firstName}, your personalized AI deployment plan (PDF attached)`
-      : `We've started, ${firstName}. Let's book your call.`;
-    const { html, text } = buildEmail({ firstName, businessName, industry, packageInterest, hasPdf, brand, leadId, unsubUrl });
+      ? `${displayFirst}, your personalized AI deployment plan (PDF attached)`
+      : `We've started, ${displayFirst}. Let's book your call.`;
+    const { html, text } = buildEmail({ firstName: displayFirst, businessName, industry, packageInterest, hasPdf, brand, leadId, unsubUrl });
 
     const emailPayload = {
       from: 'TurnkeyAI <start@tkai.com.au>',

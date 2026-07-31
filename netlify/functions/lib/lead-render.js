@@ -327,7 +327,9 @@ export function buildPdfHtml({ businessName, industry, spin, brand, leadId }) {
 }
 
 // ── EMAIL ────────────────────────────────────────────────────
-export function buildEmail({ firstName, businessName, industry, packageInterest, hasPdf, brand, leadId, unsubUrl }) {
+// `returning` = the lead enquired a while back and we are re-sending a rebuilt plan.
+// It adds one honest sentence explaining the gap, so nobody wonders why this landed.
+export function buildEmail({ firstName, businessName, industry, packageInterest, hasPdf, brand, leadId, unsubUrl, returning }) {
   const calUrl = leadId ? `https://turnkeyai.com.au/c/t0?c=${leadId}` : 'https://calendly.com/start-tkai/30min';
   const ACCENT = (brand && brand.accent) || TK_ACCENT;
   const ACCENT_SOFT = tint(ACCENT, 0.62);
@@ -335,9 +337,13 @@ export function buildEmail({ firstName, businessName, industry, packageInterest,
   const biz = businessName || 'your business';
   const recap = [businessName && `Business: ${businessName}`, industry && `Industry: ${prettyInd(industry)}`, packageInterest && `Package: ${packageInterest}`].filter(Boolean).join(' · ');
 
+  const opener = returning
+    ? `You asked us for an AI plan a little while back, and it never got the follow-up it deserved. That's on us. So we rebuilt it from scratch for ${biz}.`
+    : `Got your brief. Your AI agent is on our build queue and we've started on our end.`;
+
   const text = `Hi ${firstName},
 
-Got your brief. Your AI agent is on our build queue and we've started on our end.${hasPdf ? `\n\nAttached: a personalized deployment plan for ${biz}. It walks through what we'd build, the hours it could save you, and the package we'd recommend.` : ''}
+${opener}${hasPdf ? `\n\nAttached: a personalized deployment plan for ${biz}. It walks through what we'd build, the hours it could save you, and the package we'd recommend.` : ''}
 
 Live in 7 business days, guaranteed. Australian-built and run, rated 5.0 on Google.
 
@@ -363,7 +369,7 @@ You're receiving this because you submitted a brief on turnkeyai.com.au.${unsubU
       <tr><td style="background:#fff;padding:54px 40px 26px;">
         <p style="margin:0 0 14px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:${ACCENT};font-weight:600;">${hasPdf ? 'Personalized plan · attached' : 'Brief received'}</p>
         <h1 style="margin:0 0 20px;font-size:34px;line-height:1.12;letter-spacing:-0.02em;font-weight:600;">Thanks, ${esc(firstName)}.</h1>
-        <p style="margin:0 0 12px;font-size:17px;">Your AI agent is on our build queue. We've started on our end.</p>
+        <p style="margin:0 0 12px;font-size:17px;">${returning ? `You asked us for an AI plan a little while back, and it never got the follow-up it deserved. That's on us. So we rebuilt it from scratch for ${esc(biz)}.` : `Your AI agent is on our build queue. We've started on our end.`}</p>
         ${hasPdf ? `<p style="margin:0 0 12px;font-size:17px;">Attached is a <strong>personalized deployment plan</strong> for ${esc(biz)}. It walks through what we'd build, the hours it could save you, and the package we'd recommend. Worth 5 minutes before we talk.</p>` : ''}
         <p style="margin:0;font-size:17px;">When you're ready, grab a 30 minute call below and we'll walk through it together. No rush. We'll also reach out within 2 business hours either way.</p>
       </td></tr>

@@ -328,7 +328,7 @@ async function pushToBase44CRM({ firstName, lastName, email, phone, businessName
 // ─────────────────────────────────────────────────────
 // CLAUDE — SPIN content generation
 // ─────────────────────────────────────────────────────
-async function generateSpinContent({ firstName, businessName, website, industry, packageInterest, timeEater, siteContent }) {
+export async function generateSpinContent({ firstName, businessName, website, industry, packageInterest, timeEater, siteContent }) {
   const industryLabel = prettyIndustry(industry) || 'their business';
   const businessLabel = businessName || 'their business';
   const packageLabel = prettyPackage(packageInterest);
@@ -446,7 +446,7 @@ Reply with the JSON object only. No backticks, no markdown fences.`;
 // ─────────────────────────────────────────────────────
 // SITE FETCH — pull text content from lead's website for hyper-personalization
 // ─────────────────────────────────────────────────────
-async function fetchSiteContent(rawUrl) {
+export async function fetchSiteContent(rawUrl) {
   // Normalize URL: add https:// if missing, strip whitespace
   let url = String(rawUrl).trim();
   if (!url) return null;
@@ -531,7 +531,7 @@ async function fetchSiteContent(rawUrl) {
 // ─────────────────────────────────────────────────────
 // PDFSHIFT — HTML → PDF rendering
 // ─────────────────────────────────────────────────────
-async function renderPdf(html) {
+export async function renderPdf(html) {
   const auth = Buffer.from(`api:${process.env.PDFSHIFT_API_KEY}`).toString('base64');
   const res = await fetch('https://api.pdfshift.io/v3/convert/pdf', {
     method: 'POST',
@@ -562,11 +562,11 @@ function escapeHtml(s) {
   }[c]));
 }
 
-function slugify(s) {
+export function slugify(s) {
   return String(s).toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'lead';
 }
 
-function prettyIndustry(slug) {
+export function prettyIndustry(slug) {
   const map = {
     accounting: 'Accounting / Bookkeeping',
     real_estate: 'Real Estate',

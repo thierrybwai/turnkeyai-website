@@ -134,6 +134,8 @@ export function computeSchedule(now, accel) {
 }
 
 // ── Config / suppression / counters ──────────────────
+// mode: 'off' (nothing, ever) | 'dry' (log only) | 'test' (real sends for
+// NURTURE_TEST_EMAILS leads, dry for everyone else) | 'live'
 export async function getConfig(store) {
   const cfg = await store.get('config', { type: 'json' });
   return { mode: 'off', ...(cfg || {}) };
@@ -301,12 +303,13 @@ export async function enqueueNurture({ email, firstName, businessName, phone, da
   result.stopUrl = stopUrlFor(em);
 
   // SMS#1: direct send (no sleep; the PDF pipeline already provides the natural ~2 min delay)
+  const emode = cfg.mode === 'test' ? (isTest ? 'live' : 'dry') : cfg.mode;
   if (!record.phone) {
     result.sms1 = suspect ? 'suspect form values, email-only sequence' : 'no AU mobile, email-only sequence';
-  } else if (cfg.mode === 'off') {
+  } else if (emode === 'off') {
     record.sms1 = { status: 'held-off-mode' };
     result.sms1 = 'held (mode off)';
-  } else if (cfg.mode === 'dry') {
+  } else if (emode === 'dry') {
     record.sms1 = { status: 'dry', at: now };
     result.sms1 = 'dry run, not sent';
   } else if (!accel && !inWindow(now)) {

@@ -86,13 +86,15 @@ export default async () => {
 
     let changed = false;
     let lastSentAt = 0; // send-time spacing net: one message per lead per tick, max
+    // 'test' mode: real sends only for test-listed leads, dry for real leads.
+    const emode = cfg.mode === 'test' ? (rec.test ? 'live' : 'dry') : cfg.mode;
 
     // Queued SMS#1 (was submitted outside the window)
     if (rec.sms1?.status === 'queued' && rec.sms1.due <= now && (rec.accel || inWindow(now))) {
       changed = true;
       if (now - rec.sms1.due > STALE_MS) {
         rec.sms1 = { status: 'skipped-stale' };
-      } else if (cfg.mode === 'dry') {
+      } else if (emode === 'dry') {
         rec.sms1 = { status: 'dry', at: now };
         tick.dry.push(`sms1:${rec.leadId}`);
       } else if (!(await reserveSmsSlot(store, now))) {
@@ -134,7 +136,7 @@ export default async () => {
       const isSms = step.id.startsWith('sms');
       if (isSms && !rec.phone) { step.status = 'skipped-no-phone'; changed = true; continue; }
 
-      if (cfg.mode === 'dry') {
+      if (emode === 'dry') {
         step.status = 'dry'; step.at = now;
         tick.dry.push(`${step.id}:${rec.leadId}`);
         changed = true;
@@ -281,7 +283,7 @@ async function sendDigest(store, cfg, now) {
   let webhookAlert = '';
   try {
     const svc = process.env.TWILIO_MESSAGING_SERVICE_SID;
-    if (cfg.mode === 'live' && auth && svc) {
+    if ((cfg.mode === 'live' || cfg.mode === 'test') && auth && svc) {
       const r = await fetch(`https://messaging.twilio.com/v1/Services/${svc}`, { headers: { Authorization: auth } });
       if (r.ok) {
         const j = await r.json();

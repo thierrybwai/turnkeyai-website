@@ -89,7 +89,13 @@ ${planRef} Here's the part the PDF doesn't show: how it actually happens.
 
 3. We run it. One fixed price from A$2,999, no subscription. You own it.
 
-This is what that looks like for businesses like yours: a trades business that used to lose quotes in a full inbox now has every enquiry answered and followed up the same day. A clinic front desk that stopped drowning in reminders and reschedules. An online retailer whose order questions get handled before staff even open the laptop.
+Three we have actually built, so you can picture it:
+
+Black and White Property Group, real estate on the Gold Coast. Their website form had never been connected to anything, and 372 enquiries were sitting inside it, unread. We built the path. Every enquiry now reaches their CRM and their Slack within 15 minutes, sorted by the page it came from.
+
+Smooth Flow Group, civil contracting and traffic management in South Australia. A Mac Mini in their office, running an assistant that answers in their Slack and reads their Microsoft 365, their Xero and Traffio, the system their crews actually work in.
+
+Status8020, nutrition coaching. One assistant that pulls live numbers from Stripe, Shopify, Klaviyo, Notion and Typeform, so a question in plain English replaces five open tabs.
 
 We're Australian-built and run, and our first public review on Google is 5.0.
 
@@ -109,7 +115,10 @@ Unsubscribe: ${unsubUrl}`;
 <p style="margin:0 0 12px;"><strong>1. A free audit call, 15 minutes.</strong> We look at your plan together and I tell you straight whether AI genuinely saves you time or not. If we're not the right fit, I'll say so and point you in a better direction. It costs nothing and commits you to nothing.</p>
 <p style="margin:0 0 12px;"><strong>2. We build it, in 7 business days.</strong> You don't set anything up. No code, no new accounts, no IT project on your side.</p>
 <p style="margin:0 0 16px;"><strong>3. We run it.</strong> One fixed price from A$2,999, no subscription. You own it.</p>
-<p style="margin:0 0 16px;">This is what that looks like for businesses like yours: a trades business that used to lose quotes in a full inbox now has every enquiry answered and followed up the same day. A clinic front desk that stopped drowning in reminders and reschedules. An online retailer whose order questions get handled before staff even open the laptop.</p>
+<p style="margin:0 0 14px;">Three we have actually built, so you can picture it:</p>
+<p style="margin:0 0 12px;"><strong>Black and White Property Group</strong>, real estate on the Gold Coast. Their website form had never been connected to anything, and 372 enquiries were sitting inside it, unread. We built the path. Every enquiry now reaches their CRM and their Slack within 15 minutes, sorted by the page it came from.</p>
+<p style="margin:0 0 12px;"><strong>Smooth Flow Group</strong>, civil contracting and traffic management in South Australia. A Mac Mini in their office, running an assistant that answers in their Slack and reads their Microsoft 365, their Xero and Traffio, the system their crews actually work in.</p>
+<p style="margin:0 0 16px;"><strong>Status8020</strong>, nutrition coaching. One assistant that pulls live numbers from Stripe, Shopify, Klaviyo, Notion and Typeform, so a question in plain English replaces five open tabs.</p>
 <p style="margin:0 0 8px;">We're Australian-built and run, and our first public review on Google is 5.0.</p>
 ${cta(bookUrl, 'Book your free 15-minute audit')}
 <p style="margin:0;">Talk soon,<br><strong>Mael Demets</strong><br>Turn Key AI</p>`;

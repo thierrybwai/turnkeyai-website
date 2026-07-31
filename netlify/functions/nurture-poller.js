@@ -13,6 +13,9 @@ import {
   PURGE_MS, STALE_MS, STEP_GAP, DEDUPE_MS, MAX_SEND_ATTEMPTS, PUBLIC_BASE, brisbaneHour,
 } from './lib/nurture.js';
 import { smsTextFor, emailPartsFor } from './lib/nurture-copy.js';
+import {
+  inCallWindow, reserveCallSlot, placeVapiCall, CALL_STALE_MS, DIALING_TIMEOUT_MS,
+} from './lib/nurture-call.js';
 
 export const config = { schedule: '*/5 * * * *' };
 
@@ -58,9 +61,11 @@ export default async () => {
     try { rec = await store.get(b.key, { type: 'json' }); } catch { continue; }
     if (!rec) continue;
 
+    const callsPending = (rec.calls?.attempts || []).some(a => a.status === 'pending' || a.status === 'dialing');
     const finished = rec.stopped || rec.booked
       || (rec.sms1?.status !== 'pending' && rec.sms1?.status !== 'queued'
-          && rec.steps.every(s => s.status !== 'pending'));
+          && rec.steps.every(s => s.status !== 'pending')
+          && !(callsPending && !rec.calls?.stopped));
     // Early purge: any sequence is mathematically over after DEDUPE_MS (plan 72h + stale 48h),
     // keeping the record longer only slows every tick. DEDUPE_MS also preserves dedupe.
     if (now - rec.createdAt > PURGE_MS || (finished && now - rec.createdAt > DEDUPE_MS)) {
@@ -73,8 +78,14 @@ export default async () => {
     }
     if (rec.stopped || rec.booked || rec.paused) continue;
 
+    // A lead whose only due work is a CALL must not be skipped here: without the call
+    // clause this early exit made the entire voice layer dead code.
+    const callDue = !rec.calls?.stopped
+      && (rec.calls?.attempts || []).some(a => (a.status === 'pending' && a.due <= now)
+        || (a.status === 'dialing' && now - (a.at || 0) > DIALING_TIMEOUT_MS));
     const hasWork = (rec.sms1?.status === 'queued' && rec.sms1.due <= now)
-      || rec.steps.some(s => s.status === 'pending' && s.due <= now);
+      || rec.steps.some(s => s.status === 'pending' && s.due <= now)
+      || callDue;
     if (!hasWork) continue;
 
     if (await isSuppressed(store, rec.email, rec.phone)) {
@@ -88,6 +99,9 @@ export default async () => {
     let lastSentAt = 0; // send-time spacing net: one message per lead per tick, max
     // 'test' mode: real sends only for test-listed leads, dry for real leads.
     const emode = cfg.mode === 'test' ? (rec.test ? 'live' : 'dry') : cfg.mode;
+    // Calls have their OWN switch. The message sequence can be live for weeks while
+    // the voice layer stays off, and flipping one must never flip the other.
+    const cmode = cfg.callMode === 'test' ? (rec.test ? 'live' : 'dry') : (cfg.callMode || 'off');
 
     // Queued SMS#1 (was submitted outside the window)
     if (rec.sms1?.status === 'queued' && rec.sms1.due <= now && (rec.accel || inWindow(now))) {
@@ -114,6 +128,49 @@ export default async () => {
           }
           rec.sms1 = { status: 'failed', err: String(e.message).slice(0, 150) };
           console.error(`sms1 send failed for ${rec.leadId}:`, e.message);
+        }
+      }
+    }
+
+    // Outbound call ladder. Runs on its own clock, but never in the same tick as a
+    // message to the same lead: a text and a phone call landing together reads as spam.
+    if (cmode !== 'off' && rec.calls && !rec.calls.stopped && !rec.stopped && !lastSentAt) {
+      const atts = rec.calls.attempts || [];
+      // A lost end-of-call webhook would otherwise wedge the ladder on 'dialing'.
+      for (const a of atts) {
+        if (a.status === 'dialing' && now - (a.at || 0) > DIALING_TIMEOUT_MS) {
+          a.status = 'unknown'; changed = true;
+        }
+      }
+      const busy = atts.some(a => a.status === 'dialing');
+      const att = busy ? null : atts.find(a => a.status === 'pending' && a.due <= now);
+      if (att) {
+        if (now - att.due > CALL_STALE_MS) {
+          att.status = 'skipped-stale'; changed = true;
+        } else if (!rec.phone) {
+          rec.calls.stopped = 'no-phone'; changed = true;
+        } else if (!rec.accel && !inCallWindow(now)) {
+          // Outside legal calling hours, a weekend or a Queensland public holiday.
+          // Leave it pending: the next in-window tick picks it up.
+        } else if (cmode === 'dry') {
+          att.status = 'dry'; att.at = now; changed = true;
+          tick.dry.push(`call${att.n}:${rec.leadId}`);
+        } else if (!(await reserveCallSlot(store, now))) {
+          console.warn('daily call cap reached, deferring');
+        } else {
+          att.status = 'dialing'; att.at = now; changed = true;
+          lastSentAt = now;
+          try {
+            const call = await placeVapiCall({ rec, attempt: att });
+            att.vapiCallId = call?.id || null;
+            tick.sent.push(`call${att.n}:${rec.leadId}`);
+            await logOpsEvent(store, { type: 'call-placed', leadId: rec.leadId, attempt: att.n });
+          } catch (e) {
+            att.status = 'failed';
+            att.err = String(e.message).slice(0, 150);
+            console.error(`call attempt ${att.n} failed for ${rec.leadId}:`, e.message);
+            await logOpsEvent(store, { type: 'call-failed', leadId: rec.leadId, attempt: att.n });
+          }
         }
       }
     }

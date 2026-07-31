@@ -8,6 +8,7 @@
 
 import { getStore } from '@netlify/blobs';
 import crypto from 'node:crypto';
+import { computeCallPlan } from './nurture-call.js';
 
 const BNE_OFFSET = 10 * 3600e3; // Australia/Brisbane is UTC+10, no DST
 const WINDOW_START = 9;         // 9:00 Brisbane
@@ -138,7 +139,7 @@ export function computeSchedule(now, accel) {
 // NURTURE_TEST_EMAILS leads, dry for everyone else) | 'live'
 export async function getConfig(store) {
   const cfg = await store.get('config', { type: 'json' });
-  return { mode: 'off', ...(cfg || {}) };
+  return { mode: 'off', callMode: 'off', ...(cfg || {}) };
 }
 export async function isSuppressed(store, email, e164) {
   if (email && await store.get(`suppress:${sha1(normEmail(email))}`)) return true;
@@ -241,7 +242,7 @@ export async function sendEmail({ to, subject, html, text, unsubUrl, fromName })
 
 // ── Enqueue (called from submission-created-background, must NEVER throw upward) ──
 // Returns a status object for the team notification. Sends SMS#1 directly when possible.
-export async function enqueueNurture({ email, firstName, businessName, phone, data, hasPdf, smsTextFor }) {
+export async function enqueueNurture({ email, firstName, businessName, phone, data, hasPdf, smsTextFor, industry, planSummary }) {
   const store = nurtureStore();
   const cfg = await getConfig(store);
   const now = Date.now();
@@ -285,9 +286,16 @@ export async function enqueueNurture({ email, firstName, businessName, phone, da
     biz: cleanBiz,
     phone: smsPhone,
     hasPdf: !!hasPdf, accel, test: isTest,
+    industry: safeBiz(industry, 40) || '',
+    // Two or three lines of the PDF, spoken back on the call. This is the whole reason
+    // the call is not a cold call: the agent knows what we already sent them.
+    planSummary: String(planSummary || '').replace(/\s+/g, ' ').trim().slice(0, 400),
     createdAt: now, booked: false, paused: false, stopped: false, stopReason: null,
     sms1: { status: smsPhone ? 'pending' : 'no-phone' },
     steps: computeSchedule(now, accel),
+    // The call ladder is always PLANNED (planning costs nothing and keeps the record
+    // complete); whether it ever dials is decided at call time by config.callMode.
+    calls: smsPhone ? { attempts: computeCallPlan(now, { accel }), stopped: null } : { attempts: [], stopped: 'no-phone' },
   };
   await store.set(key, JSON.stringify(record));
   await store.set(`byid:${leadId}`, key);

@@ -179,7 +179,12 @@ export default async (req) => {
     // or Netlify's automatic retry would send the lead a duplicate t=0 email.
     let nurture = null;
     try {
-      nurture = await enqueueNurture({ email, firstName, businessName, phone, data, hasPdf, smsTextFor });
+      nurture = await enqueueNurture({
+        email, firstName, businessName, phone, data, hasPdf, smsTextFor, industry,
+        // What the voice agent says back to them. Without it the call is cold.
+        planSummary: spin ? [spin.headline, spin.workflows?.[0]?.title, spin.workflows?.[1]?.title]
+          .filter(Boolean).join('. ') : '',
+      });
       console.log('Nurture:', JSON.stringify(nurture));
     } catch (err) {
       console.error('Nurture enqueue failed:', err.message);

@@ -178,7 +178,8 @@ function packageInfo(rec) {
 
 // ── PDF ──────────────────────────────────────────────────────
 // brand = { logoDataUri, accent } | null
-export function buildPdfHtml({ businessName, industry, spin, brand }) {
+export function buildPdfHtml({ businessName, industry, spin, brand, leadId }) {
+  const calUrl = leadId ? `https://turnkeyai.com.au/c/t0?c=${leadId}` : 'https://calendly.com/start-tkai/30min';
   const ACCENT = (brand && brand.accent) || TK_ACCENT;
   const logo = brand && brand.logoDataUri;
   const biz = businessName || 'your business';
@@ -316,7 +317,7 @@ export function buildPdfHtml({ businessName, industry, spin, brand }) {
       <div class="cta">
         <h3>Book 30 minutes to confirm and lock it in.</h3>
         <p>${esc(s.next_step || `We confirm the details, lock the workflows we build first for ${biz}, and answer anything open. No pressure, no obligation.`)}</p>
-        <a class="btn" href="https://calendly.com/start-tkai/30min">Book your 30-minute call →</a>
+        <a class="btn" href="${calUrl}">Book your 30-minute call →</a>
       </div>
       <p class="disc">Figures in this plan are estimates based on typical workloads for your industry and your public information, shown as ranges on purpose. They are a starting point we confirm together, not a contractual promise. Live in 7 business days, guaranteed.${logo ? ` The ${esc(biz)} logo is shown to indicate this plan was prepared for you; TurnkeyAI Pty Ltd is the author.` : ''} start@tkai.com.au · turnkeyai.com.au</p>
     </div>
@@ -326,7 +327,8 @@ export function buildPdfHtml({ businessName, industry, spin, brand }) {
 }
 
 // ── EMAIL ────────────────────────────────────────────────────
-export function buildEmail({ firstName, businessName, industry, packageInterest, hasPdf, brand }) {
+export function buildEmail({ firstName, businessName, industry, packageInterest, hasPdf, brand, leadId, unsubUrl }) {
+  const calUrl = leadId ? `https://turnkeyai.com.au/c/t0?c=${leadId}` : 'https://calendly.com/start-tkai/30min';
   const ACCENT = (brand && brand.accent) || TK_ACCENT;
   const ACCENT_SOFT = tint(ACCENT, 0.62);
   const logo = brand && brand.logoDataUri;
@@ -340,14 +342,14 @@ Got your brief. Your AI agent is on our build queue and we've started on our end
 Live in 7 business days, guaranteed. Australian-built and run, rated 5.0 on Google.
 
 When you're ready, grab a 30 minute call and we'll walk through it together. No rush. We'll also reach out within 2 business hours either way:
-https://calendly.com/start-tkai/30min
+${calUrl}
 
 You don't set anything up. TurnkeyAI is done for you: we build it, configure it, and install it. No code, no new accounts, no IT project on your side.
 
 ${recap ? recap + '\n\n' : ''}Talk soon,
 The TurnkeyAI team
 
-You're receiving this because you submitted a brief on turnkeyai.com.au. Reply STOP and we won't email you again.`;
+You're receiving this because you submitted a brief on turnkeyai.com.au.${unsubUrl ? ` Unsubscribe anytime: ${unsubUrl}` : ''}`;
 
   const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>${hasPdf ? 'Your personalized AI deployment plan' : "We've started"}, ${esc(firstName)}</title></head>
 <body style="margin:0;padding:0;background:#f2f2f4;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1d1d1f;line-height:1.55;">
@@ -372,7 +374,7 @@ You're receiving this because you submitted a brief on turnkeyai.com.au. Reply S
         <p style="margin:0 0 10px;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:${tint(ACCENT,0.35)};font-weight:600;">Whenever it suits you</p>
         <h2 style="margin:0 0 12px;font-size:23px;line-height:1.2;letter-spacing:-0.02em;font-weight:600;color:#fff;">Walk through your plan with us.</h2>
         <p style="margin:0 0 22px;font-size:15px;color:rgba(255,255,255,0.72);">Thirty minutes to answer your questions and confirm the workflows we'd build first. Pick a time that works for you, no back and forth.</p>
-        <a href="https://calendly.com/start-tkai/30min" style="display:inline-block;background:#fff;color:#1d1d1f;font-weight:500;font-size:15px;padding:14px 24px;border-radius:100px;text-decoration:none;">See a time that suits you →</a>
+        <a href="${calUrl}" style="display:inline-block;background:#fff;color:#1d1d1f;font-weight:500;font-size:15px;padding:14px 24px;border-radius:100px;text-decoration:none;">See a time that suits you →</a>
       </td></tr></table></td></tr>
       ${recap ? `<tr><td style="background:#fff;padding:0 40px 32px;"><table role="presentation" width="100%" style="background:#f5f5f7;border-radius:14px;"><tr><td style="padding:18px 22px;font-size:14px;color:#424245;"><span style="display:inline-block;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#86868b;font-weight:600;margin-bottom:6px;">Your brief</span><br>${esc(recap)}</td></tr></table></td></tr>` : ''}
       <tr><td style="background:#fff;padding:0 40px 36px;">
@@ -380,7 +382,7 @@ You're receiving this because you submitted a brief on turnkeyai.com.au. Reply S
       </td></tr>
       <tr><td style="background:#fff;border-radius:0 0 20px 20px;padding:22px 40px 34px;border-top:1px solid #f0f0f2;">
         <p style="margin:0;font-size:14px;">Talk soon,<br><strong>The TurnkeyAI team</strong></p>
-        <p style="margin:14px 0 0;font-size:11px;color:#b0b0b5;">You're receiving this because you submitted a brief on turnkeyai.com.au. Reply STOP and we won't email you again.</p>
+        <p style="margin:14px 0 0;font-size:11px;color:#b0b0b5;">You're receiving this because you submitted a brief on turnkeyai.com.au.${unsubUrl ? ` <a href="${unsubUrl}" style="color:#b0b0b5;">Unsubscribe</a> anytime.` : ''}</p>
       </td></tr>
     </table>
   </td></tr></table>

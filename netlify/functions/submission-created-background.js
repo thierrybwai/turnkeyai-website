@@ -7,6 +7,8 @@
 
 import { handleSupportTicket } from './lib/support-handler.js';
 import { fetchBrandAssets, buildEmail, buildPdfHtml } from './lib/lead-render.js';
+import { enqueueNurture, leadIdFor, unsubUrlFor } from './lib/nurture.js';
+import { smsTextFor } from './lib/nurture-copy.js';
 
 export default async (req) => {
   try {
@@ -20,6 +22,11 @@ export default async (req) => {
     }
     if (formName !== 'ai-audit' && formName !== 'ai-recommendations') {
       return new Response('Ignored: not a handled form', { status: 200 });
+    }
+
+    // Server-side honeypot: a filled bot-field means a bot bypassed the page JS.
+    if ((data['bot-field'] || '').trim()) {
+      return new Response('ok', { status: 200 });
     }
 
     // The ads landing form ('ai-recommendations') uses shorter field names — map them
@@ -43,6 +50,9 @@ export default async (req) => {
     }
 
     const leadCtx = { firstName, lastName, email, phone, businessName, website, industry, packageInterest, timeEater };
+    const leadId = leadIdFor(email); // deterministic: used for Calendly UTM attribution on every link
+    let unsubUrl = null; // t=0 unsubscribe link; null (and omitted) until NURTURE_HMAC_SECRET is configured
+    try { unsubUrl = unsubUrlFor(email); } catch { /* fail-open on the LINK only, never on the email */ }
 
     // 0. Push the lead into the Base44 SalesFlow CRM (TKAI pipeline) FIRST, so the lead is
     //    captured even if Claude / PDFShift / Resend later fail. Non-blocking, never throws.
@@ -96,7 +106,7 @@ export default async (req) => {
     let pdfBase64 = null;
     if (spin) {
       try {
-        const pdfHtml = buildPdfHtml({ businessName, industry, spin, brand });
+        const pdfHtml = buildPdfHtml({ businessName, industry, spin, brand, leadId });
         pdfBase64 = await renderPdf(pdfHtml);
         console.log('PDFShift rendered PDF, size:', pdfBase64.length, 'chars (base64)');
       } catch (err) {
@@ -109,7 +119,7 @@ export default async (req) => {
     const subject = hasPdf
       ? `${firstName}, your personalized AI deployment plan (PDF attached)`
       : `We've started, ${firstName}. Let's book your call.`;
-    const { html, text } = buildEmail({ firstName, businessName, industry, packageInterest, hasPdf, brand });
+    const { html, text } = buildEmail({ firstName, businessName, industry, packageInterest, hasPdf, brand, leadId, unsubUrl });
 
     const emailPayload = {
       from: 'TurnkeyAI <start@tkai.com.au>',
@@ -122,6 +132,13 @@ export default async (req) => {
       html,
       text,
     };
+
+    if (unsubUrl) {
+      emailPayload.headers = {
+        'List-Unsubscribe': `<${unsubUrl}>`,
+        'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+      };
+    }
 
     if (hasPdf) {
       emailPayload.attachments = [{
@@ -148,8 +165,19 @@ export default async (req) => {
       return new Response(`Resend failed: ${resendRes.status}`, { status: 502 });
     }
 
+    // Nurture sequence enqueue (SMS + follow-up emails via the cron poller).
+    // Fully swallowed: a nurture failure must NEVER change this function's HTTP response,
+    // or Netlify's automatic retry would send the lead a duplicate t=0 email.
+    let nurture = null;
+    try {
+      nurture = await enqueueNurture({ email, firstName, businessName, phone, data, hasPdf, smsTextFor });
+      console.log('Nurture:', JSON.stringify(nurture));
+    } catch (err) {
+      console.error('Nurture enqueue failed:', err.message);
+    }
+
     // Dedicated team notification — a clear "new lead" alert, separate from the lead's audit email.
-    await sendTeamLeadNotification(leadCtx, hasPdf);
+    await sendTeamLeadNotification(leadCtx, hasPdf, nurture);
 
     return new Response(`Email sent${hasPdf ? ' with PDF' : ' (no PDF)'}`, { status: 200 });
   } catch (err) {
@@ -163,7 +191,7 @@ export default async (req) => {
 // Separate from the lead's audit email. Never throws.
 // Recipients: LEAD_NOTIFY_EMAILS (comma-separated) | LEAD_FORWARD_EMAIL | start@tkai.com.au
 // ─────────────────────────────────────────────────────
-async function sendTeamLeadNotification(lead, hasPdf) {
+async function sendTeamLeadNotification(lead, hasPdf, nurture) {
   try {
     const notifyRaw = (process.env.LEAD_NOTIFY_EMAILS || process.env.LEAD_FORWARD_EMAIL || 'start@tkai.com.au').trim();
     const to = notifyRaw.split(',').map((s) => s.trim()).filter(Boolean);
@@ -172,7 +200,15 @@ async function sendTeamLeadNotification(lead, hasPdf) {
     const { firstName, lastName, email, phone, businessName, website, industry, packageInterest } = lead;
     const name = `${firstName} ${lastName}`.trim() || 'New lead';
     const industryLabel = prettyIndustry(industry) || industry || 'Not specified';
-    const subject = `🔔 New lead: ${name}${businessName ? ' — ' + businessName : ''} (${industryLabel})`;
+    const subject = hasPdf
+      ? `🔔 New lead: ${name}${businessName ? ' — ' + businessName : ''} (${industryLabel})`
+      : `⚠️ New lead (NO PLAN SENT): ${name}${businessName ? ' — ' + businessName : ''} (${industryLabel})`;
+
+    const nurtureLabel = !nurture
+      ? 'Not enrolled'
+      : nurture.enrolled
+        ? `Enrolled. SMS#1: ${nurture.sms1}`
+        : `Not enrolled: ${nurture.note}`;
 
     const rows = [
       ['Name', name],
@@ -183,11 +219,16 @@ async function sendTeamLeadNotification(lead, hasPdf) {
       ['Industry', industryLabel],
       ['Package interest', prettyPackage(packageInterest) || '—'],
       ['Audit PDF', hasPdf ? 'Generated + emailed to the lead' : 'Not generated (Claude/PDF step failed)'],
+      ['Nurture', nurtureLabel],
     ];
+
+    const stopLine = nurture?.enrolled && nurture.stopUrl
+      ? `\n\nIf you call or close this lead yourself, stop the automatic follow-ups here: ${nurture.stopUrl}`
+      : '';
 
     const text = `New lead from the website form.\n\n` +
       rows.map(([k, v]) => `${k}: ${v}`).join('\n') +
-      `\n\nThe lead is in the TKAI pipeline (Base44). Reply to this email to reach ${firstName} directly.`;
+      `\n\nThe lead is in the TKAI pipeline (Base44). Reply to this email to reach ${firstName} directly.` + stopLine;
 
     const html = `<!doctype html><html><body style="margin:0;padding:0;background:#fafafa;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,sans-serif;color:#1d1d1f;line-height:1.55;">
 <div style="max-width:600px;margin:0 auto;padding:32px 24px;">
@@ -197,6 +238,7 @@ async function sendTeamLeadNotification(lead, hasPdf) {
     ${rows.map(([k, v], i) => `<tr><td style="padding:13px 18px;${i < rows.length - 1 ? 'border-bottom:1px solid #f0f0f2;' : ''}width:38%;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:#86868b;font-weight:600;vertical-align:top;">${escapeHtml(k)}</td><td style="padding:13px 18px;${i < rows.length - 1 ? 'border-bottom:1px solid #f0f0f2;' : ''}font-size:14px;color:#1d1d1f;">${k === 'Email' ? `<a href="mailto:${escapeHtml(v)}" style="color:#0071e3;">${escapeHtml(v)}</a>` : k === 'Website' && v !== '—' ? `<a href="${escapeHtml(v.startsWith('http') ? v : 'https://' + v)}" style="color:#0071e3;">${escapeHtml(v)}</a>` : escapeHtml(v)}</td></tr>`).join('')}
   </table>
   <p style="font-size:13px;color:#6e6e73;margin-top:20px;">The lead is in your TKAI pipeline (Base44). Reply to this email to reach ${escapeHtml(firstName)} directly.</p>
+  ${nurture?.enrolled && nurture.stopUrl ? `<p style="font-size:13px;color:#6e6e73;margin-top:10px;">Calling or closing this lead yourself? <a href="${escapeHtml(nurture.stopUrl)}" style="color:#0071e3;">Stop the automatic follow-ups for this lead</a>.</p>` : ''}
 </div></body></html>`;
 
     const res = await fetch('https://api.resend.com/emails', {

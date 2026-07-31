@@ -2179,8 +2179,9 @@ src="https://www.facebook.com/tr?id=1359053766154887&ev=PageView&noscript=1"
   </div>
 
   <div class="tk-card tk-content" style="padding: 48px;">
-    <form id="bookingForm" name="ai-audit" method="POST" data-netlify="true" onsubmit="handleFormSubmit(event)">
+    <form id="bookingForm" name="ai-audit" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleFormSubmit(event)">
       <input type="hidden" name="form-name" value="ai-audit">
+      <p hidden aria-hidden="true"><label>Leave blank: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
       <!-- First-touch attribution, auto-filled by shared.js -->
       <input type="hidden" name="leadSource" id="leadSource" value="">
       <input type="hidden" name="leadMedium" id="leadMedium" value="">
@@ -2271,7 +2272,7 @@ src="https://www.facebook.com/tr?id=1359053766154887&ev=PageView&noscript=1"
           <span><strong>Live in 7 business days.</strong> <span class="tk-g-sub">One-time price &middot; No subscription &middot; You own it.</span></span>
         </span>
       </div>
-      <p class="tk-small tk-center" style="margin-top: 14px;">Personalized 8-page PDF in your inbox in 30 seconds. Human follow-up within 2 business hours. No spam.</p>
+      <p class="tk-small tk-center" style="margin-top: 14px;">Personalized 8-page PDF in your inbox in 30 seconds. Human follow-up within 2 business hours by email or text. Reply STOP to any text to opt out.</p>
     </form>
   </div>
 
@@ -2700,6 +2701,7 @@ src="https://www.facebook.com/tr?id=1359053766154887&ev=PageView&noscript=1"
     try {
       const params = new URLSearchParams({
         'form-name': 'ai-audit',
+        'bot-field': form['bot-field'] ? form['bot-field'].value : '',
         firstName: form.firstName.value,
         lastName:  form.lastName.value,
         email:     form.email.value,

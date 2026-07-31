@@ -36,3 +36,7 @@ http://www.turnkeyai.com.au/*   https://turnkeyai.com.au/:splat  301!
 # AI telephony offer discontinued (2026-07-02) — receptionist LP retired
 /ai-receptionist/*   /ai-for-small-business/   301
 /ai-receptionist     /ai-for-small-business/   301
+
+# Nurture: short CTA links + unsubscribe (serverless functions)
+/c/*          /.netlify/functions/nurture-go     200
+/unsubscribe  /.netlify/functions/nurture-unsub  200

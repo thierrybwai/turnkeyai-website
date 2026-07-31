@@ -236,9 +236,11 @@ async function syncCalendly(store, ops, now) {
   ops.lastCalendlySync = now;
 }
 
-// ── Team messaging ───────────────────────────────────
+// ── Ops messaging ────────────────────────────────────
+// Digest and dry-run notes go to the nurture OWNER only (Mael), never to the
+// whole lead-notification list: ops chatter is not a team-wide alert.
 function teamRecipients() {
-  return (process.env.LEAD_NOTIFY_EMAILS || process.env.LEAD_FORWARD_EMAIL || 'start@tkai.com.au')
+  return (process.env.NURTURE_DIGEST_EMAILS || 'help@bwpg.com.au')
     .split(',').map(s => s.trim()).filter(Boolean);
 }
 async function teamNote(text) {
